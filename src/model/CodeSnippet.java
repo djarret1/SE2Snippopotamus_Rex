@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import javafx.beans.Observable;
@@ -9,7 +10,9 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.util.Callback;
 
-public class CodeSnippet {
+public class CodeSnippet implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private StringProperty name;
 	private StringProperty description;
@@ -19,10 +22,10 @@ public class CodeSnippet {
         return (s) -> new Observable[] {s.getNameProperty(), s.getDescriptionProperty(), s.getCodeProperty()};
     }
 	
-	public CodeSnippet(String name, String description, String code) {
+	public CodeSnippet(String name, String description, String codeText) {
 		this.name = new SimpleStringProperty(Objects.requireNonNull(name, "Name was null."));
 		this.description = new SimpleStringProperty(Objects.requireNonNull(description, "Description was null."));
-		Code theCode = new Code(code);
+		Code theCode = new Code(codeText);
 		this.code = new SimpleObjectProperty<>(theCode);
 	}
 
@@ -64,7 +67,7 @@ public class CodeSnippet {
 	
 	@Override
 	public String toString() {
-		return this.getName() + " - " + this.getDescription();
+		return this.getName();
 	}
 	
 }

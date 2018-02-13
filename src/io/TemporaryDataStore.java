@@ -1,14 +1,10 @@
 package io;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.Scanner;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,19 +26,19 @@ public class TemporaryDataStore implements CodeSnippetDataStore {
 		this.loadSnippets();
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public void loadSnippets() {
-		try (FileInputStream inputFile = new FileInputStream(this.storageFile);
-			 ObjectInputStream inputObject = new ObjectInputStream(inputFile);) {
-			List<CodeSnippet> tempList = (List<CodeSnippet>) inputObject.readObject();
-			this.snippets = FXCollections.observableArrayList(tempList);
+		this.snippets = FXCollections.observableArrayList(CodeSnippet.extractor());
+		try (Scanner in = new Scanner(this.storageFile)) {
+			while (in.hasNextLine()) {
+				String name = in.nextLine();
+				String description = in.nextLine();
+				String code = in.nextLine();
+				CodeSnippet snippet = new CodeSnippet(name, description, code);
+				this.snippets.add(snippet);
+			}
 		} catch (FileNotFoundException e) {
-			this.snippets = FXCollections.emptyObservableList();
-		} catch (IOException e) {
-			this.showErrorAlert("The existing code snippet file could not be read.");
-		} catch (ClassNotFoundException e) {
-			this.showErrorAlert("Invalid data in specified file. Is this the corrent file?");
+			// use empty list;
 		}
 	}
 
@@ -59,19 +55,22 @@ public class TemporaryDataStore implements CodeSnippetDataStore {
 
 	@Override
 	public void writeCodeSnippetList() {
-		try (FileOutputStream outFile = new FileOutputStream(this.storageFile);
-			 ObjectOutputStream outputObject = new ObjectOutputStream(outFile);) {
-			outputObject.writeObject(new ArrayList<CodeSnippet>(this.snippets));
+		try (PrintWriter outWriter = new PrintWriter(this.storageFile, "UTF-8")){
+			for (CodeSnippet snippet : this.snippets) {
+				outWriter.println(snippet.getName());
+				outWriter.println(snippet.getDescription());
+				outWriter.println(snippet.getCode().getCodeText());
+			}
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			this.showErrorAlert("The code snippet file could not be written to.");
+			this.showErrorAlert("Could not find the code snippet data file!");
+		} catch (UnsupportedEncodingException e) {
+			this.showErrorAlert(e.getLocalizedMessage());
 		}
 	}
 
 	@Override
 	public void writeCodeSnippet(CodeSnippet snippet) {
-		if (this.snippets.contains(snippet)) {
+		if (this.snippets != null && this.snippets.contains(snippet)) {
 			int index = this.snippets.indexOf(snippet);
 			this.snippets.set(index, snippet);
 		} else {
