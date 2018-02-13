@@ -6,33 +6,33 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.web.HTMLEditor?>
 
-<AnchorPane minHeight="600.0" minWidth="600.0" prefWidth="607.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainViewCodeBehind">
+<AnchorPane minHeight="600.0" minWidth="875.0" prefWidth="607.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainViewCodeBehind">
    <children>
-      <SplitPane dividerPositions="0.3074380165289256" layoutY="63.0" prefHeight="410.0" prefWidth="607.0">
+      <SplitPane dividerPositions="0.23024054982817868" layoutY="63.0" prefHeight="426.0" prefWidth="875.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="377.0" prefWidth="170.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="408.0" prefWidth="189.0">
                <children>
-                  <ListView fx:id="snippetListView" layoutY="69.0" prefHeight="313.0" prefWidth="182.0">
+                  <ListView fx:id="snippetListView" layoutY="69.0" prefHeight="313.0" prefWidth="198.0">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
                   </ListView>
-                  <ComboBox fx:id="filterComboBox" layoutX="4.0" layoutY="14.0" prefHeight="31.0" prefWidth="174.0" />
+                  <ComboBox fx:id="filterComboBox" layoutX="12.0" layoutY="14.0" prefHeight="31.0" prefWidth="174.0" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="408.0" prefWidth="404.0">
                <children>
-                  <TextArea fx:id="outputTextArea" layoutX="-3.0" layoutY="31.0" prefHeight="351.0" prefWidth="421.0" />
-                  <Label fx:id="snippetNameLabel" alignment="CENTER" layoutX="160.0" layoutY="4.0" text="Snippet Name" />
+                  <Label fx:id="snippetNameLabel" alignment="CENTER" layoutX="286.0" layoutY="4.0" text="Snippet Name" />
+                  <HTMLEditor fx:id="snippetEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutY="31.0" prefHeight="351.0" prefWidth="667.0" />
                </children>
             </AnchorPane>
         </items>
       </SplitPane>
-      <Accordion fx:id="detailsAccordian" layoutY="473.0" prefHeight="59.0" prefWidth="607.0">
+      <Accordion fx:id="detailsAccordian" layoutY="489.0" prefHeight="59.0" prefWidth="875.0">
         <panes>
           <TitledPane fx:id="detailsTitledPane" animated="false" text="Snippet Details" />
         </panes>
