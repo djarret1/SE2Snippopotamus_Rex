@@ -4,6 +4,7 @@ import controller.MainViewController;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -23,6 +24,7 @@ public class MainViewCodeBehind {
     @FXML private TitledPane detailsTitledPane;
     @FXML private HTMLEditor snippetEditor;
     @FXML private TextArea descriptionTextArea;
+    @FXML private Button saveSnippetButton;
     
     @FXML private TextField snippetNameTextField;
     
@@ -33,6 +35,7 @@ public class MainViewCodeBehind {
     void initialize() {
     	this.controller = new MainViewController("testing.dat");
     	this.initializeListView();
+    	this.setupEventHandlers();
     	this.detailsAccordian.setExpandedPane(this.detailsTitledPane);
     	this.updateView(null);
     }
@@ -52,6 +55,13 @@ public class MainViewCodeBehind {
 		this.snippetNameLabel.textProperty().bindBidirectional(this.selected.getNameProperty());
 		this.descriptionTextArea.textProperty().bindBidirectional(this.selected.getDescriptionProperty());
 		this.snippetEditor.setHtmlText(this.selected.getCode().getCodeText());
+	}
+	
+	private void setupEventHandlers() {
+		this.saveSnippetButton.setOnMouseClicked(e -> {
+			this.selected.getCode().setCodeText(this.snippetEditor.getHtmlText());
+			this.controller.updateCodeSnippet(this.selected);
+		});		
 	}
 
 }

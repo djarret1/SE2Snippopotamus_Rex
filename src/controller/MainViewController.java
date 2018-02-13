@@ -1,7 +1,5 @@
 package controller;
 
-import java.util.Objects;
-
 import io.CodeSnippetDataStore;
 import io.TemporaryDataStoreImplementation;
 import javafx.collections.ObservableList;
@@ -22,9 +20,7 @@ public class MainViewController {
 		return this.dataStore.getCodeSnippetList();
 	}
 	
-	public void addCodeSnippet(String name, String description, String codeText) {
-		CodeSnippet snippet = new CodeSnippet(Objects.requireNonNull(name, "Name was null."),
-				Objects.requireNonNull(description), Objects.requireNonNull(codeText));
+	public void updateCodeSnippet(CodeSnippet snippet) {
 		this.dataStore.writeCodeSnippet(snippet);
 	}
 	

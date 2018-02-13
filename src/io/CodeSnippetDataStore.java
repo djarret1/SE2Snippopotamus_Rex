@@ -5,9 +5,9 @@ import model.CodeSnippet;
 
 public interface CodeSnippetDataStore {
 
-	void loadSnippets();
+	void loadCodeSnippets();
 	ObservableList<CodeSnippet> getCodeSnippetList();
-	void writeCodeSnippetList();
+	void saveCodeSnippets();
 	void writeCodeSnippet(CodeSnippet snippet);
 	
 }

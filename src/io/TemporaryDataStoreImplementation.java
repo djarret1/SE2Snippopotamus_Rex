@@ -23,11 +23,11 @@ public class TemporaryDataStoreImplementation implements CodeSnippetDataStore {
 		}
 		String currentDirectory = System.getProperty("user.dir");
 		this.storageFile = new File(currentDirectory, filename);
-		this.loadSnippets();
+		this.loadCodeSnippets();
 	}
 	
 	@Override
-	public void loadSnippets() {
+	public void loadCodeSnippets() {
 		this.snippets = FXCollections.observableArrayList(CodeSnippet.extractor());
 		try (Scanner in = new Scanner(this.storageFile)) {
 			while (in.hasNextLine()) {
@@ -54,7 +54,7 @@ public class TemporaryDataStoreImplementation implements CodeSnippetDataStore {
 	}
 
 	@Override
-	public void writeCodeSnippetList() {
+	public void saveCodeSnippets() {
 		try (PrintWriter outWriter = new PrintWriter(this.storageFile, "UTF-8")){
 			for (CodeSnippet snippet : this.snippets) {
 				outWriter.println(snippet.getName());
@@ -76,7 +76,7 @@ public class TemporaryDataStoreImplementation implements CodeSnippetDataStore {
 		} else {
 			this.snippets.add(snippet);
 		}
-		this.writeCodeSnippetList();
+		this.saveCodeSnippets();
 	}
 
 }
