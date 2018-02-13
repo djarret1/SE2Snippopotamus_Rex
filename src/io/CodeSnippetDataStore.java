@@ -1,14 +1,13 @@
 package io;
 
-import java.io.Closeable;
-import java.util.List;
-
+import javafx.collections.ObservableList;
 import model.CodeSnippet;
 
-public interface CodeSnippetDataStore extends Closeable {
+public interface CodeSnippetDataStore {
 
-	List<CodeSnippet> getCodeSnippetList();
-	void writeCodeSnippetList(List<CodeSnippet> snippets);
+	void loadSnippets();
+	ObservableList<CodeSnippet> getCodeSnippetList();
+	void writeCodeSnippetList();
 	void writeCodeSnippet(CodeSnippet snippet);
 	
 }
