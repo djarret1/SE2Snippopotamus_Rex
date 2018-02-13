@@ -12,12 +12,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import model.CodeSnippet;
 
-public class TemporaryDataStore implements CodeSnippetDataStore {
+public class TemporaryDataStoreImplementation implements CodeSnippetDataStore {
 
 	private File storageFile;
 	private ObservableList<CodeSnippet> snippets;
 	
-	public TemporaryDataStore(String filename) {
+	public TemporaryDataStoreImplementation(String filename) {
 		if (filename == null) {
 			throw new NullPointerException("Filename was null.");
 		}

@@ -1,6 +1,5 @@
 package model;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 import javafx.beans.Observable;
@@ -10,9 +9,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.util.Callback;
 
-public class CodeSnippet implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
+public class CodeSnippet {
 	
 	private StringProperty name;
 	private StringProperty description;

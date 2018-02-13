@@ -1,13 +1,16 @@
 package view;
 
 import controller.MainViewController;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.web.HTMLEditor;
 import model.CodeSnippet;
 
 public class MainViewCodeBehind {
@@ -18,14 +21,39 @@ public class MainViewCodeBehind {
     @FXML private Label snippetNameLabel;
     @FXML private Accordion detailsAccordian;
     @FXML private TitledPane detailsTitledPane;
+    @FXML private HTMLEditor snippetEditor;
+    @FXML private TextArea descriptionTextArea;
+    
+    @FXML private TextField snippetNameTextField;
     
     private MainViewController controller;
+    private CodeSnippet selected;
     
     @FXML
     void initialize() {
     	this.controller = new MainViewController("testing.dat");
-    	this.snippetListView.setItems(this.controller.getCodeSnippetList());
-    	this.snippetListView.getSelectionModel().selectFirst();
+    	this.initializeListView();
+    	this.detailsAccordian.setExpandedPane(this.detailsTitledPane);
+    	this.updateView(null);
     }
+
+	private void initializeListView() {
+		this.snippetListView.setItems(this.controller.getCodeSnippetList());
+    	this.snippetListView.setOnMouseClicked(this::updateView);
+		this.snippetListView.getSelectionModel().selectFirst();
+	}
+	
+	private void updateView(Event e) {
+		if (this.selected != null) {
+			this.snippetNameLabel.textProperty().unbindBidirectional(this.selected.getNameProperty());
+			this.snippetNameTextField.textProperty().unbindBidirectional(this.selected.getNameProperty());
+			this.descriptionTextArea.textProperty().unbindBidirectional(this.selected.getDescriptionProperty());
+		}
+		this.selected = this.snippetListView.selectionModelProperty().getValue().getSelectedItem();
+		this.snippetNameLabel.textProperty().bindBidirectional(this.selected.getNameProperty());
+		this.snippetNameTextField.textProperty().bindBidirectional(this.selected.getNameProperty());
+		this.descriptionTextArea.textProperty().bindBidirectional(this.selected.getDescriptionProperty());
+		this.snippetEditor.setHtmlText(this.selected.getCode().getCodeText());
+	}
 
 }

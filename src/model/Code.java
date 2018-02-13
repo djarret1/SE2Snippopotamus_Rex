@@ -1,15 +1,12 @@
 package model;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Code implements Serializable {
+public class Code {
 
-	private static final long serialVersionUID = 1L;
-	
 	private StringProperty codeText;
 	
 	public Code(String codeText) {

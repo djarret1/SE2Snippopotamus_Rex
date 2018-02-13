@@ -3,7 +3,7 @@ package controller;
 import java.util.Objects;
 
 import io.CodeSnippetDataStore;
-import io.TemporaryDataStore;
+import io.TemporaryDataStoreImplementation;
 import javafx.collections.ObservableList;
 import model.CodeSnippet;
 
@@ -15,7 +15,7 @@ public class MainViewController {
 		if (filename == null) {
 			throw new NullPointerException("Filename was null.");
 		}
-		this.dataStore = new TemporaryDataStore(filename);
+		this.dataStore = new TemporaryDataStoreImplementation(filename);
 	}
 	
 	public ObservableList<CodeSnippet> getCodeSnippetList() {
