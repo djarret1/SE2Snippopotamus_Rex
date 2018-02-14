@@ -1,5 +1,6 @@
 package model;
 
+import java.util.List;
 import java.util.Objects;
 
 import javafx.beans.Observable;
@@ -14,6 +15,7 @@ public class CodeSnippet {
 	private StringProperty name;
 	private StringProperty description;
 	private ObjectProperty<Code> code;
+	private List<ObjectProperty<Tag>> tags;
 	
 	public static Callback<CodeSnippet, Observable[]> extractor() {
         return (s) -> new Observable[] {s.getNameProperty(), s.getDescriptionProperty(), s.getCodeProperty()};

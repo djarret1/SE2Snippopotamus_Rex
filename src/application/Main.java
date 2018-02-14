@@ -8,8 +8,17 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
-
+/**
+ * Entry point of the application. 
+ * @author 	David Jarrett
+ * @version 2/13/2018
+ */
 public class Main extends Application {
+	/**
+	 * Loads the main view.
+	 * @preconditions: 	None
+	 * @postconditions: Application will be running.
+	 */
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -26,6 +35,10 @@ public class Main extends Application {
 		}
 	}
 	
+	/**
+	 * The application entry-point.
+	 * @param args Not used.
+	 */
 	public static void main(String[] args) {
 		launch(args);
 	}

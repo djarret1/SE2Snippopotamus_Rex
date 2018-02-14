@@ -14,6 +14,11 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.web.HTMLEditor;
 import model.CodeSnippet;
 
+/**
+ * Code-behind file for the main view.
+ * @author 	David Jarrett
+ * @version	2/13/2018
+ */
 public class MainViewCodeBehind {
 
     @FXML private ListView<CodeSnippet> snippetListView;
@@ -32,7 +37,7 @@ public class MainViewCodeBehind {
     private CodeSnippet selected;
     
     @FXML
-    void initialize() {
+    private void initialize() {
     	this.controller = new MainViewController("testing.dat");
     	this.initializeListView();
     	this.setupEventHandlers();
