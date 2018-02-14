@@ -43,6 +43,7 @@ public class MainViewCodeBehind {
     @FXML
     private void initialize() {
     	this.controller = new MainViewController("testing.dat");
+    	this.selected = null;
     	this.initializeListView();
     	this.initializeListeners();
     	this.updateView(null);
@@ -50,18 +51,18 @@ public class MainViewCodeBehind {
 
 	private void initializeListView() {
 		this.snippetListView.setItems(this.controller.getCodeSnippetList());
-    	this.snippetListView.setOnMouseClicked(this::updateView);
-		this.snippetListView.getSelectionModel().selectFirst();
+    	this.snippetListView.getSelectionModel().selectFirst();
 	}
 	
 	private void initializeListeners() {
-		this.descriptionTextArea.focusedProperty().addListener((arg0, oldState, hasFocus) -> {
+		this.descriptionTextArea.focusedProperty().addListener((observable, oldState, hasFocus) -> {
 			if (!hasFocus) {
 				this.controller.storeUpdatedCodeSnippet(this.selected);
 			}
-		});		
+		});
 	}
 	
+	@FXML
 	private void updateView(Event e) {
 		if (this.selected != null) {
 			this.snippetNameLabel.textProperty().unbindBidirectional(this.selected.getNameProperty());
