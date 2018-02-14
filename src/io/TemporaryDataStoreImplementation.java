@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.Objects;
 import java.util.Scanner;
 
 import javafx.collections.FXCollections;
@@ -36,11 +37,8 @@ public class TemporaryDataStoreImplementation implements CodeSnippetDataStore {
 	 *            The name of the snippet data file.
 	 */
 	public TemporaryDataStoreImplementation(String filename) {
-		if (filename == null) {
-			throw new NullPointerException("Filename was null.");
-		}
 		String currentDirectory = System.getProperty("user.dir");
-		this.storageFile = new File(currentDirectory, filename);
+		this.storageFile = new File(currentDirectory, Objects.requireNonNull(filename, "Filename was null."));
 		this.loadCodeSnippets();
 	}
 
@@ -126,10 +124,7 @@ public class TemporaryDataStoreImplementation implements CodeSnippetDataStore {
 		if (this.snippets == null) {
 			throw new IllegalStateException("The data-store has not been initialized.");
 		}
-		if (snippet == null) {
-			throw new IllegalArgumentException("The provided snippet is invalid");
-		}
-		if (this.snippets.contains(snippet)) {
+		if (this.snippets.contains(Objects.requireNonNull(snippet, "CodeSnippet was null."))) {
 			int index = this.snippets.indexOf(snippet);
 			this.snippets.set(index, snippet);
 		} else {
@@ -148,12 +143,10 @@ public class TemporaryDataStoreImplementation implements CodeSnippetDataStore {
 		if (this.snippets == null) {
 			throw new IllegalStateException("The data-store has not been initialized.");
 		}
-		if (snippet == null) {
-			throw new IllegalArgumentException("The provided snippet is invalid");
-		}
-		if (this.snippets.contains(snippet)) {
+		if (this.snippets.contains(Objects.requireNonNull(snippet, "CodeSnippet was null."))) {
 			int index = this.snippets.indexOf(snippet);
 			this.snippets.remove(index, index);
 		}
+		this.saveCodeSnippets();
 	}
 }
