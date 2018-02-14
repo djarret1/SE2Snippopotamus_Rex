@@ -30,17 +30,17 @@
                   <ComboBox fx:id="filterComboBox" layoutX="10.0" layoutY="30.0" prefHeight="31.0" prefWidth="171.0" />
                   <Label layoutX="92.0" layoutY="4.0" text="Filter" />
                   <Button fx:id="newSnippetButton" layoutX="56.0" layoutY="449.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#newSnippetButtonClick" prefHeight="30.0" prefWidth="105.0" text="New Snippet" />
-                  <Button fx:id="deleteTagsButton" layoutX="181.0" layoutY="30.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="31.0" prefWidth="27.0" text="-" />
+                  <Button fx:id="deleteTagsButton" layoutX="181.0" layoutY="30.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deleteTagsButtonClick" prefHeight="31.0" prefWidth="27.0" text="-" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="408.0" prefWidth="615.0">
                <children>
-                  <Label fx:id="snippetNameLabel" alignment="CENTER" layoutX="6.0" layoutY="4.0" prefHeight="21.0" prefWidth="638.0" text="Snippet Name" />
                   <HTMLEditor fx:id="snippetEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutY="31.0" onKeyTyped="#onSnippetEdited" onMouseClicked="#onSnippetEdited" prefHeight="406.0" prefWidth="651.0" />
                   <Button fx:id="saveSnippetButton" disable="true" layoutX="531.0" layoutY="451.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#saveSnippetButtonClick" prefHeight="30.0" prefWidth="106.0" text="Save Code" />
                   <Button fx:id="addTagButton" layoutX="348.0" layoutY="451.0" mnemonicParsing="false" onAction="#addTagButtonClick" prefHeight="31.0" prefWidth="33.0" text="+" />
                   <ComboBox fx:id="tagComboBox" layoutX="14.0" layoutY="451.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="150.0" />
-                  <TextField fx:id="tagTextField" layoutX="177.0" layoutY="451.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="171.0" promptText="Add Tag" />
+                  <TextField fx:id="tagTextField" layoutX="177.0" layoutY="451.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="171.0" promptText="tag" />
+                  <TextField fx:id="snippetNameTextField" alignment="CENTER" layoutX="115.0" prefHeight="31.0" prefWidth="421.0" promptText="Name" />
                </children>
             </AnchorPane>
         </items>
@@ -55,7 +55,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextArea fx:id="descriptionTextArea" layoutX="7.0" layoutY="53.0" prefHeight="183.0" prefWidth="868.0">
+            <TextArea fx:id="descriptionTextArea" layoutX="7.0" layoutY="53.0" prefHeight="183.0" prefWidth="869.0">
                <effect>
                   <InnerShadow blurType="ONE_PASS_BOX" />
                </effect>
