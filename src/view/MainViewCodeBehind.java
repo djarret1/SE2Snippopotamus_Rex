@@ -34,7 +34,6 @@ public class MainViewCodeBehind {
     @FXML private HTMLEditor snippetEditor;
     @FXML private TextArea descriptionTextArea;
     @FXML private Button saveSnippetButton;
-    @FXML private Button editDetailsButton;
     @FXML private TextField snippetNameTextField;
     
     private MainViewController controller;
