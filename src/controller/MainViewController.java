@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.Objects;
+
 import io.CodeSnippetDataStore;
 import io.TemporaryDataStoreImplementation;
 import javafx.collections.ObservableList;
@@ -21,10 +23,7 @@ public class MainViewController {
 	 * @param filename 	The name of the code snippet data file.
 	 */
 	public MainViewController(String filename) {
-		if (filename == null) {
-			throw new NullPointerException("Filename was null.");
-		}
-		this.dataStore = new TemporaryDataStoreImplementation(filename);
+		this.dataStore = new TemporaryDataStoreImplementation(Objects.requireNonNull(filename, "Filename was null."));
 	}
 	
 	/**
