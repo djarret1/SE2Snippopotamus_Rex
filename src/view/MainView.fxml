@@ -37,7 +37,7 @@
                <children>
                   <Label fx:id="snippetNameLabel" alignment="CENTER" layoutX="6.0" layoutY="4.0" prefHeight="21.0" prefWidth="638.0" text="Snippet Name" />
                   <HTMLEditor fx:id="snippetEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutY="31.0" onKeyTyped="#onSnippetEdited" onMouseClicked="#onSnippetEdited" prefHeight="351.0" prefWidth="667.0" />
-                  <Button fx:id="saveSnippetButton" disable="true" layoutX="281.0" layoutY="397.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#saveSnippetButtonClick" prefHeight="30.0" prefWidth="106.0" text="Save Snippet" />
+                  <Button fx:id="saveSnippetButton" disable="true" layoutX="281.0" layoutY="397.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#saveSnippetButtonClick" prefHeight="30.0" prefWidth="106.0" text="Save Code" />
                </children>
             </AnchorPane>
         </items>
@@ -52,7 +52,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextArea fx:id="descriptionTextArea" layoutX="7.0" layoutY="53.0" onKeyTyped="#onSnippetEdited" prefHeight="183.0" prefWidth="868.0">
+            <TextArea fx:id="descriptionTextArea" layoutX="7.0" layoutY="53.0" prefHeight="183.0" prefWidth="868.0">
                <effect>
                   <InnerShadow blurType="ONE_PASS_BOX" />
                </effect>

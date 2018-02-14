@@ -44,6 +44,7 @@ public class MainViewCodeBehind {
     private void initialize() {
     	this.controller = new MainViewController("testing.dat");
     	this.initializeListView();
+    	this.initializeListeners();
     	this.updateView(null);
     }
 
@@ -53,11 +54,19 @@ public class MainViewCodeBehind {
 		this.snippetListView.getSelectionModel().selectFirst();
 	}
 	
+	private void initializeListeners() {
+		this.descriptionTextArea.focusedProperty().addListener((arg0, oldState, hasFocus) -> {
+			if (!hasFocus) {
+				this.controller.storeUpdatedCodeSnippet(this.selected);
+			}
+		});		
+	}
+	
 	private void updateView(Event e) {
 		if (this.selected != null) {
-			this.updateSaveState();
 			this.snippetNameLabel.textProperty().unbindBidirectional(this.selected.getNameProperty());
 			this.descriptionTextArea.textProperty().unbindBidirectional(this.selected.getDescriptionProperty());
+			this.updateCodeSaveState();
 		}
 		this.selected = this.snippetListView.selectionModelProperty().getValue().getSelectedItem();
 		this.snippetNameLabel.textProperty().bindBidirectional(this.selected.getNameProperty());
@@ -65,14 +74,13 @@ public class MainViewCodeBehind {
 		this.snippetEditor.setHtmlText(this.selected.getCode().getCodeText());
 	}
 	
-    private void updateSaveState() {
+    private void updateCodeSaveState() {
     	if (this.saveSnippetButton.isDisabled()) {
     		return;
     	}
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setContentText("You made modifications to a snippet. Do you want to save them?");
+		alert.setContentText("You made modifications to the code. Do you want to save them?");
 		Optional<ButtonType> result = alert.showAndWait();
-		//ButtonType result = alert.getResult();
 		if (result.get() == ButtonType.OK) {
 			this.saveSnippetButtonClick(null);
 		}
