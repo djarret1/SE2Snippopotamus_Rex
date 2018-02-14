@@ -32,4 +32,9 @@ public interface CodeSnippetDataStore {
 	 */
 	void writeCodeSnippet(CodeSnippet snippet);
 	
+	/**
+	 * Removes a provided CodeSnippet from the data-store.
+	 * @param snippet
+	 */
+	void removeCodeSnippet(CodeSnippet snippet);
 }

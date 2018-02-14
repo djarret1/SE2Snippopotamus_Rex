@@ -122,5 +122,9 @@ public class TemporaryDataStoreImplementation implements CodeSnippetDataStore {
 		}
 		this.saveCodeSnippets();
 	}
-
+	
+	@Override
+	public void removeCodeSnippet(CodeSnippet snippet) {
+		
+	}
 }
