@@ -25,11 +25,11 @@ public class MainViewCodeBehind {
     @FXML private ComboBox<CodeSnippet> filterComboBox;
     @FXML private TextArea outputTextArea;
     @FXML private Label snippetNameLabel;
-    @FXML private Accordion detailsAccordian;
     @FXML private TitledPane detailsTitledPane;
     @FXML private HTMLEditor snippetEditor;
     @FXML private TextArea descriptionTextArea;
     @FXML private Button saveSnippetButton;
+    @FXML private Button editDetailsButton;
     
     @FXML private TextField snippetNameTextField;
     
@@ -41,7 +41,6 @@ public class MainViewCodeBehind {
     	this.controller = new MainViewController("testing.dat");
     	this.initializeListView();
     	this.setupEventHandlers();
-    	this.detailsAccordian.setExpandedPane(this.detailsTitledPane);
     	this.updateView(null);
     }
 
