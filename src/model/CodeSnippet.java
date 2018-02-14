@@ -166,19 +166,63 @@ public class CodeSnippet {
 		if (tag == null) {
 			throw new IllegalArgumentException("The provided tag is invalid");
 		}
-		if(!containsTag(tag)) {
+		if (!containsTag(tag)) {
 			this.tags.add(new SimpleStringProperty(tag));
 		}
 	}
-	public void removeTag(String tag) {
-		
+
+	public void addTag(StringProperty tag) {
+		if (this.tags == null) {
+			throw new IllegalStateException("The code snippet has not been initialized.");
+		}
+		if (tag == null) {
+			throw new IllegalArgumentException("The provided tag is invalid");
+		}
+		if (!tags.contains(tag)) {
+			this.tags.add(tag);
+		}
 	}
-	
+
+	public void removeTag(String tag) {
+		if (this.tags == null) {
+			throw new IllegalStateException("The code snippet has not been initialized.");
+		}
+		if (tag == null) {
+			throw new IllegalArgumentException("The provided tag is invalid");
+		}
+		if (this.containsTag(tag)) {
+			this.tags.remove(this.getIndexOf(tag));
+		}
+	}
+
+	public void removeTag(StringProperty tag) {
+		if (this.tags == null) {
+			throw new IllegalStateException("The code snippet has not been initialized.");
+		}
+		if (tag == null) {
+			throw new IllegalArgumentException("The provided tag is invalid");
+		}
+		if (this.tags.contains(tag)) {
+			this.tags.remove(tag);
+		}
+	}
+
 	private boolean containsTag(String tag) {
 		boolean toReturn = false;
 		for (int i = 0; i < tags.size(); i++) {
 			if (this.tags.get(i).toString().equals(tag)) {
 				toReturn = true;
+			}
+		}
+		return toReturn;
+	}
+
+	// Should only be called if you are sure the tag exists for the code snippet
+	private int getIndexOf(String tag) {
+		int toReturn = 0;
+		for (int i = 0; i < tags.size(); i++) {
+			if (this.tags.get(i).toString().equals(tag)) {
+				toReturn = i;
 			}
 		}
 		return toReturn;
