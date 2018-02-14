@@ -155,5 +155,6 @@ public class TemporaryDataStoreImplementation implements CodeSnippetDataStore {
 			int index = this.snippets.indexOf(snippet);
 			this.snippets.remove(index, index);
 		}
+		this.saveCodeSnippets();
 	}
 }
