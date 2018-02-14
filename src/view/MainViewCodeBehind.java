@@ -96,6 +96,11 @@ public class MainViewCodeBehind {
     void newSnippetButtonClick(ActionEvent event) {
 
     }
+    
+    @FXML
+    void deleteTagsButtonClick(ActionEvent event) {
+
+    }
 
     @FXML
     void saveSnippetButtonClick(ActionEvent event) {
