@@ -12,11 +12,23 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import model.CodeSnippet;
 
+/**
+ * This class is acting as our temporary data-store until we decide upon a more permanent solution.
+ * @author 	David Jarrett
+ * @version	02/13/2018
+ */
 public class TemporaryDataStoreImplementation implements CodeSnippetDataStore {
 
 	private File storageFile;
 	private ObservableList<CodeSnippet> snippets;
 	
+	/**
+	 * Initializes the data-store by reading the CodeSnippet's from a text file. If the file does
+	 * not exist, then the data-store is initialized automatically with an empty ObservableList<CodeSnippet>.
+	 * @preconditions: 	filename != null
+	 * @postconditions: Data-store will be initialized and will contain all snippet data.
+	 * @param filename 	The name of the snippet data file.
+	 */
 	public TemporaryDataStoreImplementation(String filename) {
 		if (filename == null) {
 			throw new NullPointerException("Filename was null.");
@@ -26,6 +38,13 @@ public class TemporaryDataStoreImplementation implements CodeSnippetDataStore {
 		this.loadCodeSnippets();
 	}
 	
+	/**
+	 * Loads all CodeSnippet's from the snippet data file. If no data file is present,
+	 * then an empty ObservableList is used to house future CodeSnippets.
+	 * @preconditions: 	None
+	 * @postconditions:	All snippet data will be loaded and available, or an empty
+	 * 					list, ready for population, will be available.
+	 */
 	@Override
 	public void loadCodeSnippets() {
 		this.snippets = FXCollections.observableArrayList(CodeSnippet.extractor());
@@ -42,19 +61,29 @@ public class TemporaryDataStoreImplementation implements CodeSnippetDataStore {
 		}
 	}
 
-	private void showErrorAlert(String message) {
-		Alert alert = new Alert(AlertType.ERROR);
-		alert.setContentText(message);
-		alert.show();
-	}
-	
+	/**
+	 * Returns an ObservableList containing the CodeSnippets.
+	 * @preconditions:	The data-store should be initialized.
+	 * @return An ObservableList<CodeSnippet>
+	 */
 	@Override
 	public ObservableList<CodeSnippet> getCodeSnippetList() {
+		if (this.snippets == null) {
+			throw new IllegalStateException("The data-store has not been initialized.");
+		}
 		return this.snippets;
 	}
 
+	/**
+	 * Saves the CodeSnippet list back to the data file.
+	 * @preconditions:  The data-store should be initialized.
+	 * @postconditions:	The ObservableList<CodeSnippet> will be written back to disk.
+	 */
 	@Override
 	public void saveCodeSnippets() {
+		if (this.snippets == null) {
+			throw new IllegalStateException("The data-store has not been initialized.");
+		}
 		try (PrintWriter outWriter = new PrintWriter(this.storageFile, "UTF-8")){
 			for (CodeSnippet snippet : this.snippets) {
 				outWriter.println(snippet.getName());
@@ -62,15 +91,30 @@ public class TemporaryDataStoreImplementation implements CodeSnippetDataStore {
 				outWriter.println(snippet.getCode().getCodeText());
 			}
 		} catch (FileNotFoundException e) {
-			this.showErrorAlert("Could not find the code snippet data file!");
+			this.showErrorAlert("Could not write out data!");
 		} catch (UnsupportedEncodingException e) {
-			this.showErrorAlert(e.getLocalizedMessage());
+			this.showErrorAlert("An invalid coding scheme was supplied. Try UTF-8.");
 		}
 	}
 
+	private void showErrorAlert(String message) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setContentText(message);
+		alert.show();
+	}
+	
+	/**
+	 * Stores the provided CodeSnippet into the list. If the snippet exists, it is replaced.
+	 * All data is then written back to disk.
+	 * @preconditions:  The data-store should be initialized.
+	 * @postconditions:	The provided CodeSnippet will be written into the data-store.
+	 */
 	@Override
 	public void writeCodeSnippet(CodeSnippet snippet) {
-		if (this.snippets != null && this.snippets.contains(snippet)) {
+		if (this.snippets == null) {
+			throw new IllegalStateException("The data-store has not been initialized.");
+		}
+		if (this.snippets.contains(snippet)) {
 			int index = this.snippets.indexOf(snippet);
 			this.snippets.set(index, snippet);
 		} else {
