@@ -30,7 +30,6 @@ public class MainViewCodeBehind {
     @FXML private TextArea descriptionTextArea;
     @FXML private Button saveSnippetButton;
     @FXML private Button editDetailsButton;
-    
     @FXML private TextField snippetNameTextField;
     
     private MainViewController controller;
@@ -64,7 +63,7 @@ public class MainViewCodeBehind {
 	private void setupEventHandlers() {
 		this.saveSnippetButton.setOnMouseClicked(e -> {
 			this.selected.getCode().setCodeText(this.snippetEditor.getHtmlText());
-			this.controller.updateCodeSnippet(this.selected);
+			this.controller.storeUpdatedCodeSnippet(this.selected);
 		});		
 	}
 

@@ -42,7 +42,7 @@ public class MainViewController {
 	 * with the supplied snippet.
 	 * @param snippet The CodeSnippet to add to the data-store.
 	 */
-	public void updateCodeSnippet(CodeSnippet snippet) {
+	public void storeUpdatedCodeSnippet(CodeSnippet snippet) {
 		this.dataStore.writeCodeSnippet(snippet);
 	}
 	
