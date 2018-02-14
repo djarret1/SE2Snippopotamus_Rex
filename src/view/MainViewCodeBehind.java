@@ -3,6 +3,7 @@ package view;
 import java.util.Optional;
 
 import controller.MainViewController;
+import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -11,7 +12,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -53,11 +53,13 @@ public class MainViewCodeBehind {
 	}
 	
 	private void initializeListeners() {
-		this.descriptionTextArea.focusedProperty().addListener((observable, oldState, hasFocus) -> {
+		ChangeListener<Boolean> updateSnippetOnLoseFocus = (observable, oldState, hasFocus) -> {
 			if (!hasFocus) {
 				this.controller.storeUpdatedCodeSnippet(this.selected);
 			}
-		});
+		};
+		this.descriptionTextArea.focusedProperty().addListener(updateSnippetOnLoseFocus);
+		this.snippetNameTextField.focusedProperty().addListener(updateSnippetOnLoseFocus);
 	}
 	
 	@FXML
