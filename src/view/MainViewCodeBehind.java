@@ -29,7 +29,6 @@ public class MainViewCodeBehind {
     @FXML private ListView<CodeSnippet> snippetListView;
     @FXML private ComboBox<CodeSnippet> filterComboBox;
     @FXML private TextArea outputTextArea;
-    @FXML private Label snippetNameLabel;
     @FXML private TitledPane detailsTitledPane;
     @FXML private HTMLEditor snippetEditor;
     @FXML private TextArea descriptionTextArea;
@@ -64,12 +63,12 @@ public class MainViewCodeBehind {
 	@FXML
 	private void updateView(Event e) {
 		if (this.selected != null) {
-			this.snippetNameLabel.textProperty().unbindBidirectional(this.selected.getNameProperty());
+			this.snippetNameTextField.textProperty().unbindBidirectional(this.selected.getNameProperty());
 			this.descriptionTextArea.textProperty().unbindBidirectional(this.selected.getDescriptionProperty());
 			this.updateCodeSaveState();
 		}
 		this.selected = this.snippetListView.selectionModelProperty().getValue().getSelectedItem();
-		this.snippetNameLabel.textProperty().bindBidirectional(this.selected.getNameProperty());
+		this.snippetNameTextField.textProperty().bindBidirectional(this.selected.getNameProperty());
 		this.descriptionTextArea.textProperty().bindBidirectional(this.selected.getDescriptionProperty());
 		this.snippetEditor.setHtmlText(this.selected.getCode().getCodeText());
 	}

@@ -1,4 +1,4 @@
-package test.model.code;
+package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,10 +12,11 @@ class TestWhenSetCodeText {
 	void testSetCodeTextToNull() {
 		Code code = new Code("Test");
 		
-		assertThrows(NullPointerException.class,
-	            ()->{
-	            code.setCodeText(null);
-	            }, "Codetext was null");
+		Throwable exception = assertThrows(NullPointerException.class, () -> {
+	           code.setCodeText(null);
+	       });
+		
+		assertEquals("Codetext was null", exception.getMessage());
 	}
 	
 	@Test
