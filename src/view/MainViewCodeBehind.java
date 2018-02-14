@@ -1,10 +1,15 @@
 package view;
 
+import java.util.Optional;
+
 import controller.MainViewController;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -39,7 +44,6 @@ public class MainViewCodeBehind {
     private void initialize() {
     	this.controller = new MainViewController("testing.dat");
     	this.initializeListView();
-    	this.setupEventHandlers();
     	this.updateView(null);
     }
 
@@ -51,6 +55,7 @@ public class MainViewCodeBehind {
 	
 	private void updateView(Event e) {
 		if (this.selected != null) {
+			this.updateSaveState();
 			this.snippetNameLabel.textProperty().unbindBidirectional(this.selected.getNameProperty());
 			this.descriptionTextArea.textProperty().unbindBidirectional(this.selected.getDescriptionProperty());
 		}
@@ -60,20 +65,22 @@ public class MainViewCodeBehind {
 		this.snippetEditor.setHtmlText(this.selected.getCode().getCodeText());
 	}
 	
-	private void setupEventHandlers() {
-		this.saveSnippetButton.setOnMouseClicked(e -> {
-			this.selected.getCode().setCodeText(this.snippetEditor.getHtmlText());
-			this.controller.storeUpdatedCodeSnippet(this.selected);
-		});		
+    private void updateSaveState() {
+    	if (this.saveSnippetButton.isDisabled()) {
+    		return;
+    	}
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setContentText("You made modifications to a snippet. Do you want to save them?");
+		Optional<ButtonType> result = alert.showAndWait();
+		//ButtonType result = alert.getResult();
+		if (result.get() == ButtonType.OK) {
+			this.saveSnippetButtonClick(null);
+		}
+		this.saveSnippetButton.setDisable(true);
 	}
-	
-    @FXML
+
+	@FXML
     void addTagButtonClick(ActionEvent event) {
-
-    }
-
-    @FXML
-    void editDetailsButtonClick(ActionEvent event) {
 
     }
 
@@ -84,7 +91,14 @@ public class MainViewCodeBehind {
 
     @FXML
     void saveSnippetButtonClick(ActionEvent event) {
-
+    	this.selected.getCode().setCodeText(this.snippetEditor.getHtmlText());
+		this.controller.storeUpdatedCodeSnippet(this.selected);
+		this.saveSnippetButton.setDisable(true);
+    }
+    
+    @FXML
+    void onSnippetEdited(Event event) {
+    	this.saveSnippetButton.setDisable(false);
     }
 
 }
