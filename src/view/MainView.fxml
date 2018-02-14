@@ -39,7 +39,7 @@
                   <Button fx:id="saveSnippetButton" disable="true" layoutX="531.0" layoutY="451.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#saveSnippetButtonClick" prefHeight="30.0" prefWidth="106.0" text="Save Code" />
                   <Button fx:id="addTagButton" layoutX="348.0" layoutY="451.0" mnemonicParsing="false" onAction="#addTagButtonClick" prefHeight="31.0" prefWidth="33.0" text="+" />
                   <ComboBox fx:id="tagComboBox" layoutX="14.0" layoutY="451.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="150.0" />
-                  <TextField fx:id="tagTextField" layoutX="177.0" layoutY="451.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="171.0" promptText="tag" />
+                  <TextField fx:id="tagTextField" layoutX="177.0" layoutY="451.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="171.0" promptText="Add Tag" />
                </children>
             </AnchorPane>
         </items>
