@@ -1,9 +1,9 @@
 package view;
 
 import controller.MainViewController;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -66,5 +66,25 @@ public class MainViewCodeBehind {
 			this.controller.storeUpdatedCodeSnippet(this.selected);
 		});		
 	}
+	
+    @FXML
+    void addTagButtonClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void editDetailsButtonClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void newSnippetButtonClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void saveSnippetButtonClick(ActionEvent event) {
+
+    }
 
 }
