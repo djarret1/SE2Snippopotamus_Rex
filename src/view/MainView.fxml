@@ -21,8 +21,8 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="442.0" prefWidth="213.0">
                <children>
-                  <Line endX="110.0" layoutX="104.0" layoutY="70.0" startX="-105.0" />
-                  <ListView fx:id="snippetListView" layoutX="9.0" layoutY="76.0" onMouseClicked="#updateView" prefHeight="362.0" prefWidth="198.0">
+                  <Line endX="110.0" layoutX="104.0" layoutY="110.0" startX="-105.0" />
+                  <ListView fx:id="snippetListView" layoutX="9.0" layoutY="121.0" onMouseClicked="#updateView" prefHeight="317.0" prefWidth="198.0">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -31,6 +31,7 @@
                   <Label layoutX="92.0" layoutY="4.0" text="Filter" />
                   <Button fx:id="newSnippetButton" layoutX="56.0" layoutY="449.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#newSnippetButtonClick" prefHeight="30.0" prefWidth="105.0" text="New Snippet" />
                   <Button fx:id="deleteTagsButton" layoutX="181.0" layoutY="30.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deleteTagsButtonClick" prefHeight="31.0" prefWidth="27.0" text="-" />
+                  <TextField fx:id="searchTextField" alignment="CENTER" layoutX="10.0" layoutY="70.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="198.0" promptText="Search" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="408.0" prefWidth="615.0">
