@@ -22,7 +22,10 @@ import model.CodeSnippet;
  */
 public class TemporaryDataStoreImplementation implements CodeSnippetDataStore {
 
-	private File storageFile;
+	private static final String NEWLINE = "\n";
+	private static final String NEWLINE_REPLACEMENT = "000000zxczxczxc1111111111111122222222222000lskdjfPOPOPOP";
+	
+	File storageFile;
 	private ObservableList<CodeSnippet> snippets;
 
 	/**
@@ -59,10 +62,16 @@ public class TemporaryDataStoreImplementation implements CodeSnippetDataStore {
 				String description = in.nextLine();
 				String code = in.nextLine();
 				CodeSnippet snippet = new CodeSnippet(name, description, code);
+				this.replaceBreakingCharactersIn(snippet, false);
 				this.snippets.add(snippet);
 			}
 		} catch (FileNotFoundException e) {
-			// use empty list;
+			CodeSnippet emptySnippet = new CodeSnippet("Welcome! Click here to change my name...",
+					"Click here to change my description. You don't have to worry about saving me."
+					+ " Anything you type in the description will be automatically saved. So will the name.",
+					"Type your code in here. Or, you can paste it in from someplace else.");
+			this.snippets.add(emptySnippet);
+			this.saveCodeSnippets();
 		}
 	}
 
@@ -89,20 +98,27 @@ public class TemporaryDataStoreImplementation implements CodeSnippetDataStore {
 	 */
 	@Override
 	public void saveCodeSnippets() {
-		if (this.snippets == null) {
-			throw new IllegalStateException("The data-store has not been initialized.");
-		}
 		try (PrintWriter outWriter = new PrintWriter(this.storageFile, "UTF-8")) {
 			for (CodeSnippet snippet : this.snippets) {
+				this.replaceBreakingCharactersIn(snippet, true);
 				outWriter.println(snippet.getName());
 				outWriter.println(snippet.getDescription());
 				outWriter.println(snippet.getCode().getCodeText());
+				this.replaceBreakingCharactersIn(snippet, false);
 			}
 		} catch (FileNotFoundException e) {
 			this.showErrorAlert("Could not write out data!");
 		} catch (UnsupportedEncodingException e) {
 			this.showErrorAlert("An invalid coding scheme was supplied. Try UTF-8.");
 		}
+	}
+
+	private void replaceBreakingCharactersIn(CodeSnippet snippet, Boolean isSavingData) {
+		String description = snippet.getDescription();
+		String current = isSavingData ? NEWLINE : NEWLINE_REPLACEMENT;
+		String replacement = isSavingData ? NEWLINE_REPLACEMENT : NEWLINE;
+		description = description.replaceAll(current, replacement);
+		snippet.setDescription(description);
 	}
 
 	private void showErrorAlert(String message) {
@@ -121,10 +137,7 @@ public class TemporaryDataStoreImplementation implements CodeSnippetDataStore {
 	 */
 	@Override
 	public void writeCodeSnippet(CodeSnippet snippet) {
-		if (this.snippets == null) {
-			throw new IllegalStateException("The data-store has not been initialized.");
-		}
-		if (this.snippets.contains(Objects.requireNonNull(snippet, "CodeSnippet was null."))) {
+		if (this.snippets.contains(Objects.requireNonNull(snippet, "Snippet was null."))) {
 			int index = this.snippets.indexOf(snippet);
 			this.snippets.set(index, snippet);
 		} else {
@@ -132,6 +145,7 @@ public class TemporaryDataStoreImplementation implements CodeSnippetDataStore {
 		}
 		this.saveCodeSnippets();
 	}
+	
 	/**
 	 * Removes the provided CodeSnippet from the list if it exists. If the snippet does not exist nothing is done.
 	 * 
@@ -140,9 +154,6 @@ public class TemporaryDataStoreImplementation implements CodeSnippetDataStore {
 	 */
 	@Override
 	public void removeCodeSnippet(CodeSnippet snippet) {
-		if (this.snippets == null) {
-			throw new IllegalStateException("The data-store has not been initialized.");
-		}
 		if (this.snippets.contains(Objects.requireNonNull(snippet, "CodeSnippet was null."))) {
 			int index = this.snippets.indexOf(snippet);
 			this.snippets.remove(index, index);
