@@ -25,7 +25,9 @@ public class MainViewController {
 	 * @param filename 	The name of the code snippet data file.
 	 */
 	public MainViewController(String filename) {
-		this.dataStore = new TemporaryDataStoreImplementation(Objects.requireNonNull(filename, "Filename was null."));
+		this.dataStore = new TextFileDataStoreImplementation(Objects.requireNonNull(filename, "Filename was null."));
+		this.observableData = FXCollections.observableArrayList(CodeSnippet.extractor());
+		this.loadObservableData();
 	}
 	
 	private void loadObservableData() {
