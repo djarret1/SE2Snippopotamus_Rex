@@ -28,10 +28,10 @@
                      </opaqueInsets>
                   </ListView>
                   <ComboBox fx:id="filterComboBox" layoutX="10.0" layoutY="10.0" prefHeight="31.0" prefWidth="171.0" promptText="Filter" />
-                  <Button fx:id="newSnippetButton" layoutX="52.0" layoutY="449.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#newSnippetButtonClick" prefHeight="30.0" prefWidth="55.0" text="+" />
+                  <Button fx:id="newSnippetButton" layoutX="52.0" layoutY="451.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#newSnippetButtonClick" prefHeight="30.0" prefWidth="55.0" text="+" />
                   <Button fx:id="deleteTagsButton" layoutX="181.0" layoutY="10.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deleteTagsButtonClick" prefHeight="31.0" prefWidth="27.0" text="-" />
                   <TextField fx:id="searchTextField" alignment="CENTER" layoutX="10.0" layoutY="50.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="198.0" promptText="Search" />
-                  <Button fx:id="deleteSnippetButton" layoutX="107.0" layoutY="449.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deleteSnippetButtonClick" prefHeight="30.0" prefWidth="55.0" text="-" />
+                  <Button fx:id="deleteSnippetButton" layoutX="107.0" layoutY="451.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deleteSnippetButtonClick" prefHeight="30.0" prefWidth="55.0" text="-" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="408.0" prefWidth="615.0">
