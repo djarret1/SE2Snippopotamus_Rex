@@ -50,6 +50,9 @@ public class Code {
 	 * @return True if queryText is found anywhere in the code, and false otherwise.
 	 */
 	public boolean containsText(String queryText) {
+		if (queryText == null) {
+			throw new NullPointerException("Query text was null.");
+		}
 		String codeText = this.codeText.get();
 		return codeText.contains(queryText);
 	}
@@ -61,6 +64,9 @@ public class Code {
 	 * @return True if an exact match is found, and false otherwise.
 	 */
 	public boolean containsTextExactMatch(String queryText) {
+		if (queryText == null) {
+			throw new NullPointerException("Query text was null.");
+		}
 		String codeText = this.codeText.get();
 		int index = -1;
 		do {
