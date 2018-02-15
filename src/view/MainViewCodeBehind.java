@@ -34,6 +34,7 @@ public class MainViewCodeBehind {
     @FXML private TextArea descriptionTextArea;
     @FXML private Button saveSnippetButton;
     @FXML private TextField snippetNameTextField;
+    @FXML private TextField searchTextField;
     
     private MainViewController controller;
     private CodeSnippet selected;
@@ -122,6 +123,12 @@ public class MainViewCodeBehind {
     @FXML
     private void onSnippetEdited(Event event) {
     	this.saveSnippetButton.setDisable(false);
+    }
+    
+    @FXML
+    private void onSearchFieldEdited(Event event) {
+    	this.controller.filterListWith(this.searchTextField.getText());
+    	this.snippetListView.setItems(this.controller.getCodeSnippetList());
     }
 
 }

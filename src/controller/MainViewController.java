@@ -17,6 +17,8 @@ public class MainViewController {
 
 	private CodeSnippetDataStore dataStore;
 	private ObservableList<CodeSnippet> observableData;
+	private ObservableList<CodeSnippet> unfilteredData;
+	private ObservableList<CodeSnippet> filteredData;
 		
 	/**
 	 * Initializes the controller by loading the code snippet data from the data-store.
@@ -26,14 +28,15 @@ public class MainViewController {
 	 */
 	public MainViewController(String filename) {
 		this.dataStore = new TextFileDataStoreImplementation(Objects.requireNonNull(filename, "Filename was null."));
-		this.observableData = FXCollections.observableArrayList(CodeSnippet.extractor());
+		this.unfilteredData = FXCollections.observableArrayList(CodeSnippet.extractor());
 		this.loadObservableData();
 	}
 	
 	private void loadObservableData() {
 		for (CodeSnippet current : this.dataStore.getCodeSnippetList()) {
-			this.observableData.add(current);
+			this.unfilteredData.add(current);
 		}
+		this.observableData = this.unfilteredData;
 	}
 
 	/**
@@ -52,11 +55,11 @@ public class MainViewController {
 	 * @param snippet The CodeSnippet to add to the data-store.
 	 */
 	public void storeCodeSnippet(CodeSnippet snippet) {
-		if (this.observableData.contains(Objects.requireNonNull(snippet, "Snippet was null."))) {
-			int index = this.observableData.indexOf(snippet);
-			this.observableData.set(index, snippet);
+		if (this.unfilteredData.contains(Objects.requireNonNull(snippet, "Snippet was null."))) {
+			int index = this.unfilteredData.indexOf(snippet);
+			this.unfilteredData.set(index, snippet);
 		} else {
-			this.observableData.add(snippet);
+			this.unfilteredData.add(snippet);
 		}
 		this.dataStore.writeCodeSnippet(snippet);
 	}
@@ -68,10 +71,31 @@ public class MainViewController {
 	 * @postconditions: The provided CodeSnippet will be removed from the Data-store
 	 */
 	public void removeCodeSnippet(CodeSnippet snippet) {
-		if (this.observableData.contains(Objects.requireNonNull(snippet, "CodeSnippet was null."))) {
-			int index = this.observableData.indexOf(snippet);
-			this.observableData.remove(index);
+		if (this.unfilteredData.contains(Objects.requireNonNull(snippet, "CodeSnippet was null."))) {
+			int index = this.unfilteredData.indexOf(snippet);
+			this.unfilteredData.remove(index);
 			this.dataStore.removeCodeSnippet(snippet);
+		}
+	}
+
+	/**
+	 * Sets the current observable list to either the standard unfiltered list, or
+	 * to a filtered version of the standard list that is filtered on the provided text.
+	 * @preconditions: 	text != null
+	 * @postconditions: The current observable list will either be filtered or unfiltered.
+	 * @param text The text to filter with.
+	 */
+	public void filterListWith(String text) {
+		if (text == null) {
+			throw new NullPointerException("Filter text was null.");
+		}
+		if (text.equals("")) {
+			this.observableData = this.unfilteredData;
+		} else {
+			this.filteredData = this.unfilteredData.filtered((snippet) -> {
+				return snippet.getCode().containsText(text);
+			});
+			this.observableData = this.filteredData;
 		}
 	}
 	

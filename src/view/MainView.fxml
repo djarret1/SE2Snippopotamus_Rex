@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.HTMLEditor?>
 
-<AnchorPane minHeight="750.0" minWidth="875.0" prefHeight="692.0" prefWidth="879.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainViewCodeBehind">
+<AnchorPane minHeight="750.0" minWidth="875.0" prefHeight="692.0" prefWidth="879.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainViewCodeBehind">
    <children>
       <SplitPane dividerPositions="0.24971098265895952" layoutX="2.0" layoutY="2.0" prefHeight="503.0" prefWidth="875.0">
         <items>
@@ -30,7 +30,7 @@
                   <ComboBox fx:id="filterComboBox" layoutX="10.0" layoutY="10.0" prefHeight="31.0" prefWidth="171.0" promptText="Filter" />
                   <Button fx:id="newSnippetButton" layoutX="52.0" layoutY="451.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#newSnippetButtonClick" prefHeight="30.0" prefWidth="55.0" text="+" />
                   <Button fx:id="deleteTagsButton" layoutX="181.0" layoutY="10.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deleteTagsButtonClick" prefHeight="31.0" prefWidth="27.0" text="-" />
-                  <TextField fx:id="searchTextField" alignment="CENTER" layoutX="10.0" layoutY="50.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="198.0" promptText="Search" />
+                  <TextField fx:id="searchTextField" alignment="CENTER" layoutX="10.0" layoutY="50.0" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#onSearchFieldEdited" prefHeight="31.0" prefWidth="198.0" promptText="Search" />
                   <Button fx:id="deleteSnippetButton" layoutX="107.0" layoutY="451.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deleteSnippetButtonClick" prefHeight="30.0" prefWidth="55.0" text="-" />
                </children>
             </AnchorPane>
