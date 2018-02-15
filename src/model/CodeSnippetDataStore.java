@@ -2,8 +2,6 @@ package model;
 
 import java.util.List;
 
-import javafx.collections.ObservableList;
-
 /**
  * Provides a consistent interface for reading and writing CodeSnippets from a data-source.
  * @author 	David Jarrett

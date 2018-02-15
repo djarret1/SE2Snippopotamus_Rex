@@ -9,11 +9,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-
 /**
  * This class is acting as our temporary data-store until we decide upon a more
  * permanent solution.
