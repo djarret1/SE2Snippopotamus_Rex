@@ -89,12 +89,12 @@ public class MainViewCodeBehind {
 	}
 
 	@FXML
-    void addTagButtonClick(ActionEvent event) {
+    private void addTagButtonClick(ActionEvent event) {
 		
     }
 
     @FXML
-    void newSnippetButtonClick(ActionEvent event) {
+    private void newSnippetButtonClick(ActionEvent event) {
     	CodeSnippet newSnippet = new CodeSnippet("Enter name here...", "", "");
     	this.controller.storeUpdatedCodeSnippet(newSnippet);
     	this.snippetListView.getSelectionModel().select(newSnippet);
@@ -102,19 +102,19 @@ public class MainViewCodeBehind {
     }
     
     @FXML
-    void deleteTagsButtonClick(ActionEvent event) {
+    private void deleteTagsButtonClick(ActionEvent event) {
 
     }
 
     @FXML
-    void saveSnippetButtonClick(ActionEvent event) {
+    private void saveSnippetButtonClick(ActionEvent event) {
     	this.selected.getCode().setCodeText(this.snippetEditor.getHtmlText());
 		this.controller.storeUpdatedCodeSnippet(this.selected);
 		this.saveSnippetButton.setDisable(true);
     }
     
     @FXML
-    void onSnippetEdited(Event event) {
+    private void onSnippetEdited(Event event) {
     	this.saveSnippetButton.setDisable(false);
     }
 
