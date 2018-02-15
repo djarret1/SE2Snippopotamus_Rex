@@ -30,6 +30,20 @@ class TestCodeWhenContainsTextExactMatch {
 	}
 	
 	@Test
+	void testContainsTextThatIsSubstringOfCodeText() {
+		boolean result = this.code.containsTextExactMatch("are cool");
+		
+		assertTrue(result);
+	}
+	
+	@Test
+	void testContainsTextThatIsSubstringOfCodeTextButNotCompleteWord() {
+		boolean result = this.code.containsTextExactMatch("are coo");
+		
+		assertFalse(result);
+	}
+	
+	@Test
 	void testContainsTextExactMatchWhenMatchExistsButCaseDoesNotMatch() {
 		boolean result = this.code.containsTextExactMatch("snippopotami are cool");
 		
@@ -39,9 +53,9 @@ class TestCodeWhenContainsTextExactMatch {
 	@Test
 	void testContainsTextExactMatchWhenTextBeingLookedForIsNull() {
 		Throwable exception = assertThrows(NullPointerException.class, () -> {
-	           code.containsText(null);
+	           code.containsTextExactMatch(null);
 	       });
 		
-		assertEquals(null, exception.getMessage());
+		assertEquals("Query text was null.", exception.getMessage());
 	}
 }

@@ -48,7 +48,7 @@ class TestCodeWhenContainsText {
 	           code.containsText(null);
 	       });
 		
-		assertEquals(null, exception.getMessage());
+		assertEquals("Query text was null.", exception.getMessage());
 	}
 	
 	
