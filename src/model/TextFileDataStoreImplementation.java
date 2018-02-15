@@ -1,9 +1,11 @@
-package io;
+package model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -11,7 +13,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import model.CodeSnippet;
 
 /**
  * This class is acting as our temporary data-store until we decide upon a more
@@ -20,13 +21,13 @@ import model.CodeSnippet;
  * @author David Jarrett
  * @version 02/13/2018
  */
-public class TemporaryDataStoreImplementation implements CodeSnippetDataStore {
+public class TextFileDataStoreImplementation implements CodeSnippetDataStore {
 
 	private static final String NEWLINE = "\n";
 	private static final String NEWLINE_REPLACEMENT = "000000zxczxczxc1111111111111122222222222000lskdjfPOPOPOP";
 	
-	File storageFile;
-	private ObservableList<CodeSnippet> snippets;
+	private File storageFile;
+	private List<CodeSnippet> snippets;
 
 	/**
 	 * Initializes the data-store by reading the CodeSnippet's from a text file. If
@@ -39,7 +40,7 @@ public class TemporaryDataStoreImplementation implements CodeSnippetDataStore {
 	 * @param filename
 	 *            The name of the snippet data file.
 	 */
-	public TemporaryDataStoreImplementation(String filename) {
+	public TextFileDataStoreImplementation(String filename) {
 		String currentDirectory = System.getProperty("user.dir");
 		this.storageFile = new File(currentDirectory, Objects.requireNonNull(filename, "Filename was null."));
 		this.loadCodeSnippets();
@@ -55,7 +56,7 @@ public class TemporaryDataStoreImplementation implements CodeSnippetDataStore {
 	 */
 	@Override
 	public void loadCodeSnippets() {
-		this.snippets = FXCollections.observableArrayList(CodeSnippet.extractor());
+		this.snippets = new ArrayList<>();
 		try (Scanner in = new Scanner(this.storageFile)) {
 			while (in.hasNextLine()) {
 				String name = in.nextLine();
@@ -69,6 +70,14 @@ public class TemporaryDataStoreImplementation implements CodeSnippetDataStore {
 			this.createDefaultCodeSnippet();
 		}
 	}
+	
+	private void replaceBreakingCharactersIn(CodeSnippet snippet, Boolean isSavingData) {
+		String description = snippet.getDescription();
+		String current = isSavingData ? NEWLINE : NEWLINE_REPLACEMENT;
+		String replacement = isSavingData ? NEWLINE_REPLACEMENT : NEWLINE;
+		description = description.replaceAll(current, replacement);
+		snippet.setDescription(description);
+	}
 
 	/**
 	 * Returns an ObservableList containing the CodeSnippets.
@@ -77,19 +86,15 @@ public class TemporaryDataStoreImplementation implements CodeSnippetDataStore {
 	 * @return An ObservableList<CodeSnippet>
 	 */
 	@Override
-	public ObservableList<CodeSnippet> getCodeSnippetList() {
-		if (this.snippets == null) {
-			throw new IllegalStateException("The data-store has not been initialized.");
-		}
+	public List<CodeSnippet> getCodeSnippetList() {
 		return this.snippets;
 	}
 
 	/**
 	 * Saves the CodeSnippet list back to the data file.
-	 * 
+	 *
 	 * @preconditions: The data-store should be initialized.
-	 * @postconditions: The ObservableList<CodeSnippet> will be written back to
-	 *                  disk.
+	 * @postconditions: The ObservableList<CodeSnippet> will be written back to disk.
 	 */
 	@Override
 	public void saveCodeSnippets() {
@@ -102,24 +107,10 @@ public class TemporaryDataStoreImplementation implements CodeSnippetDataStore {
 				this.replaceBreakingCharactersIn(snippet, false);
 			}
 		} catch (FileNotFoundException e) {
-			this.showErrorAlert("Could not write out data!");
+			throw new IllegalStateException("The data file was somehow deleted!");
 		} catch (UnsupportedEncodingException e) {
-			this.showErrorAlert("An invalid coding scheme was supplied. Try UTF-8.");
+			throw new IllegalArgumentException("An invalid coding scheme was used for the data file.");
 		}
-	}
-
-	private void replaceBreakingCharactersIn(CodeSnippet snippet, Boolean isSavingData) {
-		String description = snippet.getDescription();
-		String current = isSavingData ? NEWLINE : NEWLINE_REPLACEMENT;
-		String replacement = isSavingData ? NEWLINE_REPLACEMENT : NEWLINE;
-		description = description.replaceAll(current, replacement);
-		snippet.setDescription(description);
-	}
-
-	private void showErrorAlert(String message) {
-		Alert alert = new Alert(AlertType.ERROR);
-		alert.setContentText(message);
-		alert.show();
 	}
 
 	/**
@@ -151,7 +142,7 @@ public class TemporaryDataStoreImplementation implements CodeSnippetDataStore {
 	public void removeCodeSnippet(CodeSnippet snippet) {
 		if (this.snippets.contains(Objects.requireNonNull(snippet, "CodeSnippet was null."))) {
 			int index = this.snippets.indexOf(snippet);
-			this.snippets.remove(index, index);
+			this.snippets.remove(index);
 		}
 		this.saveCodeSnippets();
 	}
