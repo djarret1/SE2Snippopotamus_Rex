@@ -146,7 +146,7 @@ public class TextFileDataStoreImplementation implements CodeSnippetDataStore {
 		CodeSnippet emptySnippet = new CodeSnippet("Welcome! Click here to change my name...",
 				
 				"This is the description area. You can type a description of your code snippet here, along "
-				+ "with any other relevant information.000000zxczxczxc1111111111111122222222222000lskdjfPOPOPOP "
+				+ "with any other relevant information.000000zxczxczxc1111111111111122222222222000lskdjfPOPOPOP"
 				+ "Also, know that any changes that you make to a code snippet's name or description will be "
 				+ " saved automatically.",
 				

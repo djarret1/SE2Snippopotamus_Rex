@@ -81,7 +81,9 @@ public class MainViewCodeBehind {
     		return;
     	}
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setContentText("You made modifications to the code. Do you want to save them?");
+		alert.setContentText("Press OK to save changes, Cancel to discard.");
+		alert.setTitle("Save Changes?");
+		alert.setHeaderText("Save Changes?");
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
 			this.saveSnippetButtonClick(null);
