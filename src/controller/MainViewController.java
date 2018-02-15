@@ -82,32 +82,4 @@ public class MainViewController {
 		this.dataStore.removeCodeSnippet(snippet);
 	}
 	
-	/**
-	 * Removes the provided CodeSnippet from the list if it exists. If the snippet does not exist nothing is done.
-	 * 
-	 * @preconditions: The data-store should be initialized. The provided code snippet can not be null.
-	 * @postconditions: The provided CodeSnippet will be removed from the Data-store
-	 */
-	public void removeCodeSnippet(CodeSnippet snippet) {
-		if (this.observableData.contains(Objects.requireNonNull(snippet, "CodeSnippet was null."))) {
-			int index = this.observableData.indexOf(snippet);
-			this.observableData.remove(index, index);
-		}
-		this.dataStore.removeCodeSnippet(snippet);
-	}
-	
-	/**
-	 * Removes the provided CodeSnippet from the list if it exists. If the snippet does not exist nothing is done.
-	 * 
-	 * @preconditions: The data-store should be initialized. The provided code snippet can not be null.
-	 * @postconditions: The provided CodeSnippet will be removed from the Data-store
-	 */
-	public void removeCodeSnippet(CodeSnippet snippet) {
-		if (this.observableData.contains(Objects.requireNonNull(snippet, "CodeSnippet was null."))) {
-			int index = this.observableData.indexOf(snippet);
-			this.observableData.remove(index, index);
-		}
-		this.dataStore.removeCodeSnippet(snippet);
-	}
-	
 }
