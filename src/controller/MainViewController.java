@@ -51,7 +51,7 @@ public class MainViewController {
 	 * with the supplied snippet.
 	 * @param snippet The CodeSnippet to add to the data-store.
 	 */
-	public void storeUpdatedCodeSnippet(CodeSnippet snippet) {
+	public void storeCodeSnippet(CodeSnippet snippet) {
 		if (this.observableData.contains(Objects.requireNonNull(snippet, "Snippet was null."))) {
 			int index = this.observableData.indexOf(snippet);
 			this.observableData.set(index, snippet);
@@ -70,9 +70,9 @@ public class MainViewController {
 	public void removeCodeSnippet(CodeSnippet snippet) {
 		if (this.observableData.contains(Objects.requireNonNull(snippet, "CodeSnippet was null."))) {
 			int index = this.observableData.indexOf(snippet);
-			this.observableData.remove(index, index);
+			this.observableData.remove(index);
+			this.dataStore.removeCodeSnippet(snippet);
 		}
-		this.dataStore.removeCodeSnippet(snippet);
 	}
 	
 }

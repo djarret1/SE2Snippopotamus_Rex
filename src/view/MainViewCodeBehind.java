@@ -55,7 +55,7 @@ public class MainViewCodeBehind {
 	private void initializeListeners() {
 		ChangeListener<Boolean> updateSnippetOnLoseFocus = (observable, oldState, hasFocus) -> {
 			if (!hasFocus) {
-				this.controller.storeUpdatedCodeSnippet(this.selected);
+				this.controller.storeCodeSnippet(this.selected);
 			}
 		};
 		this.descriptionTextArea.focusedProperty().addListener(updateSnippetOnLoseFocus);
@@ -96,7 +96,7 @@ public class MainViewCodeBehind {
     @FXML
     void newSnippetButtonClick(ActionEvent event) {
     	CodeSnippet newSnippet = new CodeSnippet("Enter name here...", "", "");
-    	this.controller.storeUpdatedCodeSnippet(newSnippet);
+    	this.controller.storeCodeSnippet(newSnippet);
     	this.snippetListView.getSelectionModel().select(newSnippet);
     	this.updateView(null);
     }
@@ -109,7 +109,7 @@ public class MainViewCodeBehind {
     @FXML
     void saveSnippetButtonClick(ActionEvent event) {
     	this.selected.getCode().setCodeText(this.snippetEditor.getHtmlText());
-		this.controller.storeUpdatedCodeSnippet(this.selected);
+		this.controller.storeCodeSnippet(this.selected);
 		this.saveSnippetButton.setDisable(true);
     }
     
