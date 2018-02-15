@@ -62,6 +62,15 @@ public class MainViewController {
 	}
 	
 	/**
+	 * Removes the provided CodeSnippet from the data-store if it exists. If the snippet does not exist nothing is done.
+	 * 
+	 * @param snippet The CodeSnippet to remove from the data-store.
+	 */
+	public void deleteCodeSnippet(CodeSnippet snippet) {
+		this.dataStore.removeCodeSnippet(snippet);
+	}
+	
+	/**
 	 * Removes the provided CodeSnippet from the list if it exists. If the snippet does not exist nothing is done.
 	 * 
 	 * @preconditions: The data-store should be initialized. The provided code snippet can not be null.
