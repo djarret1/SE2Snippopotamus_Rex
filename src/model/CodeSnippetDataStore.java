@@ -1,7 +1,8 @@
-package io;
+package model;
+
+import java.util.List;
 
 import javafx.collections.ObservableList;
-import model.CodeSnippet;
 
 /**
  * Provides a consistent interface for reading and writing CodeSnippets from a data-source.
@@ -19,7 +20,7 @@ public interface CodeSnippetDataStore {
 	 * Provides the CodeSnippet data in the data-store as an ObservableList<CodeSnippet>
 	 * @return The list of CodeSnippets.
 	 */
-	ObservableList<CodeSnippet> getCodeSnippetList();
+	List<CodeSnippet> getCodeSnippetList();
 	
 	/**
 	 * Should write all code snippets to disk.
