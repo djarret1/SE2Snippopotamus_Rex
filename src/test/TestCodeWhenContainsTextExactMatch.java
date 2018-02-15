@@ -51,6 +51,13 @@ class TestCodeWhenContainsTextExactMatch {
 	}
 	
 	@Test
+	void testContainsExactMatchAtBeginningOfText() {
+		boolean result = this.code.containsTextExactMatch("Snippopotami");
+		
+		assertTrue(result);
+	}
+	
+	@Test
 	void testContainsTextExactMatchWhenTextBeingLookedForIsNull() {
 		Throwable exception = assertThrows(NullPointerException.class, () -> {
 	           code.containsTextExactMatch(null);
