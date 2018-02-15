@@ -45,4 +45,13 @@ public class MainViewController {
 		this.dataStore.writeCodeSnippet(snippet);
 	}
 	
+	/**
+	 * Removes the provided CodeSnippet from the data-store if it exists. If the snippet does not exist nothing is done.
+	 * 
+	 * @param snippet The CodeSnippet to remove from the data-store.
+	 */
+	public void deleteCodeSnippet(CodeSnippet snippet) {
+		this.dataStore.removeCodeSnippet(snippet);
+	}
+	
 }

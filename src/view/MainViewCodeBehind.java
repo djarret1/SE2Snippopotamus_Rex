@@ -102,6 +102,12 @@ public class MainViewCodeBehind {
     }
     
     @FXML
+    private void deleteSnippetButtonClick(ActionEvent event) {
+    	this.controller.deleteCodeSnippet(this.selected);
+    	this.updateView(null);
+    }
+    
+    @FXML
     private void deleteTagsButtonClick(ActionEvent event) {
 
     }
