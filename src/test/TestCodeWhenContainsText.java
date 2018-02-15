@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import model.Code;
 
-class TestCodeWhenContainsCode {
+class TestCodeWhenContainsText {
 	private Code code;
 	@BeforeEach
 	void setUp() throws Exception {
