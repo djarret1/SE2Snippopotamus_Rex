@@ -66,12 +66,7 @@ public class TemporaryDataStoreImplementation implements CodeSnippetDataStore {
 				this.snippets.add(snippet);
 			}
 		} catch (FileNotFoundException e) {
-			CodeSnippet emptySnippet = new CodeSnippet("Welcome! Click here to change my name...",
-					"Click here to change my description. You don't have to worry about saving me."
-					+ " Anything you type in the description will be automatically saved. So will the name.",
-					"Type your code in here. Or, you can paste it in from someplace else.");
-			this.snippets.add(emptySnippet);
-			this.saveCodeSnippets();
+			this.createDefaultCodeSnippet();
 		}
 	}
 
@@ -158,6 +153,30 @@ public class TemporaryDataStoreImplementation implements CodeSnippetDataStore {
 			int index = this.snippets.indexOf(snippet);
 			this.snippets.remove(index, index);
 		}
+		this.saveCodeSnippets();
+	}
+	
+	private void createDefaultCodeSnippet() {
+		CodeSnippet emptySnippet = new CodeSnippet("Welcome! Click here to change my name...",
+				
+				"This is the description area. You can type a description of your code snippet here, along "
+				+ "with any other relevant information.000000zxczxczxc1111111111111122222222222000lskdjfPOPOPOP "
+				+ "Also, know that any changes that you make to a code snippet's name or description will be "
+				+ " saved automatically.",
+				
+				"<html dir=\"ltr\"><head></head><body contenteditable=\"true\"><h1><font size=\"6\">"
+				+ "Welcome to <font color=\"#990000\">S</font><font color=\"#664db3\">n</font>i<font "
+				+ "color=\"#336666\">p</font><font color=\"#cc6633\">p</font>o<font color=\"#b3e6e6\">p"
+				+ "</font><font color=\"#990000\">o</font><font color=\"#336633\">t</font><font color=\"#666666"
+				+ "\">a</font><font color=\"#4d8080\">m</font><font color=\"#996600\">u</font>s <span "
+				+ "style=\"background-color: rgb(0, 0, 0);\"><font color=\"#ffffff\">Rex</font></span>!</font>"
+				+ "</h1><h3><font size=\"4\">Code Snippets</font></h3><p>This is where you type your code snippets."
+				+ "When you're done, make sure to hit the save button. Don't worry if you forget, though, "
+				+ "because I'll remind you! The name of your snippet is at the top of this window. You"
+				+ " can click it and edit it.</p><h3><font size=\"4\">Tags</font></h3><p>The area right "
+				+ "below this message allows you to add tags to your code snippets. You can filter the "
+				+ "snippets on the left by tag.</p><p><font size=\"6\"><br></font></p><br></body></html>");
+		this.snippets.add(emptySnippet);
 		this.saveCodeSnippets();
 	}
 }

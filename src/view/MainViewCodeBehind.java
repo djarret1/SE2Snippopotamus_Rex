@@ -90,12 +90,15 @@ public class MainViewCodeBehind {
 
 	@FXML
     void addTagButtonClick(ActionEvent event) {
-
+		
     }
 
     @FXML
     void newSnippetButtonClick(ActionEvent event) {
-
+    	CodeSnippet newSnippet = new CodeSnippet("Enter name here...", "", "");
+    	this.controller.storeUpdatedCodeSnippet(newSnippet);
+    	this.snippetListView.getSelectionModel().select(newSnippet);
+    	this.updateView(null);
     }
     
     @FXML
