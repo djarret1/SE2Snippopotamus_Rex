@@ -44,7 +44,7 @@ public class MainViewController {
 	 * @preconditions: 	None
 	 * @return An observable list of code snippets.
 	 */
-	public ObservableList<CodeSnippet> getCodeSnippetList() {
+	public ObservableList<CodeSnippet> getObservableList() {
 		return this.observableData;
 	}
 	

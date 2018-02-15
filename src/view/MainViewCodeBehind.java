@@ -49,7 +49,7 @@ public class MainViewCodeBehind {
     }
 
 	private void initializeListView() {
-		this.snippetListView.setItems(this.controller.getCodeSnippetList());
+		this.snippetListView.setItems(this.controller.getObservableList());
     	this.snippetListView.getSelectionModel().selectFirst();
 	}
 	
@@ -102,6 +102,8 @@ public class MainViewCodeBehind {
     	this.controller.storeCodeSnippet(newSnippet);
     	this.snippetListView.getSelectionModel().select(newSnippet);
     	this.updateView(null);
+    	this.snippetNameTextField.requestFocus();
+    	this.snippetNameTextField.selectAll();
     }
     
     @FXML
@@ -130,7 +132,7 @@ public class MainViewCodeBehind {
     @FXML
     private void onSearchFieldEdited(Event event) {
     	this.controller.filterListWith(this.searchTextField.getText());
-    	this.snippetListView.setItems(this.controller.getCodeSnippetList());
+    	this.snippetListView.setItems(this.controller.getObservableList());
     }
 
 }
