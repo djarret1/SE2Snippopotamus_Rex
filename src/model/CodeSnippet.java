@@ -158,51 +158,68 @@ public class CodeSnippet {
 	public String toString() {
 		return this.getName();
 	}
-
+	/**
+	 * Adds a tag to this CodeSnippet.
+	 * 
+	 * @preconditions: tag isn't null, and the code Snippet has been initialized 
+	 * @param tag
+	 * 			the tag to be applied
+	 * @postconditions the passed tag is added to this object as a tag
+	 */
 	public void addTag(String tag) {
 		if (this.tags == null) {
 			throw new IllegalStateException("The code snippet has not been initialized.");
 		}
-		if (tag == null) {
-			throw new IllegalArgumentException("The provided tag is invalid");
-		}
 		if (!containsTag(tag)) {
-			this.tags.add(new SimpleStringProperty(tag));
+			this.tags.add(new SimpleStringProperty(Objects.requireNonNull(tag)));
 		}
 	}
-
+	/**
+	 * Adds a tag to this CodeSnippet.
+	 * 
+	 * @preconditions: tag isn't null, and the code Snippet has been initialized 
+	 * @param tag
+	 * 			the tag to be applied
+	 * @postconditions the passed tag is added to this object as a tag
+	 */
 	public void addTag(StringProperty tag) {
 		if (this.tags == null) {
 			throw new IllegalStateException("The code snippet has not been initialized.");
 		}
-		if (tag == null) {
-			throw new IllegalArgumentException("The provided tag is invalid");
-		}
-		if (!tags.contains(tag)) {
+		if (!tags.contains(Objects.requireNonNull(tag))) {
 			this.tags.add(tag);
 		}
 	}
-
+	
+	/**
+	 * removes a tag from this CodeSnippet.
+	 * 
+	 * @preconditions: tag isn't null, and the code Snippet has been initialized 
+	 * @param tag
+	 * 			the tag to be removed
+	 * @postconditions the passed tag is removed this object
+	 */
 	public void removeTag(String tag) {
 		if (this.tags == null) {
 			throw new IllegalStateException("The code snippet has not been initialized.");
 		}
-		if (tag == null) {
-			throw new IllegalArgumentException("The provided tag is invalid");
-		}
-		if (this.containsTag(tag)) {
+		if (this.containsTag(Objects.requireNonNull(tag))) {
 			this.tags.remove(this.getIndexOf(tag));
 		}
 	}
-
+	/**
+	 * removes a tag from this CodeSnippet.
+	 * 
+	 * @preconditions: tag isn't null, and the code Snippet has been initialized 
+	 * @param tag
+	 * 			the tag to be removed
+	 * @postconditions the passed tag is removed this object
+	 */
 	public void removeTag(StringProperty tag) {
 		if (this.tags == null) {
 			throw new IllegalStateException("The code snippet has not been initialized.");
 		}
-		if (tag == null) {
-			throw new IllegalArgumentException("The provided tag is invalid");
-		}
-		if (this.tags.contains(tag)) {
+		if (this.tags.contains(Objects.requireNonNull(tag))) {
 			this.tags.remove(tag);
 		}
 	}
