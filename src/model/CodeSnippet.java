@@ -244,4 +244,13 @@ public class CodeSnippet {
 		}
 		return toReturn;
 	}
+	/**
+	 * Gets the tags of the CodeSnippet.
+	 * 
+	 * @preconditions: None
+	 * @return The tags of the CodeSnippet.
+	 */
+	public List<StringProperty> getTags() {
+		return this.tags;
+	}
 }
