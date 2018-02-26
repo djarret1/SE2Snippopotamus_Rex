@@ -78,6 +78,7 @@ public class MainViewCodeBehind {
 		this.snippetEditor.setHtmlText(this.selected.getCode().getCodeText());
 		this.tagComboBox.getItems().clear();
 		this.tagComboBox.getItems().addAll(this.selected.getTags());
+		this.tagComboBox.getSelectionModel().selectFirst();
 	}
 	
     private void updateCodeSaveState() {
@@ -127,7 +128,17 @@ public class MainViewCodeBehind {
     
     @FXML
     private void deleteTagsButtonClick(ActionEvent event) {
-    	//this.controller.getTagIndex().untagSnippet(tag, selected);
+    	
+    	Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setContentText("Press OK to save changes, Cancel to discard.");
+		alert.setTitle("Remove tag?");
+		alert.setHeaderText("Are you sure you would like to remove this tag?");
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK) {
+			this.controller.getTagIndex().untagSnippet(this.tagComboBox.getValue().getValue(), this.selected);
+		}
+    	
+    	
     }
 
     @FXML
