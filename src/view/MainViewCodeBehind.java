@@ -123,6 +123,7 @@ public class MainViewCodeBehind {
 		this.updateTagComboBox();
 		this.initializeFilterComboBox();
 		this.controller.storeCodeSnippet(this.selected);
+		this.tagTextField.setText("");
 	}
 
 	@FXML
@@ -157,14 +158,21 @@ public class MainViewCodeBehind {
 		}
 
 	}
+	
 	@FXML
 	private void purgeTagButtonClick() {
-		
-	}
-	
-	/*String tag = this.filterComboBox.selectionModelProperty().getValue().getSelectedItem();
-	this.filterComboBox.itemsProperty().get().remove(tag);
-	this.controller.getTagIndex().purgeTag(tag);*/
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setContentText("Press OK to remove all instences of this tag, Cancel to discard.");
+        alert.setTitle("Purge tag?");
+        alert.setHeaderText("Are you sure you would like to remove all instences of this tag?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            this.controller.purgeTag(this.filterComboBox.getValue());
+            this.controller.writeAllCodeSnippetsToDataStore();
+            String tag = this.filterComboBox.selectionModelProperty().getValue().getSelectedItem();
+        	this.filterComboBox.itemsProperty().get().remove(tag);
+        }
+    }
 	
 	@FXML
 	private void saveSnippetButtonClick(ActionEvent event) {

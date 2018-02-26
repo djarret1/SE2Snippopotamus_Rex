@@ -84,6 +84,12 @@ public class MainViewController {
 			this.dataStore.removeCodeSnippet(snippet);
 		}
 	}
+	
+	public void writeAllCodeSnippetsToDataStore() {
+		for (CodeSnippet snippet : this.unfilteredData) {
+			this.storeCodeSnippet(snippet);
+		}
+	}
 
 	/**
 	 * Sets the current observable list to either the standard unfiltered list, or
@@ -143,5 +149,11 @@ public class MainViewController {
 		});
 		this.observableData = this.filteredData;
 	}
-	
+
+	public void purgeTag(String tagString) {
+		this.unfilteredData.forEach(snippet -> {
+			List<StringProperty> tags = snippet.getTags();
+			tags.removeIf(aTag -> aTag.get().equals(tagString));
+		});
+	}
 }
