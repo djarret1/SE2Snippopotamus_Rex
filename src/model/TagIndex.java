@@ -91,6 +91,9 @@ public class TagIndex {
 				snippet.removeTag(tag);
 				this.tags.get(tag).remove(snippet);
 			}
+			if(this.tags.get(tag).isEmpty()) {
+				this.removeTag(tag);
+			}
 		}
 
 	}
