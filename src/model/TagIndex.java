@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,6 +16,7 @@ import javafx.beans.property.StringProperty;
  */
 public class TagIndex {
 	private HashMap<String, ArrayList<CodeSnippet>> tags;
+	private HashSet<String> allTags;
 
 	/**
 	 * Initializes a new tagindex.
@@ -24,6 +26,7 @@ public class TagIndex {
 	 */
 	public TagIndex() {
 		this.tags = new HashMap<String, ArrayList<CodeSnippet>>();
+		this.allTags = new HashSet<>();
 	}
 
 	/**
@@ -63,6 +66,8 @@ public class TagIndex {
 
 			this.tags.get(tag).add(snippet);
 			snippet.addTag(tag);
+			
+			this.allTags.add(tag);
 
 		}
 
@@ -105,6 +110,8 @@ public class TagIndex {
 				currSnippet.removeTag(toPurge);
 			}
 			this.tags.remove(toPurge);
+			
+			this.allTags.remove(toPurge);
 		}
 	}
 
@@ -120,7 +127,8 @@ public class TagIndex {
 
 		if (this.tags.containsKey(toRemove)) {
 			this.tags.remove(toRemove);
-
+			
+			this.allTags.remove(toRemove);
 		}
 	}
 	
@@ -138,8 +146,13 @@ public class TagIndex {
 		for (CodeSnippet snippet : codeStore) {
 			for (StringProperty tag : snippet.getTags()) {
 				this.tagSnippet(tag.toString(), snippet);
-				}
+				
+				this.allTags.add(tag.toString());
 			}
 		}
 	}
-
+	
+	public HashSet<String> getAllTags() {
+		return this.allTags;
+	}
+}

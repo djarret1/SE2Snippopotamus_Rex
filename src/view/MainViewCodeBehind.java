@@ -28,7 +28,7 @@ import model.CodeSnippet;
 public class MainViewCodeBehind {
 
     @FXML private ListView<CodeSnippet> snippetListView;
-    @FXML private ComboBox<CodeSnippet> filterComboBox;
+    @FXML private ComboBox<String> filterComboBox;
     @FXML private TextArea outputTextArea;
     @FXML private TitledPane detailsTitledPane;
     @FXML private HTMLEditor snippetEditor;
@@ -46,6 +46,7 @@ public class MainViewCodeBehind {
     	this.controller = new MainViewController("testing.dat");
     	this.selected = null;
     	this.initializeListView();
+    	this.initializeFilterComboBox();
     	this.initializeListeners();
     	this.updateView(null);
     }
@@ -53,6 +54,10 @@ public class MainViewCodeBehind {
 	private void initializeListView() {
 		this.snippetListView.setItems(this.controller.getObservableList());
     	this.snippetListView.getSelectionModel().selectFirst();
+	}
+	
+	private void initializeFilterComboBox() {
+		this.filterComboBox.setItems(this.controller.getAllExistingTags());		
 	}
 	
 	private void initializeListeners() {

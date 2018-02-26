@@ -48,11 +48,15 @@ public class CodeSnippet {
 	 *            The actual code stored in the CodeSnippet.
 	 */
 	public CodeSnippet(String name, String description, String codeText) {
+		this(name, description, codeText, new ArrayList<StringProperty>());
+	}
+	
+	public CodeSnippet(String name, String description, String codeText, List<StringProperty> tags) {
 		this.name = new SimpleStringProperty(Objects.requireNonNull(name, "Name was null."));
 		this.description = new SimpleStringProperty(Objects.requireNonNull(description, "Description was null."));
 		Code theCode = new Code(Objects.requireNonNull(codeText, "Code text was null."));
 		this.code = new SimpleObjectProperty<>(theCode);
-		this.tags = new ArrayList<StringProperty>();
+		this.tags = tags;
 	}
 
 	/**

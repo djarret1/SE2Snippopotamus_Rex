@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.HashSet;
 import java.util.Objects;
 
 import javafx.collections.FXCollections;
@@ -105,6 +106,13 @@ public class MainViewController {
 
 	public TagIndex getTagIndex() {
 		return tagIndex;
+	}
+
+	public ObservableList<String> getAllExistingTags() {
+		HashSet<String> tags = this.tagIndex.getAllTags();
+		ObservableList<String> allTags = FXCollections.observableArrayList();
+		tags.forEach(tag -> allTags.add(tag));
+		return allTags;
 	}
 	
 }

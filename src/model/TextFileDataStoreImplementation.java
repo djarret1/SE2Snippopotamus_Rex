@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 /**
  * This class is acting as our temporary data-store until we decide upon a more
  * permanent solution.
@@ -20,6 +23,7 @@ public class TextFileDataStoreImplementation implements CodeSnippetDataStore {
 
 	private static final String NEWLINE = "\n";
 	private static final String NEWLINE_REPLACEMENT = "000000zxczxczxc1111111111111122222222222000lskdjfPOPOPOP";
+	private static final String TAG_MARKER = ">TAG<";
 	
 	private File storageFile;
 	private List<CodeSnippet> snippets;
@@ -56,7 +60,12 @@ public class TextFileDataStoreImplementation implements CodeSnippetDataStore {
 				String name = in.nextLine();
 				String description = in.nextLine();
 				String code = in.nextLine();
-				CodeSnippet snippet = new CodeSnippet(name, description, code);
+				List<StringProperty> tags = new ArrayList<>();
+				while (in.hasNext(TAG_MARKER)) {
+					in.nextLine();
+					tags.add(new SimpleStringProperty(in.nextLine()));
+				}
+				CodeSnippet snippet = new CodeSnippet(name, description, code, tags);
 				this.replaceBreakingCharactersIn(snippet, false);
 				this.snippets.add(snippet);
 			}
@@ -64,7 +73,7 @@ public class TextFileDataStoreImplementation implements CodeSnippetDataStore {
 			this.createDefaultCodeSnippet();
 		}
 	}
-	
+
 	private void replaceBreakingCharactersIn(CodeSnippet snippet, Boolean isSavingData) {
 		String description = snippet.getDescription();
 		String current = isSavingData ? NEWLINE : NEWLINE_REPLACEMENT;
@@ -98,6 +107,11 @@ public class TextFileDataStoreImplementation implements CodeSnippetDataStore {
 				outWriter.println(snippet.getName());
 				outWriter.println(snippet.getDescription());
 				outWriter.println(snippet.getCode().getCodeText());
+				List<StringProperty> tags = snippet.getTags();
+				for (StringProperty nextTag : tags) {
+					outWriter.println(TAG_MARKER);
+					outWriter.println(nextTag.get());
+				}
 				this.replaceBreakingCharactersIn(snippet, false);
 			}
 		} catch (FileNotFoundException e) {
