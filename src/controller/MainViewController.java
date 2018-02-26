@@ -61,7 +61,8 @@ public class MainViewController {
 	 * @param snippet The CodeSnippet to add to the data-store.
 	 */
 	public void storeCodeSnippet(CodeSnippet snippet) {
-		if (this.unfilteredData.contains(Objects.requireNonNull(snippet, "Snippet was null."))) {
+		Objects.requireNonNull(snippet, "CodeSnippet was null");
+		if (this.unfilteredData.contains(snippet)) {
 			int index = this.unfilteredData.indexOf(snippet);
 			this.unfilteredData.set(index, snippet);
 		} else {
@@ -78,13 +79,20 @@ public class MainViewController {
 	 * @param snippet The CodeSnippet to remove.
 	 */
 	public void removeCodeSnippet(CodeSnippet snippet) {
-		if (this.unfilteredData.contains(Objects.requireNonNull(snippet, "CodeSnippet was null."))) {
+		Objects.requireNonNull(snippet, "CodeSnippet was null.");
+		if (this.unfilteredData.contains(snippet)) {
 			int index = this.unfilteredData.indexOf(snippet);
 			this.unfilteredData.remove(index);
 			this.dataStore.removeCodeSnippet(snippet);
 		}
 	}
 	
+	/**
+	 * Writes the entire DataStore to disk, syncing all CodeSnippets.
+	 * 
+	 * @preconditions: 	None
+	 * @postconditions: The DataStore will be written to disk.
+	 */
 	public void writeAllCodeSnippetsToDataStore() {
 		for (CodeSnippet snippet : this.unfilteredData) {
 			this.storeCodeSnippet(snippet);
@@ -99,9 +107,7 @@ public class MainViewController {
 	 * @param text The text to filter with.
 	 */
 	public void filterListWith(String text) {
-		if (text == null) {
-			throw new NullPointerException("Filter text was null.");
-		}
+		Objects.requireNonNull(text, "Filter text was null.");
 		if (text.equals("")) {
 			this.observableData = this.unfilteredData;
 		} else {
