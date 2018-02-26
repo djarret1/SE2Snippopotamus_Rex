@@ -69,6 +69,7 @@ public class MainViewController {
 	 * 
 	 * @preconditions: The data-store should be initialized. The provided code snippet can not be null.
 	 * @postconditions: The provided CodeSnippet will be removed from the Data-store
+	 * @param snippet The CodeSnippet to remove.
 	 */
 	public void removeCodeSnippet(CodeSnippet snippet) {
 		if (this.unfilteredData.contains(Objects.requireNonNull(snippet, "CodeSnippet was null."))) {

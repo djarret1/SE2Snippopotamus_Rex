@@ -64,17 +64,14 @@ public class Code {
 	 * @return True if an exact match is found, and false otherwise.
 	 */
 	public boolean containsTextExactMatch(String queryText) {
-		if (queryText == null) {
-			throw new NullPointerException("Query text was null.");
-		}
+		Objects.requireNonNull(queryText, "Query text was null.");
 		String codeText = this.codeText.get();
 		int index = -1;
-		do {
-			index = codeText.indexOf(queryText, index + 1);
-			if(index != -1 && this.isNotEmbeddedText(codeText, queryText, index)) {
+		while ((index = codeText.indexOf(queryText, index + 1)) != -1) {
+			if(this.isNotEmbeddedText(codeText, queryText, index)) {
 				return true;
 			}
-		} while (index != -1);
+		}
 		return false;
 	}
 
