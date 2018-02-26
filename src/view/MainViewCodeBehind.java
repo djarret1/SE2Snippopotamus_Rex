@@ -121,6 +121,7 @@ public class MainViewCodeBehind {
 		String toAdd = tagTextField.getText();
 		this.controller.getTagIndex().tagSnippet(toAdd, selected);
 		this.updateTagComboBox();
+		this.initializeFilterComboBox();
 		this.controller.storeCodeSnippet(this.selected);
 	}
 
@@ -160,6 +161,11 @@ public class MainViewCodeBehind {
 	private void purgeTagButtonClick() {
 		
 	}
+	
+	/*String tag = this.filterComboBox.selectionModelProperty().getValue().getSelectedItem();
+	this.filterComboBox.itemsProperty().get().remove(tag);
+	this.controller.getTagIndex().purgeTag(tag);*/
+	
 	@FXML
 	private void saveSnippetButtonClick(ActionEvent event) {
 		this.selected.getCode().setCodeText(this.snippetEditor.getHtmlText());

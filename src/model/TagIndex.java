@@ -11,7 +11,7 @@ import javafx.beans.property.StringProperty;
 /**
  * Indexing system for tags.
  * 
- * @author Andrew Weems
+ * @author Andrew Weems and David Jarrett
  * @version 2/12/2018
  */
 public class TagIndex {
