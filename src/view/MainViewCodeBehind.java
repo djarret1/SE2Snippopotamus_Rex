@@ -158,8 +158,17 @@ public class MainViewCodeBehind {
 	}
 	@FXML
 	private void purgeTagButtonClick() {
-		
-	}
+	        Alert alert = new Alert(AlertType.CONFIRMATION);
+	        alert.setContentText("Press OK to remove all instences of this tag, Cancel to discard.");
+	        alert.setTitle("Purge tag?");
+	        alert.setHeaderText("Are you sure you would like to remove all instences of this tag?");
+	        Optional<ButtonType> result = alert.showAndWait();
+	        if (result.get() == ButtonType.OK) {
+	            this.controller.getTagIndex().purgeTag(filterComboBox.getValue());
+	    
+	        }
+	    }
+	
 	@FXML
 	private void saveSnippetButtonClick(ActionEvent event) {
 		this.selected.getCode().setCodeText(this.snippetEditor.getHtmlText());
