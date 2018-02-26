@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.CodeSnippet;
 import model.CodeSnippetDataStore;
+import model.TagIndex;
 import model.TextFileDataStoreImplementation;
 
 /**
@@ -19,7 +20,7 @@ public class MainViewController {
 	private ObservableList<CodeSnippet> observableData;
 	private ObservableList<CodeSnippet> unfilteredData;
 	private ObservableList<CodeSnippet> filteredData;
-		
+	private TagIndex tagIndex;
 	/**
 	 * Initializes the controller by loading the code snippet data from the data-store.
 	 * @preconditions: 	filename != null
@@ -28,6 +29,8 @@ public class MainViewController {
 	 */
 	public MainViewController(String filename) {
 		this.dataStore = new TextFileDataStoreImplementation(Objects.requireNonNull(filename, "Filename was null."));
+		this.tagIndex = new TagIndex();
+		this.tagIndex.populateIndex(this.dataStore);
 		this.unfilteredData = FXCollections.observableArrayList(CodeSnippet.extractor());
 		this.loadObservableData();
 	}
@@ -98,6 +101,10 @@ public class MainViewController {
 			});
 			this.observableData = this.filteredData;
 		}
+	}
+
+	public TagIndex getTagIndex() {
+		return tagIndex;
 	}
 	
 }

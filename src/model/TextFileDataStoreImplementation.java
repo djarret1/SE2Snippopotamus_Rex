@@ -44,7 +44,6 @@ public class TextFileDataStoreImplementation implements CodeSnippetDataStore {
 	/**
 	 * Loads all CodeSnippet's from the snippet data file. If no data file is
 	 * present, then an empty ObservableList is used to house future CodeSnippets.
-	 * 
 	 * @preconditions: None
 	 * @postconditions: All snippet data will be loaded and available, or an empty
 	 *                  list, ready for population, will be available.

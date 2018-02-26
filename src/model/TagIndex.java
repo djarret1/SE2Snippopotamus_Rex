@@ -132,7 +132,7 @@ public class TagIndex {
 	 * @param data
 	 *            Datastore to populate with
 	 */
-	public void populateIndex(TextFileDataStoreImplementation data) {
+	public void populateIndex(CodeSnippetDataStore data) {
 		Objects.requireNonNull(data, "DataStore can't be null");
 		List<CodeSnippet> codeStore = data.getCodeSnippetList();
 		for (CodeSnippet snippet : codeStore) {

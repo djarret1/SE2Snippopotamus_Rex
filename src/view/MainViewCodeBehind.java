@@ -3,6 +3,7 @@ package view;
 import java.util.Optional;
 
 import controller.MainViewController;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -35,7 +36,8 @@ public class MainViewCodeBehind {
     @FXML private Button saveSnippetButton;
     @FXML private TextField snippetNameTextField;
     @FXML private TextField searchTextField;
-    
+    @FXML private TextField tagTextField;
+    @FXML private ComboBox<StringProperty> tagComboBox;
     private MainViewController controller;
     private CodeSnippet selected;
     
@@ -74,6 +76,8 @@ public class MainViewCodeBehind {
 		this.snippetNameTextField.textProperty().bindBidirectional(this.selected.getNameProperty());
 		this.descriptionTextArea.textProperty().bindBidirectional(this.selected.getDescriptionProperty());
 		this.snippetEditor.setHtmlText(this.selected.getCode().getCodeText());
+		this.tagComboBox.getItems().clear();
+		this.tagComboBox.getItems().addAll(this.selected.getTags());
 	}
 	
     private void updateCodeSaveState() {
@@ -93,7 +97,16 @@ public class MainViewCodeBehind {
 
 	@FXML
     private void addTagButtonClick(ActionEvent event) {
-		
+		if(tagTextField.getText().isEmpty()) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Tagging Alert");
+			alert.setHeaderText(null);
+			alert.setContentText("A tag can't be empty");
+
+			alert.showAndWait();
+		}
+		String toAdd= tagTextField.getText();
+		this.controller.getTagIndex().tagSnippet(toAdd, selected);
     }
 
     @FXML
@@ -114,7 +127,7 @@ public class MainViewCodeBehind {
     
     @FXML
     private void deleteTagsButtonClick(ActionEvent event) {
-
+    	//this.controller.getTagIndex().untagSnippet(tag, selected);
     }
 
     @FXML
