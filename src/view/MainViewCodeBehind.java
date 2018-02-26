@@ -115,16 +115,17 @@ public class MainViewCodeBehind {
 
 	@FXML
 	private void addTagButtonClick(ActionEvent event) {
-		if (tagTextField.getText().isEmpty()) {
+		try {
+			String toAdd = tagTextField.getText();
+			this.controller.addTagToSnippet(this.selected, toAdd);
+			this.updateTagComboBox();
+			this.updateFilterComboBox();
+			this.tagTextField.setText("");
+		} catch (IllegalArgumentException e) {
 			String content = "A tag cannot be empty.";
 			String title = "Empty Tag";
 			this.showAlertDialog(AlertType.WARNING, content, title, null);
 		}
-		String toAdd = tagTextField.getText();
-		this.controller.addTagToSnippet(this.selected, toAdd);
-		this.updateTagComboBox();
-		this.updateFilterComboBox();
-		this.tagTextField.setText("");
 	}
 
 	@FXML

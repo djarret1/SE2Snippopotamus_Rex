@@ -24,6 +24,7 @@ public class MainViewController {
 	private ObservableList<CodeSnippet> unfilteredData;
 	private ObservableList<CodeSnippet> filteredData;
 	private TagIndex tagIndex;
+	
 	/**
 	 * Initializes the controller by loading the code snippet data from the data-store.
 	 * @preconditions: 	filename != null
@@ -182,6 +183,9 @@ public class MainViewController {
 	public void addTagToSnippet(CodeSnippet snippet, String newTag) {
 		Objects.requireNonNull(newTag,  "The tag cannot be null.");
 		Objects.requireNonNull(snippet, "The CodeSnippet cannot be null.");
+		if (newTag.length() == 0) {
+			throw new IllegalArgumentException("Cannot add tag of length zero.");
+		}
 		snippet.addTag(newTag);
 		this.storeCodeSnippet(snippet);
 		this.tagIndex.getAllTags().add(newTag);
