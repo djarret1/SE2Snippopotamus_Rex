@@ -223,7 +223,6 @@ public class CodeSnippet {
 		return toReturn;
 	}
 
-	
 	/**
 	 * Gets the tags of the CodeSnippet.
 	 * 

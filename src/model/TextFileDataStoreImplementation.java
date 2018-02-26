@@ -13,8 +13,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
- * This class is acting as our temporary data-store until we decide upon a more
- * permanent solution.
+ * This implementation of the CodeSnippetDataStore interface uses a text file to store CodeSnippets.
  * 
  * @author David Jarrett
  * @version 02/13/2018

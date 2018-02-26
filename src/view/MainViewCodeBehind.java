@@ -31,6 +31,8 @@ import model.CodeSnippet;
  */
 public class MainViewCodeBehind {
 
+	private static final String DATA_STORE_FILE = "data.dat";
+	
     @FXML private ListView<CodeSnippet> snippetListView;
     @FXML private ComboBox<String> filterComboBox;
     @FXML private TextArea outputTextArea;
@@ -49,10 +51,10 @@ public class MainViewCodeBehind {
     
     @FXML
     private void initialize() {
-    	this.controller = new MainViewController("testing.dat");
+    	this.controller = new MainViewController(DATA_STORE_FILE);
     	this.selected = null;
     	this.initializeListView();
-    	this.initializeFilterComboBox();
+    	this.updateFilterComboBox();
     	this.initializeListeners();
     	this.updateView(null);
     }
@@ -62,7 +64,7 @@ public class MainViewCodeBehind {
 		this.snippetListView.getSelectionModel().selectFirst();
 	}
 
-	private void initializeFilterComboBox() {
+	private void updateFilterComboBox() {
 		this.filterComboBox.setItems(this.controller.getAllExistingTags());		
 	}
 	
@@ -94,11 +96,9 @@ public class MainViewCodeBehind {
 		if (this.saveSnippetButton.isDisabled()) {
 			return;
 		}
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setContentText("Press OK to save changes, Cancel to discard.");
-		alert.setTitle("Save Changes?");
-		alert.setHeaderText("Save Changes?");
-		Optional<ButtonType> result = alert.showAndWait();
+		String content = "Press OK to save changes, Cancel to discard.";
+		String title = "Save Changes?";
+		Optional<ButtonType> result = this.showAlertDialog(AlertType.CONFIRMATION, content, title, title);
 		if (result.get() == ButtonType.OK) {
 			this.saveSnippetButtonClick(null);
 		}
@@ -116,17 +116,14 @@ public class MainViewCodeBehind {
 	@FXML
 	private void addTagButtonClick(ActionEvent event) {
 		if (tagTextField.getText().isEmpty()) {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Tagging Alert");
-			alert.setHeaderText(null);
-			alert.setContentText("A tag can't be empty");
-
-			alert.showAndWait();
+			String content = "A tag cannot be empty.";
+			String title = "Empty Tag";
+			this.showAlertDialog(AlertType.WARNING, content, title, null);
 		}
 		String toAdd = tagTextField.getText();
 		this.controller.addTagToSnippet(this.selected, toAdd);
 		this.updateTagComboBox();
-		this.initializeFilterComboBox();
+		this.updateFilterComboBox();
 		this.tagTextField.setText("");
 	}
 
@@ -148,35 +145,39 @@ public class MainViewCodeBehind {
 
 	@FXML
 	private void deleteTagButtonClick(ActionEvent event) {
-
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setContentText("Press OK to save changes, Cancel to discard.");
-		alert.setTitle("Remove tag?");
-		alert.setHeaderText("Are you sure you would like to remove this tag?");
-		Optional<ButtonType> result = alert.showAndWait();
+		String content = "Press OK to save changes, Cancel to discard.";
+		String title = "Remove tag?";
+		String header = "Are you sure you would like to remove this tag?";
+		Optional<ButtonType> result = this.showAlertDialog(AlertType.CONFIRMATION, content, title, header);
 		if (result.get() == ButtonType.OK) {
 			String tagToRemove = this.tagComboBox.selectionModelProperty().get().getSelectedItem();
 			this.controller.removeTagFromSnippet(this.selected, tagToRemove);
 			this.updateTagComboBox();
-			this.initializeFilterComboBox();
+			this.updateFilterComboBox();
 		}
 
 	}
 	
 	@FXML
 	private void purgeTagButtonClick() {
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setContentText("Press OK to remove all instences of this tag, Cancel to discard.");
-        alert.setTitle("Purge tag?");
-        alert.setHeaderText("Are you sure you would like to remove all instences of this tag?");
-        Optional<ButtonType> result = alert.showAndWait();
+        String content = "Press OK to remove all instences of this tag, Cancel to discard.";
+        String title = "Purge tag?";
+        String header = "Are you sure you would like to remove all instences of this tag?";
+        Optional<ButtonType> result = this.showAlertDialog(AlertType.CONFIRMATION, content, title, header);
         if (result.get() == ButtonType.OK) {
             this.controller.purgeTag(this.filterComboBox.getValue());
-            this.controller.writeAllCodeSnippetsToDataStore();
             String tag = this.filterComboBox.selectionModelProperty().getValue().getSelectedItem();
         	this.filterComboBox.itemsProperty().get().remove(tag);
         }
     }
+	
+	private Optional<ButtonType> showAlertDialog(AlertType type, String content, String title, String header) {
+		Alert alert = new Alert(type);
+		alert.setContentText(content);
+		alert.setTitle(title);
+		alert.setHeaderText(header);
+		return alert.showAndWait();
+	}
 	
 	@FXML
 	private void saveSnippetButtonClick(ActionEvent event) {

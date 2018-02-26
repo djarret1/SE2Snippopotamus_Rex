@@ -61,7 +61,8 @@ public class MainViewController {
 	 * @param snippet The CodeSnippet to add to the data-store.
 	 */
 	public void storeCodeSnippet(CodeSnippet snippet) {
-		if (this.unfilteredData.contains(Objects.requireNonNull(snippet, "Snippet was null."))) {
+		Objects.requireNonNull(snippet, "CodeSnippet was null");
+		if (this.unfilteredData.contains(snippet)) {
 			int index = this.unfilteredData.indexOf(snippet);
 			this.unfilteredData.set(index, snippet);
 		} else {
@@ -78,13 +79,20 @@ public class MainViewController {
 	 * @param snippet The CodeSnippet to remove.
 	 */
 	public void removeCodeSnippet(CodeSnippet snippet) {
-		if (this.unfilteredData.contains(Objects.requireNonNull(snippet, "CodeSnippet was null."))) {
+		Objects.requireNonNull(snippet, "CodeSnippet was null.");
+		if (this.unfilteredData.contains(snippet)) {
 			int index = this.unfilteredData.indexOf(snippet);
 			this.unfilteredData.remove(index);
 			this.dataStore.removeCodeSnippet(snippet);
 		}
 	}
 	
+	/**
+	 * Writes the entire DataStore to disk, syncing all CodeSnippets.
+	 * 
+	 * @preconditions: 	None
+	 * @postconditions: The DataStore will be written to disk.
+	 */
 	public void writeAllCodeSnippetsToDataStore() {
 		for (CodeSnippet snippet : this.unfilteredData) {
 			this.storeCodeSnippet(snippet);
@@ -99,9 +107,7 @@ public class MainViewController {
 	 * @param text The text to filter with.
 	 */
 	public void filterListWith(String text) {
-		if (text == null) {
-			throw new NullPointerException("Filter text was null.");
-		}
+		Objects.requireNonNull(text, "Filter text was null.");
 		if (text.equals("")) {
 			this.observableData = this.unfilteredData;
 		} else {
@@ -150,23 +156,50 @@ public class MainViewController {
 		this.observableData = this.filteredData;
 	}
 
+	/**
+	 * Removes the specified tag from every CodeSnippet, and the system as a whole.
+	 * @preconditions: tagString != null
+	 * @postconditions: The specified tag will be removed from the system.
+	 * @param tagString The tag to purge.
+	 */
 	public void purgeTag(String tagString) {
+		Objects.requireNonNull(tagString, "The tagString was null.");
 		this.unfilteredData.forEach(snippet -> {
 			List<StringProperty> tags = snippet.getTags();
 			tags.removeIf(aTag -> aTag.get().equals(tagString));
 		});
 		this.tagIndex.getAllTags().remove(tagString);
+		this.writeAllCodeSnippetsToDataStore();
 	}
 
-	public void addTagToSnippet(CodeSnippet selected, String newTag) {
-		selected.addTag(newTag);
-		this.storeCodeSnippet(selected);
+	/**
+	 * Adds a tag to a CodeSnippet.
+	 * @preconditions: newTag != null && snippet != null
+	 * @postconditions: The specified tag will be added to the specified CodeSnippet.
+	 * @param snippet The CodeSnippet the tag is being added to.
+	 * @param newTag The tag being added.
+	 */
+	public void addTagToSnippet(CodeSnippet snippet, String newTag) {
+		Objects.requireNonNull(newTag,  "The tag cannot be null.");
+		Objects.requireNonNull(snippet, "The CodeSnippet cannot be null.");
+		snippet.addTag(newTag);
+		this.storeCodeSnippet(snippet);
 		this.tagIndex.getAllTags().add(newTag);
 	}
 
-	public void removeTagFromSnippet(CodeSnippet selected, String tagToRemove) {
-		selected.removeTag(tagToRemove);
-		this.storeCodeSnippet(selected);
+	/**
+	 * Removes a tag from a CodeSnippet.
+	 * @preconditions: tagToRemove != null && codeSnippet != null
+	 * @postconditions: The specified tag will be removed from the specified CodeSnippet.
+	 * @param snippet The CodeSnippet the tag is being removed from.
+	 * @param newTag The tag being removed.
+	 */
+	public void removeTagFromSnippet(CodeSnippet codeSnippet, String tagToRemove) {
+		Objects.requireNonNull(tagToRemove, "The tag cannot be null.");
+		Objects.requireNonNull(codeSnippet, "The CodeSnippet cannot be null.");
+		
+		codeSnippet.removeTag(tagToRemove);
+		this.storeCodeSnippet(codeSnippet);
 		boolean[] isTagPurgable = {true};
 		this.unfilteredData.forEach(snippet -> {
 			List<StringProperty> tags = snippet.getTags();
