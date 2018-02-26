@@ -31,7 +31,7 @@ class TestCodeSnippetWhenRemoveTag {
 		
 		this.cs.removeTag(test);
 		
-		assertFalse(test.equals(this.cs.getTags().get(0)));
+		assertFalse(test.equals(this.cs.getTags().get(0).getValue()));
 	}
 
 }

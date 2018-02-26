@@ -171,9 +171,6 @@ public class CodeSnippet {
 	 * @postconditions the passed tag is added to this object as a tag
 	 */
 	public void addTag(String tag) {
-		if (this.tags == null) {
-			throw new IllegalStateException("The code snippet has not been initialized.");
-		}
 		if (!this.containsTag(tag)) {
 			this.tags.add(new SimpleStringProperty(Objects.requireNonNull(tag, "The tag was null")));
 		}
@@ -187,12 +184,7 @@ public class CodeSnippet {
 	 * @postconditions the passed tag is added to this object as a tag
 	 */
 	public void addTag(StringProperty tag) {
-		if (this.tags == null) {
-			throw new IllegalStateException("The code snippet has not been initialized.");
-		}
-		if (!tags.contains(Objects.requireNonNull(tag, "The tag was null"))) {
-			this.tags.add(tag);
-		}
+		this.tags.add(Objects.requireNonNull(tag, "The tag was null"));
 	}
 	
 	/**
@@ -216,9 +208,6 @@ public class CodeSnippet {
 	 * @postconditions the passed tag is removed this object
 	 */
 	public void removeTag(StringProperty tag) {
-		if (this.tags == null) {
-			throw new IllegalStateException("The code snippet has not been initialized.");
-		}
 		if (this.tags.contains(Objects.requireNonNull(tag))) {
 			this.tags.remove(tag);
 		}
@@ -234,16 +223,7 @@ public class CodeSnippet {
 		return toReturn;
 	}
 
-	// Should only be called if you are sure the tag exists for the code snippet
-	private int getIndexOf(String tag) {
-		int toReturn = 0;
-		for (int i = 0; i < tags.size(); i++) {
-			if (this.tags.get(i).toString().equals(tag)) {
-				toReturn = i;
-			}
-		}
-		return toReturn;
-	}
+	
 	/**
 	 * Gets the tags of the CodeSnippet.
 	 * 
