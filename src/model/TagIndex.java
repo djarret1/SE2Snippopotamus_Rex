@@ -148,9 +148,9 @@ public class TagIndex {
 		List<CodeSnippet> codeStore = data.getCodeSnippetList();
 		for (CodeSnippet snippet : codeStore) {
 			for (StringProperty tag : snippet.getTags()) {
-				this.tagSnippet(tag.toString(), snippet);
+				this.tagSnippet(tag.getValue(), snippet);
 				
-				this.allTags.add(tag.toString());
+				this.allTags.add(tag.getValue());
 			}
 		}
 	}

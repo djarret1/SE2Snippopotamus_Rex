@@ -119,6 +119,7 @@ public class MainViewCodeBehind {
 		String toAdd = tagTextField.getText();
 		this.controller.getTagIndex().tagSnippet(toAdd, selected);
 		this.updateTagComboBox();
+		this.controller.storeCodeSnippet(this.selected);
 	}
 
 	@FXML
@@ -148,6 +149,7 @@ public class MainViewCodeBehind {
 		if (result.get() == ButtonType.OK) {
 			this.controller.getTagIndex().untagSnippet(this.tagComboBox.getValue().getValue(), this.selected);
 			this.updateTagComboBox();
+			this.initializeFilterComboBox();
 		}
 
 	}
