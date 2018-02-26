@@ -155,5 +155,25 @@ public class MainViewController {
 			List<StringProperty> tags = snippet.getTags();
 			tags.removeIf(aTag -> aTag.get().equals(tagString));
 		});
+		this.tagIndex.getAllTags().remove(tagString);
+	}
+
+	public void addTagToSnippet(CodeSnippet selected, String newTag) {
+		selected.addTag(newTag);
+		this.storeCodeSnippet(selected);
+		this.tagIndex.getAllTags().add(newTag);
+	}
+
+	public void removeTagFromSnippet(CodeSnippet selected, String tagToRemove) {
+		selected.removeTag(tagToRemove);
+		this.storeCodeSnippet(selected);
+		boolean[] isTagPurgable = {true};
+		this.unfilteredData.forEach(snippet -> {
+			List<StringProperty> tags = snippet.getTags();
+			tags.forEach(tagProperty -> { if (tagProperty.get().equals(tagToRemove)) isTagPurgable[0] = false; });
+		});
+		if (isTagPurgable[0]) {
+			this.tagIndex.getAllTags().remove(tagToRemove);
+		}
 	}
 }

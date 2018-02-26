@@ -204,13 +204,9 @@ public class CodeSnippet {
 	 * @postconditions the passed tag is removed this object
 	 */
 	public void removeTag(String tag) {
-		if (this.tags == null) {
-			throw new IllegalStateException("The code snippet has not been initialized.");
-		}
-		if (this.containsTag(Objects.requireNonNull(tag))) {
-			this.tags.remove(this.getIndexOf(tag));
-		}
+		this.tags.removeIf(aTag -> aTag.get().equals(tag));
 	}
+	
 	/**
 	 * removes a tag from this CodeSnippet.
 	 * 

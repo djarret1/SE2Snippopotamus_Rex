@@ -1,7 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -11,148 +9,36 @@ import javafx.beans.property.StringProperty;
 /**
  * Indexing system for tags.
  * 
- * @author Andrew Weems and David Jarrett
+ * @author Andrew Weems & David Jarrett
  * @version 2/12/2018
  */
 public class TagIndex {
-	private HashMap<String, ArrayList<CodeSnippet>> tags;
 	private HashSet<String> allTags;
 
 	/**
-	 * Initializes a new tagindex.
+	 * Initializes a new TagIndex.
 	 * 
 	 * @preconditions: none
 	 * @postconditions: Object will be initialized and ready for use.
 	 */
 	public TagIndex() {
-		this.tags = new HashMap<String, ArrayList<CodeSnippet>>();
 		this.allTags = new HashSet<>();
 	}
 
 	/**
-	 * Adds a tag to the index
-	 * 
-	 * @preconditions: toAdd != null and the index has been initialized
-	 * @postcondition: the tag is added to the index
-	 * @param toAdd
-	 *            Tag to add.
-	 */
-	public void addTag(String toAdd) {
-
-
-		if (!this.tags.containsKey(toAdd)) {
-			this.tags.put(toAdd, new ArrayList<CodeSnippet>());
-		}
-	}
-
-	/**
-	 * Adds tags to a snippet in the index
-	 * 
-	 * @preconditions: tag != null snippet!= null and the index has been initialized
-	 * @postcondition: the tag is added to the index if it doesnt exist, and the
-	 *                 snippet is associated with it
-	 * @param tag
-	 *            Tag to add.
-	 * @param snippet
-	 *            The snippet to tag
-	 */
-	public void tagSnippet(String tag, CodeSnippet snippet) {
-
-		if (!this.tags.containsKey(tag)) {
-			this.addTag(tag);
-			this.tagSnippet(tag, snippet);
-
-		} else if (!this.tags.get(tag).contains(snippet)) {
-
-			this.tags.get(tag).add(snippet);
-			snippet.addTag(tag);
-			
-			this.allTags.add(tag);
-
-		}
-
-	}
-
-	/**
-	 * Removes tags from a snippet in the index
-	 * 
-	 * @preconditions: tag != null snippet!= null and the index has been initialized
-	 * @postcondition: the tag is added to the index
-	 * @param tag
-	 *            Tag to remove.
-	 * @param snippet
-	 *            The snippet to untag
-	 */
-	public void untagSnippet(String tag, CodeSnippet snippet) {
-
-		if (this.tags.containsKey(tag)) {
-
-			if (this.tags.get(tag).contains(snippet)) {
-				snippet.removeTag(tag);
-				this.tags.get(tag).remove(snippet);
-			}
-			if(this.tags.get(tag).isEmpty()) {
-				this.removeTag(tag);
-			}
-		}
-
-	}
-
-	/**
-	 * Removes a tag from the index, and every code snippet that contains it
-	 * 
-	 * @preconditions: toPurge != null and the index has been initialized
-	 * @postcondition: the tag is purged from the system
-	 * @param toPurge
-	 *            Tag to purged.
-	 */
-	public void purgeTag(String toPurge) {
-
-		if (this.tags.containsKey(toPurge)) {
-			for (CodeSnippet currSnippet : this.tags.get(toPurge)) {
-				currSnippet.removeTag(toPurge);
-			}
-			this.tags.remove(toPurge);
-			
-			this.allTags.remove(toPurge);
-		}
-	}
-
-	/**
-	 * Removes a tag from the index
-	 * 
-	 * @preconditions: toRemove != null and the index has been initialized
-	 * @postcondition: the tag is removed from the index
-	 * @param toRemove
-	 *            Tag to add.
-	 */
-	public void removeTag(String toRemove) {
-
-		if (this.tags.containsKey(toRemove)) {
-			this.tags.remove(toRemove);
-			
-			this.allTags.remove(toRemove);
-		}
-	}
-	
-	/**
 	 * Populates the index from a datastore
 	 * 
-	 * @preconditions: data != null, and the index has been initialized
-	 * @postcondition: the tagindex is populated from a datastore
-	 * @param data
-	 *            Datastore to populate with
+	 * @preconditions: data != null
+	 * @postcondition: the TagIndex is populated from a DataStore
+	 * @param data DataStore to populate from.
 	 */
 	public void populateIndex(CodeSnippetDataStore data) {
 		Objects.requireNonNull(data, "DataStore can't be null");
 		List<CodeSnippet> codeStore = data.getCodeSnippetList();
-		for (CodeSnippet snippet : codeStore) {
-			for (StringProperty tag : snippet.getTags()) {
-				this.tagSnippet(tag.getValue(), snippet);
-				
-				this.allTags.add(tag.getValue());
-			}
-		}
+		codeStore.forEach(snippet -> {
+			List<StringProperty> tags = snippet.getTags();
+			tags.forEach(tag -> this.allTags.add(tag.get()));
+		});
 	}
 	
 	public HashSet<String> getAllTags() {

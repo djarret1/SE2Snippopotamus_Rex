@@ -1,6 +1,9 @@
 package view;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import controller.MainViewController;
 import javafx.beans.property.StringProperty;
@@ -38,7 +41,7 @@ public class MainViewCodeBehind {
     @FXML private TextField snippetNameTextField;
     @FXML private TextField searchTextField;
     @FXML private TextField tagTextField;
-    @FXML private ComboBox<StringProperty> tagComboBox;
+    @FXML private ComboBox<String> tagComboBox;
     @FXML private Button clearTagFilterButton;
     
     private MainViewController controller;
@@ -104,7 +107,9 @@ public class MainViewCodeBehind {
 
 	private void updateTagComboBox() {
 		this.tagComboBox.getItems().clear();
-		this.tagComboBox.getItems().addAll(this.selected.getTags());
+		Stream<StringProperty> stream = this.selected.getTags().stream();
+		List<String> tagNames = stream.map(tag -> tag.get()).collect(Collectors.toList());
+		this.tagComboBox.getItems().addAll(tagNames);
 		this.tagComboBox.getSelectionModel().selectFirst();
 	}
 
@@ -119,10 +124,9 @@ public class MainViewCodeBehind {
 			alert.showAndWait();
 		}
 		String toAdd = tagTextField.getText();
-		this.controller.getTagIndex().tagSnippet(toAdd, selected);
+		this.controller.addTagToSnippet(this.selected, toAdd);
 		this.updateTagComboBox();
 		this.initializeFilterComboBox();
-		this.controller.storeCodeSnippet(this.selected);
 		this.tagTextField.setText("");
 	}
 
@@ -151,10 +155,10 @@ public class MainViewCodeBehind {
 		alert.setHeaderText("Are you sure you would like to remove this tag?");
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
-			this.controller.getTagIndex().untagSnippet(this.tagComboBox.getValue().getValue(), this.selected);
+			String tagToRemove = this.tagComboBox.selectionModelProperty().get().getSelectedItem();
+			this.controller.removeTagFromSnippet(this.selected, tagToRemove);
 			this.updateTagComboBox();
 			this.initializeFilterComboBox();
-			this.controller.storeCodeSnippet(this.selected);
 		}
 
 	}
