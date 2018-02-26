@@ -70,7 +70,7 @@ public class MainViewCodeBehind {
 	
 	private void initializeListeners() {
 		ChangeListener<Boolean> updateSnippetOnLoseFocus = (observable, oldState, hasFocus) -> {
-			if (!hasFocus) {
+			if (!hasFocus && this.selected != null) {
 				this.controller.storeCodeSnippet(this.selected);
 			}
 		};
@@ -86,10 +86,12 @@ public class MainViewCodeBehind {
 			this.updateCodeSaveState();
 		}
 		this.selected = this.snippetListView.selectionModelProperty().getValue().getSelectedItem();
-		this.snippetNameTextField.textProperty().bindBidirectional(this.selected.getNameProperty());
-		this.descriptionTextArea.textProperty().bindBidirectional(this.selected.getDescriptionProperty());
-		this.snippetEditor.setHtmlText(this.selected.getCode().getCodeText());
-		this.updateTagComboBox();
+		if (this.selected != null) {
+			this.snippetNameTextField.textProperty().bindBidirectional(this.selected.getNameProperty());
+			this.descriptionTextArea.textProperty().bindBidirectional(this.selected.getDescriptionProperty());
+			this.snippetEditor.setHtmlText(this.selected.getCode().getCodeText());
+			this.updateTagComboBox();
+		}
 	}
 
 	private void updateCodeSaveState() {
@@ -130,8 +132,7 @@ public class MainViewCodeBehind {
 
 	@FXML
 	private void newSnippetButtonClick(ActionEvent event) {
-		CodeSnippet newSnippet = new CodeSnippet("Enter name here...", "", "");
-		this.controller.storeCodeSnippet(newSnippet);
+		CodeSnippet newSnippet = this.controller.createNewCodeSnippetWithName("Enter name here...");
 		this.snippetListView.getSelectionModel().select(newSnippet);
 		this.updateView(null);
 		this.snippetNameTextField.requestFocus();
@@ -140,8 +141,12 @@ public class MainViewCodeBehind {
 
 	@FXML
 	private void deleteSnippetButtonClick(ActionEvent event) {
-		this.controller.removeCodeSnippet(this.selected);
-		this.updateView(null);
+		if (this.selected != null) {
+			this.controller.removeCodeSnippet(this.selected);
+			this.snippetListView.getSelectionModel().selectFirst();
+			this.updateFilterComboBox();
+			this.updateView(null);
+		}
 	}
 
 	@FXML
@@ -169,6 +174,7 @@ public class MainViewCodeBehind {
             this.controller.purgeTag(this.filterComboBox.getValue());
             String tag = this.filterComboBox.selectionModelProperty().getValue().getSelectedItem();
         	this.filterComboBox.itemsProperty().get().remove(tag);
+        	this.snippetListView.getSelectionModel().selectFirst();
         }
     }
 	
@@ -203,6 +209,7 @@ public class MainViewCodeBehind {
 		String filterString = this.filterComboBox.selectionModelProperty().getValue().getSelectedItem();
 		this.controller.filterListWithTag(filterString);
 		this.snippetListView.setItems(this.controller.getObservableList());
+		this.snippetListView.getSelectionModel().selectFirst();
 	}
 	
 	@FXML

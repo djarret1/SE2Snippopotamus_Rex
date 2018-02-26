@@ -87,7 +87,7 @@ public class MainViewController {
 			this.dataStore.removeCodeSnippet(snippet);
 		}
 	}
-	
+
 	/**
 	 * Writes the entire DataStore to disk, syncing all CodeSnippets.
 	 * 
@@ -155,6 +155,22 @@ public class MainViewController {
 			return containsTag[0];
 		});
 		this.observableData = this.filteredData;
+	}
+	
+	/**
+	 * Creates a new CodeSnippet with the specified name and puts it in the DataStore.
+	 * @preconditions: name != null && name is not empty
+	 * @param name The name of the new CodeSnippet.
+	 * @return The new CodeSnippet.
+	 */
+	public CodeSnippet createNewCodeSnippetWithName(String name) {
+		Objects.requireNonNull(name, "The name cannot be null.");
+		if (name.length() == 0) {
+			throw new IllegalArgumentException("The name cannot have length zero.");
+		}
+		CodeSnippet newSnippet = new CodeSnippet(name, "", "");
+		this.storeCodeSnippet(newSnippet);
+		return newSnippet;
 	}
 
 	/**

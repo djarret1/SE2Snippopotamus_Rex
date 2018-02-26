@@ -213,6 +213,15 @@ public class CodeSnippet {
 		}
 	}
 
+	/**
+	 * Removes all tags from this CodeSnippet.
+	 * @preconditions: None
+	 * @postconditions: All tags will be deleted.
+	 */
+	public void removeAllTags() {
+		this.tags.clear();
+	}
+	
 	private boolean containsTag(String tag) {
 		boolean toReturn = false;
 		for (int i = 0; i < tags.size(); i++) {
