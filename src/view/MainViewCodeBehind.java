@@ -39,6 +39,8 @@ public class MainViewCodeBehind {
     @FXML private TextField searchTextField;
     @FXML private TextField tagTextField;
     @FXML private ComboBox<StringProperty> tagComboBox;
+    @FXML private Button clearTagFilterButton;
+    
     private MainViewController controller;
     private CodeSnippet selected;
     
@@ -182,5 +184,11 @@ public class MainViewCodeBehind {
 		this.controller.filterListWithTag(filterString);
 		this.snippetListView.setItems(this.controller.getObservableList());
 	}
+	
+	@FXML
+    void clearTagFilter(ActionEvent event) {
+		this.searchTextField.setText("");
+		this.onSearchFieldEdited(null);
+    }
 
 }

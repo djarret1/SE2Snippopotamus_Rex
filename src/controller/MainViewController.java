@@ -107,10 +107,20 @@ public class MainViewController {
 		}
 	}
 
+	/**
+	 * Returns the TagIndex object in this controller.
+	 * @preconditions: None
+	 * @return The TagIndex
+	 */
 	public TagIndex getTagIndex() {
 		return tagIndex;
 	}
 
+	/**
+	 * Gets a list of all tags that currently exist in the program.
+	 * @preconditions: None
+	 * @return The list of tags.
+	 */
 	public ObservableList<String> getAllExistingTags() {
 		HashSet<String> tags = this.tagIndex.getAllTags();
 		ObservableList<String> allTags = FXCollections.observableArrayList();
@@ -118,6 +128,13 @@ public class MainViewController {
 		return allTags;
 	}
 
+	/**
+	 * Sets the current observable list to either the standard unfiltered list, or
+	 * to a filtered version of the standard list that is filtered on the provided tag.
+	 * @preconditions: 	text != null
+	 * @postconditions: The current observable list will either be filtered or unfiltered.
+	 * @param text The text to filter with.
+	 */
 	public void filterListWithTag(String filterString) {
 		this.filteredData = this.unfilteredData.filtered((snippet) -> {
 			boolean[] containsTag = {false};
