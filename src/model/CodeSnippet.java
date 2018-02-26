@@ -170,8 +170,8 @@ public class CodeSnippet {
 		if (this.tags == null) {
 			throw new IllegalStateException("The code snippet has not been initialized.");
 		}
-		if (!containsTag(tag)) {
-			this.tags.add(new SimpleStringProperty(Objects.requireNonNull(tag)));
+		if (!this.containsTag(tag)) {
+			this.tags.add(new SimpleStringProperty(Objects.requireNonNull(tag, "The tag was null")));
 		}
 	}
 	/**
@@ -186,7 +186,7 @@ public class CodeSnippet {
 		if (this.tags == null) {
 			throw new IllegalStateException("The code snippet has not been initialized.");
 		}
-		if (!tags.contains(Objects.requireNonNull(tag))) {
+		if (!tags.contains(Objects.requireNonNull(tag, "The tag was null"))) {
 			this.tags.add(tag);
 		}
 	}
@@ -227,7 +227,7 @@ public class CodeSnippet {
 	private boolean containsTag(String tag) {
 		boolean toReturn = false;
 		for (int i = 0; i < tags.size(); i++) {
-			if (this.tags.get(i).toString().equals(tag)) {
+			if (this.tags.get(i).getValue().equals(tag)) {
 				toReturn = true;
 			}
 		}
