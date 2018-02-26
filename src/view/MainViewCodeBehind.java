@@ -150,6 +150,7 @@ public class MainViewCodeBehind {
 			this.controller.getTagIndex().untagSnippet(this.tagComboBox.getValue().getValue(), this.selected);
 			this.updateTagComboBox();
 			this.initializeFilterComboBox();
+			this.controller.storeCodeSnippet(this.selected);
 		}
 
 	}
