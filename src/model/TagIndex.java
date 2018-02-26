@@ -36,9 +36,7 @@ public class TagIndex {
 	 */
 	public void addTag(String toAdd) {
 
-		if (this.tags == null) {
-			throw new IllegalStateException("TagIndex not initialized");
-		}
+
 		if (!this.tags.containsKey(toAdd)) {
 			this.tags.put(toAdd, new ArrayList<CodeSnippet>());
 		}
@@ -57,9 +55,6 @@ public class TagIndex {
 	 */
 	public void tagSnippet(String tag, CodeSnippet snippet) {
 
-		if (this.tags == null) {
-			throw new IllegalStateException("TagIndex not initialized");
-		}
 		if (!this.tags.containsKey(tag)) {
 			this.addTag(tag);
 			this.tagSnippet(tag, snippet);
@@ -85,9 +80,6 @@ public class TagIndex {
 	 */
 	public void untagSnippet(String tag, CodeSnippet snippet) {
 
-		if (this.tags == null) {
-			throw new IllegalStateException("TagIndex not initialized");
-		}
 		if (this.tags.containsKey(tag)) {
 
 			if (this.tags.get(tag).contains(snippet)) {
@@ -108,9 +100,6 @@ public class TagIndex {
 	 */
 	public void purgeTag(String toPurge) {
 
-		if (this.tags == null) {
-			throw new IllegalStateException("TagStore not initialized");
-		}
 		if (this.tags.containsKey(toPurge)) {
 			for (CodeSnippet currSnippet : this.tags.get(toPurge)) {
 				currSnippet.removeTag(toPurge);
@@ -129,9 +118,6 @@ public class TagIndex {
 	 */
 	public void removeTag(String toRemove) {
 
-		if (this.tags == null) {
-			throw new IllegalStateException("TagStore not initialized");
-		}
 		if (this.tags.containsKey(toRemove)) {
 			this.tags.remove(toRemove);
 
@@ -147,9 +133,6 @@ public class TagIndex {
 	 *            Datastore to populate with
 	 */
 	public void populateIndex(TextFileDataStoreImplementation data) {
-		if (this.tags == null) {
-			throw new IllegalStateException("TagStore not initialized");
-		}
 		Objects.requireNonNull(data, "DataStore can't be null");
 		List<CodeSnippet> codeStore = data.getCodeSnippetList();
 		for (CodeSnippet snippet : codeStore) {
