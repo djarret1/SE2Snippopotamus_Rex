@@ -175,5 +175,12 @@ public class MainViewCodeBehind {
 		this.controller.filterListWith(this.searchTextField.getText());
 		this.snippetListView.setItems(this.controller.getObservableList());
 	}
+	
+	@FXML
+	void onSelectFilterTag(ActionEvent event) {
+		String filterString = this.filterComboBox.selectionModelProperty().getValue().getSelectedItem();
+		this.controller.filterListWithTag(filterString);
+		this.snippetListView.setItems(this.controller.getObservableList());
+	}
 
 }

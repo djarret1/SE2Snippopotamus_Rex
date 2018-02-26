@@ -27,7 +27,7 @@
                         <Insets />
                      </opaqueInsets>
                   </ListView>
-                  <ComboBox fx:id="filterComboBox" layoutX="10.0" layoutY="10.0" prefHeight="31.0" prefWidth="171.0" promptText="Filter" />
+                  <ComboBox fx:id="filterComboBox" layoutX="10.0" layoutY="10.0" onAction="#onSelectFilterTag" prefHeight="31.0" prefWidth="171.0" promptText="Filter" />
                   <Button fx:id="newSnippetButton" layoutX="52.0" layoutY="451.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#newSnippetButtonClick" prefHeight="30.0" prefWidth="55.0" text="+" />
                   <Button fx:id="deleteTagsButton" layoutX="181.0" layoutY="10.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#purgeTagButtonClick" prefHeight="31.0" prefWidth="27.0" text="-" />
                   <TextField fx:id="searchTextField" alignment="CENTER" layoutX="10.0" layoutY="50.0" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#onSearchFieldEdited" prefHeight="31.0" prefWidth="198.0" promptText="Search" />

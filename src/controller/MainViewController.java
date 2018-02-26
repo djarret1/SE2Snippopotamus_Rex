@@ -1,8 +1,11 @@
 package controller;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.CodeSnippet;
@@ -113,6 +116,16 @@ public class MainViewController {
 		ObservableList<String> allTags = FXCollections.observableArrayList();
 		tags.forEach(tag -> allTags.add(tag));
 		return allTags;
+	}
+
+	public void filterListWithTag(String filterString) {
+		this.filteredData = this.unfilteredData.filtered((snippet) -> {
+			boolean[] containsTag = {false};
+			List<StringProperty> tags = snippet.getTags();
+			tags.forEach(tagProperty -> { if(tagProperty.get().equals(filterString)) containsTag[0] = true; });
+			return containsTag[0];
+		});
+		this.observableData = this.filteredData;
 	}
 	
 }
