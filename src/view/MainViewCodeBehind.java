@@ -166,7 +166,6 @@ public class MainViewCodeBehind {
         Optional<ButtonType> result = this.showAlertDialog(AlertType.CONFIRMATION, content, title, header);
         if (result.get() == ButtonType.OK) {
             this.controller.purgeTag(this.filterComboBox.getValue());
-            this.controller.writeAllCodeSnippetsToDataStore();
             String tag = this.filterComboBox.selectionModelProperty().getValue().getSelectedItem();
         	this.filterComboBox.itemsProperty().get().remove(tag);
         }

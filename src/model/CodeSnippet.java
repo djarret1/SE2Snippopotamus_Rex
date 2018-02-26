@@ -234,16 +234,6 @@ public class CodeSnippet {
 		return toReturn;
 	}
 
-	// Should only be called if you are sure the tag exists for the code snippet
-	private int getIndexOf(String tag) {
-		int toReturn = 0;
-		for (int i = 0; i < tags.size(); i++) {
-			if (this.tags.get(i).toString().equals(tag)) {
-				toReturn = i;
-			}
-		}
-		return toReturn;
-	}
 	/**
 	 * Gets the tags of the CodeSnippet.
 	 * 
