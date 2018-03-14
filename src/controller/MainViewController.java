@@ -24,6 +24,7 @@ public class MainViewController {
 	private ObservableList<CodeSnippet> unfilteredData;
 	private ObservableList<CodeSnippet> filteredData;
 	private TagIndex tagIndex;
+	
 	/**
 	 * Initializes the controller by loading the code snippet data from the data-store.
 	 * @preconditions: 	filename != null
@@ -86,7 +87,7 @@ public class MainViewController {
 			this.dataStore.removeCodeSnippet(snippet);
 		}
 	}
-	
+
 	/**
 	 * Writes the entire DataStore to disk, syncing all CodeSnippets.
 	 * 
@@ -155,6 +156,22 @@ public class MainViewController {
 		});
 		this.observableData = this.filteredData;
 	}
+	
+	/**
+	 * Creates a new CodeSnippet with the specified name and puts it in the DataStore.
+	 * @preconditions: name != null && name is not empty
+	 * @param name The name of the new CodeSnippet.
+	 * @return The new CodeSnippet.
+	 */
+	public CodeSnippet createNewCodeSnippetWithName(String name) {
+		Objects.requireNonNull(name, "The name cannot be null.");
+		if (name.length() == 0) {
+			throw new IllegalArgumentException("The name cannot have length zero.");
+		}
+		CodeSnippet newSnippet = new CodeSnippet(name, "", "");
+		this.storeCodeSnippet(newSnippet);
+		return newSnippet;
+	}
 
 	/**
 	 * Removes the specified tag from every CodeSnippet, and the system as a whole.
@@ -182,6 +199,9 @@ public class MainViewController {
 	public void addTagToSnippet(CodeSnippet snippet, String newTag) {
 		Objects.requireNonNull(newTag,  "The tag cannot be null.");
 		Objects.requireNonNull(snippet, "The CodeSnippet cannot be null.");
+		if (newTag.length() == 0) {
+			throw new IllegalArgumentException("Cannot add tag of length zero.");
+		}
 		snippet.addTag(newTag);
 		this.storeCodeSnippet(snippet);
 		this.tagIndex.getAllTags().add(newTag);
