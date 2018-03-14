@@ -9,10 +9,10 @@ import model.CodeSnippetDataStore;
 import model.TagIndex;
 import model.TextFileDataStoreImplementation;
 
-class TestTextFileDataStoreImplementationWhenSaveCodeSnippets {
+class TestTextFileDataStoreImplementationWhenRemoveCodeSnippet {
 
 	@Test
-	void testSaveCodeSnippetWithValidDataStore() {
+	void testRemoveCodeSnippetWithValidDataStore() {
 		CodeSnippetDataStore ds = new TextFileDataStoreImplementation("populatedDummyData2.dat");
 		TagIndex index = new TagIndex();
 		index.populateIndex(ds);
@@ -22,9 +22,11 @@ class TestTextFileDataStoreImplementationWhenSaveCodeSnippets {
 		
 		ds.saveCodeSnippets();
 		
-		assertEquals(4, ds.getCodeSnippetList().size());
-		
 		ds.removeCodeSnippet(snippet);
 		ds.saveCodeSnippets();
+		
+		assertEquals(3, ds.getCodeSnippetList().size());
+		
+		
 	}
 }
