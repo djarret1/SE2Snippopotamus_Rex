@@ -20,6 +20,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.web.HTMLEditor;
 import model.CodeSnippet;
 
@@ -128,6 +129,15 @@ public class MainViewCodeBehind {
 			String title = "Empty Tag";
 			this.showAlertDialog(AlertType.WARNING, content, title, null);
 		}
+	}
+	
+	@FXML
+	public void enterPressed(KeyEvent ke)
+	{
+	    if(ke.getCode().toString().equals("ENTER"))
+	    {
+	    	this.addTagButtonClick(null);
+	    }
 	}
 
 	@FXML
