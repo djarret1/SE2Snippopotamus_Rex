@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.zeromq.ZMQ;
 
@@ -12,6 +13,11 @@ import com.google.gson.Gson;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * Represents an interaction with the server.
+ * @author 	David Jarrett
+ * @version 04/16/2018
+ */
 public class Server {
 
 	public static final String DEFAULT_IP_PORT = "tcp://localhost:5555";
@@ -36,17 +42,42 @@ public class Server {
 	private ZMQ.Socket socket;
 	private String userName;
 
+	/**
+	 * Creates a new Server object that is connected to the default IP and port. Uses admin
+	 * as the username.
+	 * 
+	 * @preconditions: None
+	 * @postconditions: The Server object will be connected to the server and ready to accept commands.
+	 */
 	public Server() {
 		this(Server.DEFAULT_IP_PORT, "admin");
 	}
 
+	/**
+	 * Creates a new Server object connected to the specified ip/port, using the provided username.
+	 * 
+	 * @preconditions: ipPort != null && userName != null
+	 * @postconditions: The Server object will be connected to the server and ready to accept commands.
+	 * 
+	 * @param ipPort The ip/port combination to use.
+	 * @param userName The username of the person logging in to the server.
+	 */
 	public Server(String ipPort, String userName) {
+		Objects.requireNonNull(ipPort, "The ipPort cannot be null.");
+		Objects.requireNonNull(userName, "The username cannot be null.");
 		this.context = ZMQ.context(1);
 		socket = context.socket(ZMQ.REQ);
 		socket.connect(ipPort);
 		this.userName = userName;
 	}
 
+	/**
+	 * Returns a list containing all CodeSnippets on the server.
+	 * 
+	 * @preconditions: None
+	 * 
+	 * @return A list containing all CodeSnippets on the server.
+	 */
 	public List<CodeSnippet> getAllSnippetsFromServer() {
 		Map<String, String> message = new HashMap<>();
 		message.put(MSG_ID, COMMAND_DUMP);
