@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.HTMLEditor?>
 
-<AnchorPane minHeight="750.0" minWidth="875.0" prefHeight="692.0" prefWidth="879.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainViewCodeBehind">
+<AnchorPane minHeight="750.0" minWidth="875.0" prefHeight="692.0" prefWidth="879.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainViewCodeBehind">
    <children>
       <SplitPane dividerPositions="0.24971098265895952" layoutX="2.0" layoutY="2.0" prefHeight="503.0" prefWidth="875.0">
         <items>
@@ -42,7 +42,7 @@
                   <Button fx:id="addTagButton" layoutX="348.0" layoutY="451.0" mnemonicParsing="false" onAction="#addTagButtonClick" prefHeight="31.0" prefWidth="33.0" text="+" />
                   <Button fx:id="removeTagButton" layoutX="381.0" layoutY="451.0" mnemonicParsing="false" onAction="#deleteTagButtonClick" prefHeight="31.0" prefWidth="33.0" text="-" />
                   <ComboBox fx:id="tagComboBox" layoutX="14.0" layoutY="451.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="150.0" />
-                  <TextField fx:id="tagTextField" layoutX="177.0" layoutY="451.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="171.0" promptText="Add Tag" />
+                  <TextField fx:id="tagTextField" layoutX="177.0" layoutY="451.0" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#enterPressed" prefHeight="31.0" prefWidth="171.0" promptText="Add Tag" />
                   <TextField fx:id="snippetNameTextField" alignment="CENTER" layoutX="115.0" prefHeight="31.0" prefWidth="421.0" promptText="Name">
                      <font>
                         <Font size="14.0" />

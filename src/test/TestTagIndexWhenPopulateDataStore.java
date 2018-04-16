@@ -14,13 +14,13 @@ class TestTagIndexWhenPopulateDataStore {
 	
 	@Test
 	void testPopulateTagIndexWithValidDataStore() {
-		CodeSnippetDataStore ds = new TextFileDataStoreImplementation("data.dat");
+		CodeSnippetDataStore ds = new TextFileDataStoreImplementation("populatedDummyData.dat");
 		TagIndex index = new TagIndex();
 		index.populateIndex(ds);
 		
 		HashSet<String> allTags = index.getAllTags();
 		
-		assertEquals(0, allTags.size());
+		assertEquals(3, allTags.size());
 	}
 	
 	@Test
