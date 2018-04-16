@@ -39,6 +39,8 @@ public class Server {
 	public static final String COMMAND_TERMINATE = "terminate";
 	public static final String COMMAND_UPDATE = "update";
 
+	private boolean isActive;
+
 	private ZMQ.Context context;
 	private ZMQ.Socket socket;
 	private String userName;
@@ -75,17 +77,22 @@ public class Server {
 		socket = context.socket(ZMQ.REQ);
 		socket.connect(ipPort);
 		this.userName = userName;
+		this.isActive = true;
 	}
 
 	/**
 	 * Returns a list containing all CodeSnippets on the server.
 	 * 
-	 * @preconditions: None
+	 * @preconditions: The server must be active.
 	 * 
 	 * @return A list containing all CodeSnippets on the server.
 	 */
 	@SuppressWarnings("unchecked")
 	public List<CodeSnippet> getAllSnippetsFromServer() {
+		if (!this.isActive) {
+			throw new IllegalStateException("The server is no longer active.");
+		}
+
 		Map<String, String> message = new HashMap<>();
 		message.put(MSG_ID, COMMAND_DUMP);
 		message.put(MSG_USER_NAME, this.userName);
@@ -99,6 +106,7 @@ public class Server {
 		Map<String, String> responseMap = gson.fromJson(new String(reply), HashMap.class);
 		String data = responseMap.get(RESPONSE);
 
+		this.deactivateServer();
 		return this.parseServerSnippetObjects(data);
 	}
 
@@ -130,9 +138,10 @@ public class Server {
 	 * Updates an existing CodeSnippet on the server. The request fails if the
 	 * snippet doesn't exist.
 	 * 
-	 * @preconditions: snippet != null
+	 * @preconditions: snippet != null && the server is active
 	 * 
-	 * @param snippet The CodeSnippet to update on the server.
+	 * @param snippet
+	 *            The CodeSnippet to update on the server.
 	 * @return true if the update was successful, false otherwise.
 	 */
 	public boolean updateSnippet(CodeSnippet snippet) {
@@ -144,15 +153,20 @@ public class Server {
 	 * 
 	 * @preconditions: snippet != null
 	 * 
-	 * @param snippet The CodeSnippet to add to the server.
+	 * @param snippet
+	 *            The CodeSnippet to add to the server.
 	 * @return true if the add was successful, false otherwise.
 	 */
 	public boolean addSnippet(CodeSnippet snippet) {
 		return this.snippetCommand(snippet, COMMAND_ADD);
 	}
-	
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private boolean snippetCommand(CodeSnippet snippet, String command) {
+		if (!this.isActive) {
+			throw new IllegalStateException("The server is no longer active.");
+		}
+		
 		Objects.requireNonNull(snippet, "The CodeSnippet cannot be null.");
 		Objects.requireNonNull(command, "The command cannot be null.");
 
@@ -180,6 +194,23 @@ public class Server {
 		Map<String, String> responseMap = gson.fromJson(new String(reply), HashMap.class);
 		String response = responseMap.get(RESPONSE);
 
+		this.deactivateServer();
 		return response.equals(SUCCESS);
 	}
+
+	/**
+	 * Closes the connection to the remote server and makes further transactions
+	 * impossible. Used to enforce a single transaction per Server object policy.
+	 * 
+	 * @preconditions: None
+	 * @postconditions: The server will no longer be active.
+	 */
+	public void deactivateServer() {
+		if (this.isActive) {
+			this.socket.close();
+			this.context.term();
+			this.isActive = false;
+		}
+	}
+
 }
