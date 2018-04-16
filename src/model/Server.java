@@ -97,17 +97,20 @@ public class Server {
 	}
 
 	private List<CodeSnippet> parseServerSnippetObjects(String data) {
+		final int SNIPPET_NAME_INDEX = 1;
+		final int DESCRIPTION_INDEX = 2;
+		final int CODE_INDEX = 3;
+		final int TAG_INDEX = 4;
 		List<CodeSnippet> snippets = new ArrayList<>();
 		String[] snippetRecords = data.split("\n");
 
 		for (String record : snippetRecords) {
 			String[] components = record.split(",");
-			//String userName = components[0];
-			String snippetName = components[1];
-			String description = components[2];
-			String code = components[3];
+			String snippetName = components[SNIPPET_NAME_INDEX];
+			String description = components[DESCRIPTION_INDEX];
+			String code = components[CODE_INDEX];
 			List<StringProperty> tags = new ArrayList<>();
-			for (int i = 4; i < components.length; i++) {
+			for (int i = TAG_INDEX; i < components.length; i++) {
 				tags.add(new SimpleStringProperty(components[i]));
 			}
 			CodeSnippet newSnippet = new CodeSnippet(snippetName, description, code, tags);
