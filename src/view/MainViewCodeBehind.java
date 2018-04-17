@@ -250,6 +250,7 @@ public class MainViewCodeBehind {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ServerSnippetView.fxml"));
 			Parent root = loader.load();
 			this.serverSnippetController = loader.getController();
+			this.getSnippetsFromServer();
 		    Scene scene = new Scene(root);
 		    Stage stage = new Stage();
 		    stage.setTitle("Snippopotamus Server Snippets");
@@ -262,6 +263,10 @@ public class MainViewCodeBehind {
 			alert.show();
 		}
 		
+		
+	}
+
+	private void getSnippetsFromServer() {
 		List<CodeSnippet> snippets = this.serverSnippetController.getSnippetsToReturn();
 		for (CodeSnippet currentSnippet : snippets) {
 			this.controller.getObservableList().add(currentSnippet);
