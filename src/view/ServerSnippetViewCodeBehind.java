@@ -51,6 +51,7 @@ public class ServerSnippetViewCodeBehind {
     @FXML private Button clearTagFilterButton;
     
     private MainViewController controller;
+    private MainViewCodeBehind mainViewCodeBehind;
     private CodeSnippet selected;
     private ObservableList<CodeSnippet> selectedSnippets;
     private List<CodeSnippet> snippetsToReturn;
@@ -63,8 +64,8 @@ public class ServerSnippetViewCodeBehind {
     	if (this.controller.getUserName() == null) {
     		this.showUserNameDialog();
     	}
-    	
-    	this.snipRexServer = new Server(Server.DEFAULT_IP_PORT, this.controller.getUserName());
+    	this.mainViewCodeBehind = null;
+    	this.snipRexServer = new Server();
     	this.selected = null;
     	this.initializeListView();
     	this.updateFilterComboBox();
@@ -160,7 +161,10 @@ public class ServerSnippetViewCodeBehind {
 	
 	@FXML
 	void onAddToMySnippetsButtonPressed(ActionEvent event) {
-		this.snippetsToReturn = this.selectedSnippets;
+		System.out.println("Snippets to return size: " + this.snippetsToReturn.size());
+		for (CodeSnippet snippet : this.selectedSnippets) {
+			this.mainViewCodeBehind.getController().getObservableList().add(snippet);
+		}
 		Stage stage = (Stage) this.addToMySnippetsButton.getScene().getWindow();
 		stage.close();
 		
@@ -169,4 +173,10 @@ public class ServerSnippetViewCodeBehind {
 	public List<CodeSnippet> getSnippetsToReturn() {
 		return this.snippetsToReturn;
 	}
+	
+	public void setMainViewCodeBehind(MainViewCodeBehind mainViewCodeBehind) {
+		this.mainViewCodeBehind = mainViewCodeBehind;
+	}
+	
+	
 }

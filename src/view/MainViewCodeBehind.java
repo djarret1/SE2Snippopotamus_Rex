@@ -246,11 +246,12 @@ public class MainViewCodeBehind {
 	
 	@FXML
 	void onAddFromServerButtonPressed(ActionEvent event) {
+		System.out.println(this.controller.getObservableList().size());
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ServerSnippetView.fxml"));
 			Parent root = loader.load();
 			this.serverSnippetController = loader.getController();
-			this.getSnippetsFromServer();
+			this.serverSnippetController.setMainViewCodeBehind(this);
 		    Scene scene = new Scene(root);
 		    Stage stage = new Stage();
 		    stage.setTitle("Snippopotamus Server Snippets");
@@ -263,11 +264,16 @@ public class MainViewCodeBehind {
 			alert.show();
 		}
 		
-		
+		System.out.println(this.controller.getObservableList().size());
+	}
+	
+	public MainViewController getController() {
+		return this.controller;
 	}
 
 	private void getSnippetsFromServer() {
 		List<CodeSnippet> snippets = this.serverSnippetController.getSnippetsToReturn();
+		System.out.println(snippets.size() + " snippets");
 		for (CodeSnippet currentSnippet : snippets) {
 			this.controller.getObservableList().add(currentSnippet);
 		}
