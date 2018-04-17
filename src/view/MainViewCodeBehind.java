@@ -42,9 +42,7 @@ public class MainViewCodeBehind {
 
 	private static final String DATA_STORE_FILE = "data.dat";
 	
-	private static List<CodeSnippet> resultsList = new ArrayList<>();
-	
-    @FXML private ListView<CodeSnippet> snippetListView;
+	@FXML private ListView<CodeSnippet> snippetListView;
     @FXML private ComboBox<String> filterComboBox;
     @FXML private TextArea outputTextArea;
     @FXML private TitledPane detailsTitledPane;
@@ -77,11 +75,6 @@ public class MainViewCodeBehind {
     	this.updateFilterComboBox();
     	this.initializeListeners();
     	this.updateView(null);
-    }
-    
-    public static void setResultsList(List<CodeSnippet> results)
-    {
-    	resultsList = results;
     }
     
     private void initializeListView() {

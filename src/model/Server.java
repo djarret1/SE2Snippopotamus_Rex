@@ -113,6 +113,11 @@ public class Server {
 		
 		Map<String, String> responseMap = gson.fromJson(new String(reply), HashMap.class);
 		String data = responseMap.get(RESPONSE);
+		
+		if (data.contains("[Errno 2]"))
+		{
+			return new ArrayList<>();
+		}
 
 		this.deactivateServer();
 		return this.parseServerSnippetObjects(data);
