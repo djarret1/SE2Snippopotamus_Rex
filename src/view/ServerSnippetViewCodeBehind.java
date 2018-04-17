@@ -150,6 +150,21 @@ public class ServerSnippetViewCodeBehind {
 		stage.close();
 		
 	}
+	
+	private void showUserNameDialog() {
+		TextInputDialog dialog = new TextInputDialog();
+		dialog.setTitle("Snippopotamus Rex");
+		dialog.setHeaderText("Enter your user name:");
+		dialog.setContentText("User name:");
+		
+		Optional<String> result = dialog.showAndWait();
+		
+		if (!result.isPresent()) {
+			return;
+		}
+		this.controller.setUserName(result.get());
+		
+	}
 
 	/**
 	 * Allows you to set the MainViewCodeBehind so that the list may be passed back to the MainView

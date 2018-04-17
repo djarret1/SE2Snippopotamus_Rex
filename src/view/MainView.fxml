@@ -22,18 +22,19 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="442.0" prefWidth="213.0">
                <children>
                   <Line endX="110.0" layoutX="104.0" layoutY="90.0" startX="-105.0" />
-                  <ListView fx:id="snippetListView" layoutX="9.0" layoutY="138.0" onMouseClicked="#updateView" prefHeight="280.0" prefWidth="198.0">
+                  <ListView fx:id="snippetListView" layoutX="9.0" layoutY="138.0" onMouseClicked="#updateView" prefHeight="245.0" prefWidth="198.0">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
                   </ListView>
                   <ComboBox fx:id="filterComboBox" layoutX="10.0" layoutY="10.0" onAction="#onSelectFilterTag" prefHeight="31.0" prefWidth="171.0" promptText="Filter" />
-                  <Button fx:id="newSnippetButton" layoutX="54.0" layoutY="425.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#newSnippetButtonClick" prefHeight="30.0" prefWidth="55.0" text="+" />
+                  <Button fx:id="newSnippetButton" layoutX="56.0" layoutY="395.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#newSnippetButtonClick" prefHeight="30.0" prefWidth="55.0" text="+" />
                   <Button fx:id="deleteTagsButton" layoutX="181.0" layoutY="10.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#purgeTagButtonClick" prefHeight="31.0" prefWidth="27.0" text="-" />
                   <TextField fx:id="searchTextField" alignment="CENTER" layoutX="10.0" layoutY="101.0" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#onSearchFieldEdited" prefHeight="31.0" prefWidth="198.0" promptText="Search" />
-                  <Button fx:id="deleteSnippetButton" layoutX="108.0" layoutY="425.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deleteSnippetButtonClick" prefHeight="30.0" prefWidth="55.0" text="-" />
+                  <Button fx:id="deleteSnippetButton" layoutX="109.0" layoutY="395.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deleteSnippetButtonClick" prefHeight="30.0" prefWidth="55.0" text="-" />
                   <Button fx:id="clearTagFilterButton" layoutX="10.0" layoutY="47.0" mnemonicParsing="false" onAction="#clearTagFilter" prefHeight="30.0" prefWidth="171.0" text="Clear Filter" />
-                  <Button fx:id="addFromServerButton" layoutX="56.0" layoutY="462.0" mnemonicParsing="false" onAction="#onAddFromServerButtonPressed" prefHeight="25.0" prefWidth="106.0" text="Add From Server" />
+                  <Button fx:id="addFromServerButton" layoutX="58.0" layoutY="431.0" mnemonicParsing="false" onAction="#onAddFromServerButtonPressed" prefHeight="25.0" prefWidth="106.0" text="Add From Server" />
+                  <Button fx:id="shareSnippetButton" layoutX="58.0" layoutY="462.0" mnemonicParsing="false" onAction="#onShareSnippetButtonPressed" prefHeight="25.0" prefWidth="106.0" text="Share Snippet" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="408.0" prefWidth="615.0">
