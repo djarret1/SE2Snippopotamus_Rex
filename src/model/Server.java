@@ -34,6 +34,7 @@ public class Server {
 	public static final String SUCCESS = "success";
 
 	public static final String COMMAND_ADD = "add";
+	public static final String COMMAND_DELETE = "delete";
 	public static final String COMMAND_DUMP = "dump";
 	public static final String NEW_USER = "new_user";
 	public static final String COMMAND_TERMINATE = "terminate";
@@ -149,7 +150,7 @@ public class Server {
 	}
 
 	/**
-	 * A new CodeSnippet to the server.
+	 * Adds a new CodeSnippet to the server.
 	 * 
 	 * @preconditions: snippet != null
 	 * 
@@ -161,12 +162,25 @@ public class Server {
 		return this.snippetCommand(snippet, COMMAND_ADD);
 	}
 
+	/**
+	 * Deletes a CodeSnippet from the server.
+	 * 
+	 * @preconditions: snippet != null
+	 * 
+	 * @param snippet
+	 *            The CodeSnippet to remove from the server.
+	 * @return true if the delete was successful, false otherwise.
+	 */
+	public boolean deleteSnippet(CodeSnippet snippet) {
+		return this.snippetCommand(snippet, COMMAND_DELETE);
+	}
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private boolean snippetCommand(CodeSnippet snippet, String command) {
 		if (!this.isActive) {
 			throw new IllegalStateException("The server is no longer active.");
 		}
-		
+
 		Objects.requireNonNull(snippet, "The CodeSnippet cannot be null.");
 		Objects.requireNonNull(command, "The command cannot be null.");
 
