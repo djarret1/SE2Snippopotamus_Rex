@@ -1,30 +1,27 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import controller.MainViewController;
-import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TitledPane;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.web.HTMLEditor;
+import javafx.stage.Stage;
 import model.CodeSnippet;
+import model.Server;
 
 /**
  * Code-behind file for the main view.
@@ -56,19 +53,44 @@ public class ServerSnippetViewCodeBehind {
     private MainViewController controller;
     private CodeSnippet selected;
     private ObservableList<CodeSnippet> selectedSnippets;
+    private List<CodeSnippet> snippetsToReturn;
+    private Server snipRexServer;
     
     @FXML
     private void initialize() {
+    	
     	this.controller = new MainViewController(DATA_STORE_FILE);
+    	if (this.controller.getUserName() == null) {
+    		this.showUserNameDialog();
+    	}
+    	
+    	this.snipRexServer = new Server(Server.DEFAULT_IP_PORT, this.controller.getUserName());
     	this.selected = null;
     	this.initializeListView();
     	this.updateFilterComboBox();
     	this.initializeListeners();
     	this.updateView(null);
     	this.selectedSnippets = FXCollections.observableArrayList(CodeSnippet.extractor());
+    	this.snippetsToReturn = new ArrayList<CodeSnippet>();
     }
-
+    
+    private void showUserNameDialog() {
+		TextInputDialog dialog = new TextInputDialog();
+		dialog.setTitle("Snippopotamus Rex");
+		dialog.setHeaderText("Enter your user name:");
+		dialog.setContentText("User name:");
+		
+		Optional<String> result = dialog.showAndWait();
+		
+		result.ifPresent(name -> {
+			this.controller.setUserName(name);
+		});
+	}
+    
 	private void initializeListView() {
+		//List<CodeSnippet> snippetsFromServer = this.snipRexServer.getAllSnippetsFromServer();
+		//ObservableList<CodeSnippet> observableSnippetsFromServer = FXCollections.observableArrayList(snippetsFromServer);
+		//this.snippetListView.setItems(observableSnippetsFromServer);
 		this.snippetListView.setItems(this.controller.getObservableList());
 		this.snippetListView.getSelectionModel().selectFirst();
 	}
@@ -98,24 +120,7 @@ public class ServerSnippetViewCodeBehind {
 			this.snippetNameTextField.textProperty().bindBidirectional(this.selected.getNameProperty());
 			this.descriptionTextArea.textProperty().bindBidirectional(this.selected.getDescriptionProperty());
 			this.snippetEditor.setHtmlText(this.selected.getCode().getCodeText());
-			//this.updateTagComboBox();
 		}
-	}
-
-	private void updateTagComboBox() {
-		//this.tagComboBox.getItems().clear();
-		Stream<StringProperty> stream = this.selected.getTags().stream();
-		List<String> tagNames = stream.map(tag -> tag.get()).collect(Collectors.toList());
-		this.tagComboBox.getItems().addAll(tagNames);
-		this.tagComboBox.getSelectionModel().selectFirst();
-	}
-	
-	private Optional<ButtonType> showAlertDialog(AlertType type, String content, String title, String header) {
-		Alert alert = new Alert(type);
-		alert.setContentText(content);
-		alert.setTitle(title);
-		alert.setHeaderText(header);
-		return alert.showAndWait();
 	}
 	
 	@FXML
@@ -152,5 +157,16 @@ public class ServerSnippetViewCodeBehind {
 		this.selectedSnippets.clear();
 		this.serverSnippetListView.setItems(this.selectedSnippets);
 	}
-
+	
+	@FXML
+	void onAddToMySnippetsButtonPressed(ActionEvent event) {
+		this.snippetsToReturn = this.selectedSnippets;
+		Stage stage = (Stage) this.addToMySnippetsButton.getScene().getWindow();
+		stage.close();
+		
+	}
+	
+	public List<CodeSnippet> getSnippetsToReturn() {
+		return this.snippetsToReturn;
+	}
 }

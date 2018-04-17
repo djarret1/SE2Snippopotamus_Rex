@@ -24,6 +24,7 @@ public class MainViewController {
 	private ObservableList<CodeSnippet> unfilteredData;
 	private ObservableList<CodeSnippet> filteredData;
 	private TagIndex tagIndex;
+	private String userName;
 	
 	/**
 	 * Initializes the controller by loading the code snippet data from the data-store.
@@ -36,6 +37,7 @@ public class MainViewController {
 		this.tagIndex = new TagIndex();
 		this.tagIndex.populateIndex(this.dataStore);
 		this.unfilteredData = FXCollections.observableArrayList(CodeSnippet.extractor());
+		this.userName = null;
 		this.loadObservableData();
 	}
 	
@@ -229,4 +231,27 @@ public class MainViewController {
 			this.tagIndex.getAllTags().remove(tagToRemove);
 		}
 	}
+
+	/**
+	 * Gets the current user name
+	 * 
+	 * @return the current user name
+	 */
+	public String getUserName() {
+		return userName;
+	}
+	
+	/**
+	 * Sets the current user name
+	 * 
+	 * @precondition userName != null;
+	 * 
+	 * @param userName the user name
+	 */
+	public void setUserName(String userName) {
+		Objects.requireNonNull(userName, "The user name cannot be null");
+		this.userName = userName;
+	}
+	
+	
 }

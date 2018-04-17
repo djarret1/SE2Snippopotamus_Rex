@@ -33,7 +33,7 @@
                   <TextField fx:id="searchTextField" alignment="CENTER" layoutX="10.0" layoutY="101.0" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#onSearchFieldEdited" prefHeight="31.0" prefWidth="198.0" promptText="Search" />
                   <Button fx:id="deleteSnippetButton" layoutX="108.0" layoutY="425.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deleteSnippetButtonClick" prefHeight="30.0" prefWidth="55.0" text="-" />
                   <Button fx:id="clearTagFilterButton" layoutX="10.0" layoutY="47.0" mnemonicParsing="false" onAction="#clearTagFilter" prefHeight="30.0" prefWidth="171.0" text="Clear Filter" />
-                  <Button fx:id="serverButton" layoutX="56.0" layoutY="462.0" mnemonicParsing="false" onAction="#serverButtonPressed" prefHeight="25.0" prefWidth="106.0" text="Add From Server" />
+                  <Button fx:id="addFromServerButton" layoutX="56.0" layoutY="462.0" mnemonicParsing="false" onAction="#onAddFromServerButtonPressed" prefHeight="25.0" prefWidth="106.0" text="Add From Server" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="408.0" prefWidth="615.0">

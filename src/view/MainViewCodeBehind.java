@@ -24,6 +24,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TitledPane;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.web.HTMLEditor;
@@ -52,15 +53,23 @@ public class MainViewCodeBehind {
     @FXML private TextField tagTextField;
     @FXML private ComboBox<String> tagComboBox;
     @FXML private Button clearTagFilterButton;
-    @FXML private Button serverButton;
+    @FXML private Button addFromServerButton;
+    @FXML private Button removeTagButton;
+    @FXML private Button addTagButton;
+    @FXML private Button deleteSnippetButton;
+    @FXML private Button deleteTagsButton;
+    @FXML private Button newSnippetButton;
     
     private MainViewController controller;
     private CodeSnippet selected;
+
+	private ServerSnippetViewCodeBehind serverSnippetController;
     
     @FXML
     private void initialize() {
     	this.controller = new MainViewController(DATA_STORE_FILE);
     	this.selected = null;
+    	this.serverSnippetController = null;
     	this.initializeListView();
     	this.updateFilterComboBox();
     	this.initializeListeners();
@@ -236,13 +245,14 @@ public class MainViewCodeBehind {
     }
 	
 	@FXML
-	void serverButtonPressed(ActionEvent event) {
-	    ServerSnippetViewCodeBehind server = new ServerSnippetViewCodeBehind();
+	void onAddFromServerButtonPressed(ActionEvent event) {
 		try {
-	    	Parent root = FXMLLoader.load(Main.class.getResource("/view/ServerSnippetView.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ServerSnippetView.fxml"));
+			Parent root = loader.load();
+			this.serverSnippetController = loader.getController();
 		    Scene scene = new Scene(root);
 		    Stage stage = new Stage();
-		    stage.setTitle("New Window");
+		    stage.setTitle("Snippopotamus Server Snippets");
 		    stage.setScene(scene);
 		    stage.show();
 		} catch (IOException e) {
@@ -251,6 +261,11 @@ public class MainViewCodeBehind {
 			alert.setContentText(e.getMessage());
 			alert.show();
 		}
+		
+		List<CodeSnippet> snippets = this.serverSnippetController.getSnippetsToReturn();
+		for (CodeSnippet currentSnippet : snippets) {
+			this.controller.getObservableList().add(currentSnippet);
+		}
 	}
-
+	
 }

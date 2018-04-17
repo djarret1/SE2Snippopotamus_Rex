@@ -66,7 +66,7 @@
             <ListView fx:id="serverSnippetListView" layoutX="14.0" layoutY="37.0" prefHeight="660.0" prefWidth="208.0" />
             <Label layoutX="73.0" layoutY="14.0" text="Selected Snippets" />
             <Button fx:id="clearAllSelectedSnippetsButton" layoutX="14.0" layoutY="711.0" mnemonicParsing="false" onAction="#clearAllButtonPressed" prefHeight="25.0" prefWidth="62.0" text="Clear All" />
-            <Button fx:id="addToMySnippetsButton" layoutX="99.0" layoutY="711.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" text="Add to My Snippets" />
+            <Button fx:id="addToMySnippetsButton" layoutX="99.0" layoutY="711.0" mnemonicParsing="false" onAction="#onAddToMySnippetsButtonPressed" prefHeight="25.0" prefWidth="123.0" text="Add to My Snippets" />
          </children>
       </AnchorPane>
    </children>
