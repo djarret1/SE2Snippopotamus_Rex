@@ -58,7 +58,6 @@ public class ServerSnippetViewCodeBehind {
     
     @FXML
     private void initialize() {
-    	
     	this.controller = new MainViewController(DATA_STORE_FILE);
     	if (this.controller.getUserName() == null) {
     		this.showUserNameDialog();
