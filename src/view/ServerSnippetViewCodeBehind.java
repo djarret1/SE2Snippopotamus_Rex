@@ -161,7 +161,6 @@ public class ServerSnippetViewCodeBehind {
 	
 	@FXML
 	void onAddToMySnippetsButtonPressed(ActionEvent event) {
-		System.out.println("Snippets to return size: " + this.snippetsToReturn.size());
 		for (CodeSnippet snippet : this.selectedSnippets) {
 			this.mainViewCodeBehind.getController().getObservableList().add(snippet);
 		}

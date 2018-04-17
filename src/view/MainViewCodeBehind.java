@@ -246,7 +246,6 @@ public class MainViewCodeBehind {
 	
 	@FXML
 	void onAddFromServerButtonPressed(ActionEvent event) {
-		System.out.println(this.controller.getObservableList().size());
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ServerSnippetView.fxml"));
 			Parent root = loader.load();
@@ -263,8 +262,6 @@ public class MainViewCodeBehind {
 			alert.setContentText(e.getMessage());
 			alert.show();
 		}
-		
-		System.out.println(this.controller.getObservableList().size());
 	}
 	
 	public MainViewController getController() {
@@ -273,7 +270,6 @@ public class MainViewCodeBehind {
 
 	private void getSnippetsFromServer() {
 		List<CodeSnippet> snippets = this.serverSnippetController.getSnippetsToReturn();
-		System.out.println(snippets.size() + " snippets");
 		for (CodeSnippet currentSnippet : snippets) {
 			this.controller.getObservableList().add(currentSnippet);
 		}
