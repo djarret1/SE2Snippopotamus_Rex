@@ -259,6 +259,10 @@ public class MainViewCodeBehind {
 			Parent root = loader.load();
 			this.serverSnippetController = loader.getController();
 			this.serverSnippetController.setMainViewCodeBehind(this);
+			this.showUserNameDialog();
+			if (this.userNameNull()) {
+				return;
+			}
 		    Scene scene = new Scene(root);
 		    Stage stage = new Stage();
 		    stage.setTitle("Snippopotamus Server Snippets");
@@ -270,6 +274,25 @@ public class MainViewCodeBehind {
 			alert.setContentText(e.getMessage());
 			alert.show();
 		}
+	}
+	
+	private boolean userNameNull() {
+		return this.serverSnippetController.getController().getUserName() == null;
+	}
+	
+	private void showUserNameDialog() {
+		TextInputDialog dialog = new TextInputDialog();
+		dialog.setTitle("Snippopotamus Rex");
+		dialog.setHeaderText("Enter your user name:");
+		dialog.setContentText("User name:");
+		
+		Optional<String> result = dialog.showAndWait();
+		
+		if (!result.isPresent()) {
+			return;
+		}
+		this.serverSnippetController.getController().setUserName(result.get());
+		
 	}
 	
 	/**
