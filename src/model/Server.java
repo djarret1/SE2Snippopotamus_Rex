@@ -35,6 +35,7 @@ public class Server {
 
 	public static final String COMMAND_ADD = "add";
 	public static final String COMMAND_DELETE = "delete";
+	public static final String COMMAND_DELETE_ALL = "delete_all";
 	public static final String COMMAND_DUMP = "dump";
 	public static final String NEW_USER = "new_user";
 	public static final String COMMAND_TERMINATE = "terminate";
@@ -114,7 +115,7 @@ public class Server {
 		Map<String, String> responseMap = gson.fromJson(new String(reply), HashMap.class);
 		String data = responseMap.get(RESPONSE);
 		
-		if (data.contains("[Errno 2]"))
+		if (data.contains("[Errno") || data.equals(""))
 		{
 			return new ArrayList<>();
 		}
@@ -227,6 +228,33 @@ public class Server {
 
 		this.deactivateServer();
 		return response.equals(SUCCESS);
+	}
+	
+	public boolean deleteAllSnippets() {
+		if (!this.isActive) {
+			throw new IllegalStateException("The server is no longer active.");
+		}
+
+		Map<String, String> message = new HashMap<>();
+		message.put(MSG_ID, COMMAND_DELETE_ALL);
+		message.put(MSG_USER_NAME, this.userName);
+
+		Gson gson = new Gson();
+		String jsonMessage = gson.toJson(message, HashMap.class);
+
+		this.socket.send(jsonMessage.getBytes(), 0);
+		byte[] reply = this.socket.recv(0);
+
+		if (reply == null)
+		{
+			return false;
+		}
+		
+		Map<String, String> responseMap = gson.fromJson(new String(reply), HashMap.class);
+		String data = responseMap.get(RESPONSE);
+		
+		this.deactivateServer();
+		return true;
 	}
 
 	/**
