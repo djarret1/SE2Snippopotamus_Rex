@@ -65,7 +65,7 @@ public class MainViewCodeBehind {
     
     private MainViewController controller;
     private CodeSnippet selected;
-
+    private String userName;
 	private ServerSnippetViewCodeBehind serverSnippetController;
     
     @FXML
@@ -254,15 +254,16 @@ public class MainViewCodeBehind {
 	
 	@FXML
 	void onAddFromServerButtonPressed(ActionEvent event) {
+		this.showUserNameDialog();
+		if (this.userNameNull()) {
+			return;
+		}
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ServerSnippetView.fxml"));
 			Parent root = loader.load();
 			this.serverSnippetController = loader.getController();
 			this.serverSnippetController.setMainViewCodeBehind(this);
-			this.showUserNameDialog();
-			if (this.userNameNull()) {
-				return;
-			}
+			this.serverSnippetController.getController().setUserName(this.userName);
 		    Scene scene = new Scene(root);
 		    Stage stage = new Stage();
 		    stage.setTitle("Snippopotamus Server Snippets");
@@ -277,7 +278,7 @@ public class MainViewCodeBehind {
 	}
 	
 	private boolean userNameNull() {
-		return this.serverSnippetController.getController().getUserName() == null;
+		return this.userName == null;
 	}
 	
 	private void showUserNameDialog() {
@@ -291,8 +292,7 @@ public class MainViewCodeBehind {
 		if (!result.isPresent()) {
 			return;
 		}
-		this.serverSnippetController.getController().setUserName(result.get());
-		
+		this.userName = result.get();
 	}
 	
 	/**
