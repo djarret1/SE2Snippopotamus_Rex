@@ -60,9 +60,6 @@ public class ServerSnippetViewCodeBehind {
     @FXML
     private void initialize() {
     	this.controller = new MainViewController(DATA_STORE_FILE);
-    	if (this.controller.getUserName() == null) {
-    		this.showUserNameDialog();
-    	}
     	this.mainViewCodeBehind = null;
     	this.snipRexServer = new Server();
     	this.selected = null;
@@ -72,19 +69,6 @@ public class ServerSnippetViewCodeBehind {
     	this.updateView(null);
     	this.selectedSnippets = FXCollections.observableArrayList(CodeSnippet.extractor());
     }
-    
-    private void showUserNameDialog() {
-		TextInputDialog dialog = new TextInputDialog();
-		dialog.setTitle("Snippopotamus Rex");
-		dialog.setHeaderText("Enter your user name:");
-		dialog.setContentText("User name:");
-		
-		Optional<String> result = dialog.showAndWait();
-		
-		result.ifPresent(name -> {
-			this.controller.setUserName(name);
-		});
-	}
     
 	private void initializeListView() {
 		List<CodeSnippet> snippetsFromServer = this.snipRexServer.getAllSnippetsFromServer();
@@ -180,4 +164,8 @@ public class ServerSnippetViewCodeBehind {
 		Objects.requireNonNull(mainViewCodeBehind, "mainViewCodeBehind cannot be null");
 		this.mainViewCodeBehind = mainViewCodeBehind;
 	}	
+	
+	public MainViewController getController() {
+		return this.controller;
+	}
 }
