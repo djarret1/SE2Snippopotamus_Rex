@@ -91,7 +91,6 @@ public class ServerSnippetViewCodeBehind {
 		List<CodeSnippet> snippetsFromServer = this.snipRexServer.getAllSnippetsFromServer();
 		ObservableList<CodeSnippet> observableSnippetsFromServer = FXCollections.observableArrayList(snippetsFromServer);
 		this.snippetListView.setItems(observableSnippetsFromServer);
-		//this.snippetListView.setItems(this.controller.getObservableList());
 		this.snippetListView.getSelectionModel().selectFirst();
 	}
 
