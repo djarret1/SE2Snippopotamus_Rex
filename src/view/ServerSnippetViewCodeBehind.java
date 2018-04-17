@@ -2,6 +2,7 @@ package view;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import controller.MainViewController;
@@ -54,7 +55,6 @@ public class ServerSnippetViewCodeBehind {
     private MainViewCodeBehind mainViewCodeBehind;
     private CodeSnippet selected;
     private ObservableList<CodeSnippet> selectedSnippets;
-    private List<CodeSnippet> snippetsToReturn;
     private Server snipRexServer;
     
     @FXML
@@ -71,7 +71,6 @@ public class ServerSnippetViewCodeBehind {
     	this.initializeListeners();
     	this.updateView(null);
     	this.selectedSnippets = FXCollections.observableArrayList(CodeSnippet.extractor());
-    	this.snippetsToReturn = new ArrayList<CodeSnippet>();
     }
     
     private void showUserNameDialog() {
@@ -91,7 +90,6 @@ public class ServerSnippetViewCodeBehind {
 		List<CodeSnippet> snippetsFromServer = this.snipRexServer.getAllSnippetsFromServer();
 		ObservableList<CodeSnippet> observableSnippetsFromServer = FXCollections.observableArrayList(snippetsFromServer);
 		this.snippetListView.setItems(observableSnippetsFromServer);
-		//this.snippetListView.setItems(this.controller.getObservableList());
 		this.snippetListView.getSelectionModel().selectFirst();
 	}
 
@@ -167,14 +165,18 @@ public class ServerSnippetViewCodeBehind {
 		stage.close();
 		
 	}
-	
-	public List<CodeSnippet> getSnippetsToReturn() {
-		return this.snippetsToReturn;
-	}
-	
+
+	/**
+	 * Allows you to set the MainViewCodeBehind so that the list may be passed back to the MainView
+	 * 
+	 * @param mainViewCodeBehind the MainViewCodeBehind
+	 * 
+	 * @precondition mainViewCodeBehind != null
+	 * 
+	 * @postcondition this.mainViewCodeBehind == mainViewCodeBehind
+	 */
 	public void setMainViewCodeBehind(MainViewCodeBehind mainViewCodeBehind) {
+		Objects.requireNonNull(mainViewCodeBehind, "mainViewCodeBehind cannot be null");
 		this.mainViewCodeBehind = mainViewCodeBehind;
-	}
-	
-	
+	}	
 }

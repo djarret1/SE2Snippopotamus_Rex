@@ -272,15 +272,12 @@ public class MainViewCodeBehind {
 		}
 	}
 	
+	/**
+	 * Gets the current MainViewController
+	 * 
+	 * @return the current MainViewController
+	 */
 	public MainViewController getController() {
 		return this.controller;
 	}
-
-	private void getSnippetsFromServer() {
-		List<CodeSnippet> snippets = this.serverSnippetController.getSnippetsToReturn();
-		for (CodeSnippet currentSnippet : snippets) {
-			this.controller.getObservableList().add(currentSnippet);
-		}
-	}
-	
 }
