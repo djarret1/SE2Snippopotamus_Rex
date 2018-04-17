@@ -76,6 +76,8 @@ public class Server {
 		Objects.requireNonNull(userName, "The username cannot be null.");
 		this.context = ZMQ.context(1);
 		socket = context.socket(ZMQ.REQ);
+		socket.setSendTimeOut(5000);
+		socket.setReceiveTimeOut(5000);
 		socket.connect(ipPort);
 		this.userName = userName;
 		this.isActive = true;
@@ -104,6 +106,11 @@ public class Server {
 		this.socket.send(jsonMessage.getBytes(), 0);
 		byte[] reply = this.socket.recv(0);
 
+		if (reply == null)
+		{
+			return new ArrayList<>();
+		}
+		
 		Map<String, String> responseMap = gson.fromJson(new String(reply), HashMap.class);
 		String data = responseMap.get(RESPONSE);
 
@@ -204,6 +211,11 @@ public class Server {
 
 		this.socket.send(jsonMessage.getBytes(), 0);
 		byte[] reply = this.socket.recv(0);
+		
+		if (reply == null)
+		{
+			return false;
+		}
 
 		Map<String, String> responseMap = gson.fromJson(new String(reply), HashMap.class);
 		String response = responseMap.get(RESPONSE);
