@@ -161,6 +161,7 @@ public class ServerSnippetViewCodeBehind {
 		for (CodeSnippet snippet : this.selectedSnippets) {
 			this.mainViewCodeBehind.getController().getObservableList().add(snippet);
 		}
+		this.mainViewCodeBehind.getController().writeAllCodeSnippetsToDataStore();
 		Stage stage = (Stage) this.addToMySnippetsButton.getScene().getWindow();
 		stage.close();
 		
