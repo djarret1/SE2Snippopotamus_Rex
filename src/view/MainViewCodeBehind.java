@@ -1,6 +1,7 @@
 package view;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -41,6 +42,8 @@ public class MainViewCodeBehind {
 
 	private static final String DATA_STORE_FILE = "data.dat";
 	
+	private static List<CodeSnippet> resultsList = new ArrayList<>();
+	
     @FXML private ListView<CodeSnippet> snippetListView;
     @FXML private ComboBox<String> filterComboBox;
     @FXML private TextArea outputTextArea;
@@ -75,8 +78,13 @@ public class MainViewCodeBehind {
     	this.initializeListeners();
     	this.updateView(null);
     }
-
-	private void initializeListView() {
+    
+    public static void setResultsList(List<CodeSnippet> results)
+    {
+    	resultsList = results;
+    }
+    
+    private void initializeListView() {
 		this.snippetListView.setItems(this.controller.getObservableList());
 		this.snippetListView.getSelectionModel().selectFirst();
 	}
