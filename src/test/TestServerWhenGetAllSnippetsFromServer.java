@@ -26,4 +26,5 @@ class TestServerWhenGetAllSnippetsFromServer {
 	           server.getAllSnippetsFromServer();
 	       });
 	}
+	
 }

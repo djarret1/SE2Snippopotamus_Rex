@@ -31,6 +31,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.web.HTMLEditor;
 import javafx.stage.Stage;
 import model.CodeSnippet;
+import model.Server;
 
 /**
  * Code-behind file for the main view.
@@ -62,21 +63,25 @@ public class MainViewCodeBehind {
     @FXML private Button deleteSnippetButton;
     @FXML private Button deleteTagsButton;
     @FXML private Button newSnippetButton;
+    @FXML private Button shareSnippetButton;
     
     private MainViewController controller;
     private CodeSnippet selected;
     private String userName;
 	private ServerSnippetViewCodeBehind serverSnippetController;
+	private Server snipRexServer;
     
     @FXML
     private void initialize() {
     	this.controller = new MainViewController(DATA_STORE_FILE);
     	this.selected = null;
     	this.serverSnippetController = null;
+    	this.snipRexServer = null;
     	this.initializeListView();
     	this.updateFilterComboBox();
     	this.initializeListeners();
     	this.updateView(null);
+    	
     }
     
     public static void setResultsList(List<CodeSnippet> results)
@@ -106,6 +111,7 @@ public class MainViewCodeBehind {
 	@FXML
 	private void updateView(Event e) {
 		if (this.selected != null) {
+			this.shareSnippetButton.setDisable(false);
 			this.snippetNameTextField.textProperty().unbindBidirectional(this.selected.getNameProperty());
 			this.descriptionTextArea.textProperty().unbindBidirectional(this.selected.getDescriptionProperty());
 			this.updateCodeSaveState();
@@ -294,6 +300,43 @@ public class MainViewCodeBehind {
 			return;
 		}
 		this.userName = result.get();
+	}
+	
+	@FXML
+	void onShareSnippetButtonPressed(ActionEvent event) {
+		this.showUserNameDialog();
+		if (this.userNameNull()) {
+			return;
+		}
+		
+		this.snipRexServer = new Server();
+		
+		this.snipRexServer.addSnippet(this.selected);
+		
+		// TODO This is for testing purposes
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Snippopotamus Rex Server");
+		alert.setHeaderText("Response From Server");
+		alert.setContentText("Your snippet was added to the server.");
+
+		alert.showAndWait();
+		
+		// This currently does not work
+		/*if (this.snipRexServer.getAllSnippetsFromServer().contains(this.selected)) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Snippopotamus Rex Server");
+			alert.setHeaderText("Response From Server");
+			alert.setContentText("Your snippet was added to the server.");
+
+			alert.showAndWait();
+		} else {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Snippopotamus Rex Server");
+			alert.setHeaderText("Response From Server");
+			alert.setContentText("Your snippet was not added to the server.");
+
+			alert.showAndWait();
+		}*/
 	}
 	
 	/**
