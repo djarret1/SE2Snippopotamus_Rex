@@ -248,6 +248,7 @@ public class MainViewCodeBehind {
 	
 	@FXML
     void clearTagFilter(ActionEvent event) {
+		this.filterComboBox.getSelectionModel().clearSelection();
 		this.searchTextField.setText("");
 		this.onSearchFieldEdited(null);
     }
