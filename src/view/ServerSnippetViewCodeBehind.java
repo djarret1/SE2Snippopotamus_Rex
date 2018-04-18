@@ -56,12 +56,13 @@ public class ServerSnippetViewCodeBehind {
     private CodeSnippet selected;
     private ObservableList<CodeSnippet> selectedSnippets;
     private Server snipRexServer;
+
+	private String userName;
     
     @FXML
     private void initialize() {
     	this.controller = new MainViewController(DATA_STORE_FILE);
-    	this.mainViewCodeBehind = null;
-    	this.snipRexServer = new Server();
+    	
     	this.selected = null;
     	this.initializeListView();
     	this.updateFilterComboBox();
@@ -71,6 +72,10 @@ public class ServerSnippetViewCodeBehind {
     }
     
 	private void initializeListView() {
+		if (this.userName == null) {
+			this.userName = this.mainViewCodeBehind.getUserName();
+		}
+		this.snipRexServer = new Server(Server.DEFAULT_IP_PORT, this.userName);
 		List<CodeSnippet> snippetsFromServer = this.snipRexServer.getAllSnippetsFromServer();
 		ObservableList<CodeSnippet> observableSnippetsFromServer = FXCollections.observableArrayList(snippetsFromServer);
 		this.snippetListView.setItems(observableSnippetsFromServer);
@@ -164,6 +169,11 @@ public class ServerSnippetViewCodeBehind {
 		Objects.requireNonNull(mainViewCodeBehind, "mainViewCodeBehind cannot be null");
 		this.mainViewCodeBehind = mainViewCodeBehind;
 	}	
+	
+	
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 	
 	public MainViewController getController() {
 		return this.controller;

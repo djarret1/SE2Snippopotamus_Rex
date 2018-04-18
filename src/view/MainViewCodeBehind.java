@@ -258,11 +258,13 @@ public class MainViewCodeBehind {
 		if (this.userNameNull()) {
 			return;
 		}
+		
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ServerSnippetView.fxml"));
 			Parent root = loader.load();
 			this.serverSnippetController = loader.getController();
 			this.serverSnippetController.setMainViewCodeBehind(this);
+			this.serverSnippetController.setUserName(this.userName);
 			this.serverSnippetController.getController().setUserName(this.userName);
 		    Scene scene = new Scene(root);
 		    Stage stage = new Stage();
@@ -324,5 +326,9 @@ public class MainViewCodeBehind {
 	 */
 	public MainViewController getController() {
 		return this.controller;
+	}
+	
+	public String getUserName() {
+		return this.userName;
 	}
 }
