@@ -38,6 +38,7 @@ public class Server {
 	public static final String COMMAND_DELETE_ALL = "delete_all";
 	public static final String COMMAND_DUMP = "dump";
 	public static final String NEW_USER = "new_user";
+	public static final String DELETE_USER = "delete_user";
 	public static final String COMMAND_TERMINATE = "terminate";
 	public static final String COMMAND_UPDATE = "update";
 
@@ -107,16 +108,14 @@ public class Server {
 		this.socket.send(jsonMessage.getBytes(), 0);
 		byte[] reply = this.socket.recv(0);
 
-		if (reply == null)
-		{
+		if (reply == null) {
 			return new ArrayList<>();
 		}
-		
+
 		Map<String, String> responseMap = gson.fromJson(new String(reply), HashMap.class);
 		String data = responseMap.get(RESPONSE);
-		
-		if (data.contains("[Errno") || data.equals(""))
-		{
+
+		if (data.contains("[Errno") || data.equals("")) {
 			return new ArrayList<>();
 		}
 
@@ -217,9 +216,8 @@ public class Server {
 
 		this.socket.send(jsonMessage.getBytes(), 0);
 		byte[] reply = this.socket.recv(0);
-		
-		if (reply == null)
-		{
+
+		if (reply == null) {
 			this.deactivateServer();
 			return false;
 		}
@@ -230,7 +228,14 @@ public class Server {
 		this.deactivateServer();
 		return response.equals(SUCCESS);
 	}
-	
+
+	/**
+	 * Deletes all CodeSnippets from the server.
+	 * 
+	 * @preconditions: None
+	 * 
+	 * @return true if the delete was successful, false otherwise.
+	 */
 	public boolean deleteAllSnippets() {
 		if (!this.isActive) {
 			throw new IllegalStateException("The server is no longer active.");
@@ -246,16 +251,97 @@ public class Server {
 		this.socket.send(jsonMessage.getBytes(), 0);
 		byte[] reply = this.socket.recv(0);
 
-		if (reply == null)
-		{
+		if (reply == null) {
 			return false;
 		}
-		
+
 		Map<String, String> responseMap = gson.fromJson(new String(reply), HashMap.class);
 		String data = responseMap.get(RESPONSE);
-		
+
 		this.deactivateServer();
 		return true;
+	}
+
+	/**
+	 * Adds a new user to the server.
+	 * 
+	 * @preconditions: username != null
+	 * 
+	 * @return true if the add was successful, false otherwise.
+	 */
+	public boolean addNewUser(String username) {
+		Objects.requireNonNull(username, "The username cannot be null.");
+
+		Map<String, String> message = new HashMap<>();
+		message.put(MSG_ID, NEW_USER);
+		message.put(MSG_USER_NAME, username);
+
+		Gson gson = new Gson();
+		String jsonMessage = gson.toJson(message, HashMap.class);
+
+		this.socket.send(jsonMessage.getBytes(), 0);
+		byte[] reply = this.socket.recv(0);
+
+		if (reply == null) {
+			return false;
+		}
+
+		Map<String, String> responseMap = gson.fromJson(new String(reply), HashMap.class);
+		String data = responseMap.get(RESPONSE);
+
+		this.deactivateServer();
+		return true;
+	}
+
+	/**
+	 * Deletes a user from the server.
+	 * 
+	 * @preconditions: username != null
+	 * 
+	 * @return true if the add was successful, false otherwise.
+	 */
+	public boolean deleteUser(String username) {
+		Objects.requireNonNull(username, "The username cannot be null.");
+
+		Map<String, String> message = new HashMap<>();
+		message.put(MSG_ID, DELETE_USER);
+		message.put(MSG_USER_NAME, username);
+
+		Gson gson = new Gson();
+		String jsonMessage = gson.toJson(message, HashMap.class);
+
+		this.socket.send(jsonMessage.getBytes(), 0);
+		byte[] reply = this.socket.recv(0);
+
+		if (reply == null) {
+			return false;
+		}
+
+		Map<String, String> responseMap = gson.fromJson(new String(reply), HashMap.class);
+		String data = responseMap.get(RESPONSE);
+
+		this.deactivateServer();
+		return true;
+	}
+
+	/**
+	 * Terminates the server.
+	 * 
+	 * @preconditions: None
+	 * @postconditions: Server will be terminated.
+	 */
+	public void terminateServer() {
+		Map<String, String> message = new HashMap<>();
+		message.put(MSG_ID, COMMAND_TERMINATE);
+		message.put(MSG_USER_NAME, "admin");
+
+		Gson gson = new Gson();
+		String jsonMessage = gson.toJson(message, HashMap.class);
+
+		this.socket.send(jsonMessage.getBytes(), 0);
+		byte[] reply = this.socket.recv(0);
+
+		return;
 	}
 
 	/**

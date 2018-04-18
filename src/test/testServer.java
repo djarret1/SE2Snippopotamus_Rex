@@ -1,7 +1,6 @@
 package test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 
@@ -41,7 +40,7 @@ class testServer {
 
 		assertEquals(true, wasFound);
 	}
-	
+
 	@Test
 	void testUpdateSnippet() {
 		Server server = new Server();
@@ -54,17 +53,27 @@ class testServer {
 		server = new Server();
 		testSnippet = new CodeSnippet("admin", "Test Snippet", "Longer Description");
 		server.updateSnippet(testSnippet);
-		
+
 		server = new Server();
 		List<CodeSnippet> results = server.getAllSnippetsFromServer();
 		boolean wasFound = false;
 		for (CodeSnippet snippet : results) {
-			if (snippet.getName().equals(testSnippet.getName()) && snippet.getDescription().equals(testSnippet.getDescription())) {
+			if (snippet.getName().equals(testSnippet.getName())
+					&& snippet.getDescription().equals(testSnippet.getDescription())) {
 				wasFound = true;
 			}
 		}
 
 		assertEquals(true, wasFound);
+	}
+
+	@Test
+	void testAddNewUser() {
+		Server server = new Server();
+		server.deleteUser("test_user");
+
+		server = new Server();
+		assertEquals(true, server.addNewUser("test_user"));
 	}
 
 	@Test
@@ -82,20 +91,6 @@ class testServer {
 		server = new Server();
 		List<CodeSnippet> results = server.getAllSnippetsFromServer();
 		assertEquals(0, results.size());
-	}
-
-	@Test
-	void testDeactivateServer() {
-		Server server = new Server();
-		List<CodeSnippet> results = server.getAllSnippetsFromServer();
-		
-		assertEquals(true, server.deleteAllSnippets());
-
-//		Throwable exception = assertThrows(IllegalStateException.class, () -> {
-//			server.deleteAllSnippets();
-//		});
-//
-//		assertEquals("The server is no longer active.", exception.getMessage());
 	}
 
 }
