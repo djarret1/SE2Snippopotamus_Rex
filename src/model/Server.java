@@ -115,7 +115,7 @@ public class Server {
 		Map<String, String> responseMap = gson.fromJson(new String(reply), HashMap.class);
 		String data = responseMap.get(RESPONSE);
 
-		if (data.contains("[Errno") || data.equals("")) {
+		if (data.contains("[Errno") || data.equals("") || data.equals("invalid_user")) {
 			return new ArrayList<>();
 		}
 
