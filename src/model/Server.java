@@ -220,6 +220,7 @@ public class Server {
 		
 		if (reply == null)
 		{
+			this.deactivateServer();
 			return false;
 		}
 
