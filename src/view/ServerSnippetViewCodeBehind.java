@@ -72,10 +72,12 @@ public class ServerSnippetViewCodeBehind {
     }
     
 	private void initializeListView() {
-		if (this.userName == null) {
-			this.userName = this.mainViewCodeBehind.getUserName();
-		}
+//		if (this.userName == null) {
+//			this.userName = this.mainViewCodeBehind.getUserName();
+//		}
+		this.userName = MainViewCodeBehind.getUser_Name();
 		this.snipRexServer = new Server(Server.DEFAULT_IP_PORT, this.userName);
+//		this.snipRexServer = new Server();
 		List<CodeSnippet> snippetsFromServer = this.snipRexServer.getAllSnippetsFromServer();
 		ObservableList<CodeSnippet> observableSnippetsFromServer = FXCollections.observableArrayList(snippetsFromServer);
 		this.snippetListView.setItems(observableSnippetsFromServer);

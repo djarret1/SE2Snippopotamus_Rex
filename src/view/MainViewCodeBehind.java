@@ -43,6 +43,11 @@ public class MainViewCodeBehind {
 
 	private static final String DATA_STORE_FILE = "data.dat";
 	
+	private static String user_name = "";
+	public static String getUser_Name() {
+		return user_name;
+	}
+	
 	@FXML private ListView<CodeSnippet> snippetListView;
     @FXML private ComboBox<String> filterComboBox;
     @FXML private TextArea outputTextArea;
@@ -258,14 +263,16 @@ public class MainViewCodeBehind {
 		if (this.userNameNull()) {
 			return;
 		}
+		user_name = this.userName;
 		
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ServerSnippetView.fxml"));
 			Parent root = loader.load();
 			this.serverSnippetController = loader.getController();
-			this.serverSnippetController.setMainViewCodeBehind(this);
-			this.serverSnippetController.setUserName(this.userName);
-			this.serverSnippetController.getController().setUserName(this.userName);
+//			this.serverSnippetController.setMainViewCodeBehind(this);
+//			this.serverSnippetController.setUserName(this.userName);
+//			this.serverSnippetController.getController().setUserName(this.userName);
+			
 		    Scene scene = new Scene(root);
 		    Stage stage = new Stage();
 		    stage.setTitle("Snippopotamus Server Snippets");
