@@ -302,7 +302,7 @@ public class MainViewCodeBehind {
 			return;
 		}
 		
-		this.snipRexServer = new Server();
+		this.snipRexServer = new Server(Server.DEFAULT_IP_PORT, this.userName);
 		
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Snippopotamus Rex Server");
