@@ -304,32 +304,17 @@ public class MainViewCodeBehind {
 		
 		this.snipRexServer = new Server();
 		
-		this.snipRexServer.addSnippet(this.selected);
-		
-		// TODO This is for testing purposes
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Snippopotamus Rex Server");
 		alert.setHeaderText("Response From Server");
-		alert.setContentText("Your snippet was added to the server.");
-
-		alert.showAndWait();
 		
-		// This currently does not work
-		/*if (this.snipRexServer.getAllSnippetsFromServer().contains(this.selected)) {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Snippopotamus Rex Server");
-			alert.setHeaderText("Response From Server");
+		if (this.snipRexServer.addSnippet(this.selected)) {
 			alert.setContentText("Your snippet was added to the server.");
-
-			alert.showAndWait();
 		} else {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Snippopotamus Rex Server");
-			alert.setHeaderText("Response From Server");
-			alert.setContentText("Your snippet was not added to the server.");
-
-			alert.showAndWait();
-		}*/
+			alert.setContentText("Your snippet already exists on the server.");
+		}
+		
+		alert.showAndWait();
 	}
 	
 	/**
